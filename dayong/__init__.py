@@ -1,3 +1,0 @@
-"""
-Dayong's base directory.
-"""
