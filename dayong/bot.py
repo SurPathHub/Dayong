@@ -62,7 +62,8 @@ def load_extensions() -> list[str]:
 
 
 def setup_bot(use_config: bool = False) -> None:
-    """Run Dayong with the configuration specified in the `config.json` file.
+    """Run Dayong with the configuration specified in either the `config.json`
+    or `.env` file.
 
     The keys in the config file are as listed here:
     - bot_prefix (string)
