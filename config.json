@@ -1,7 +1,7 @@
 {
-  "bot_prefix": "YOUR_BOT_PREFIX",
-  "token": "YOUR_BOT_TOKEN",
-  "application_id": "YOUR_APPLICATION_ID",
+  "bot_command_prefix": ".",
+  "token": "your bot token",
+  "application_id": "your application_id",
   "owners": [
     123456789,
     987654321
