@@ -1,42 +1,9 @@
 {
-  "guild_id": 790101969413865472,
-  "bot_prefix": ".",
-  "imap_host": "imap.gmail.com",
-  "embeddings": {
-    "new_member_greetings": {
-      "readme_channel_id": 790110106809401344,
-      "description": "**Maligayang pagdating sa {}, <@!{}>!**\n\n Please make sure to check the <#{}> channel to access the other channels and connect with our members. \n\nCheck us on:",
-      "color": 11828958,
-      "greetings_field": {
-        "0": {
-          "name": "<:surpath_in_blackandgreen:880784919331242034> Website ",
-          "value": "[surpathhub.github.io](https://surpathhub.github.io/)"
-        },
-        "1": {
-          "name": "<:github:855326750439505970> Github ",
-          "value": "[SurPath Hub](https://github.com/SurPathHub)"
-        },
-        "2": {
-          "name": "<:facebook:880784618574446612> Facebook ",
-          "value": "[@SurPathHub](https://web.facebook.com/SurPathHub)"
-        },
-        "3": {
-          "name": "<:twitter:880784614908657684> Twitter ",
-          "value": "[@SurPathHub](https://twitter.com/SurPathHub)"
-        },
-        "4": {
-          "name": "<:linkedin:880784614921232436> LinkedIn ",
-          "value": "[SurPath Hub](https://www.linkedin.com/company/surpathhub)"
-        },
-        "5": {
-          "name": "<:youtube:880784617928527882> Youtube ",
-          "value": "[SurPath Hub](https://www.youtube.com/channel/UCjA75ni_WO_AoyWsLxnnwjA)"
-        }
-      }
-    },
-    "anonymous_message": {
-      "title": "Anon",
-      "color": 10181046
-    }
-  }
+  "bot_command_prefix": ".",
+  "token": "your bot token",
+  "application_id": "your application_id",
+  "owners": [
+    123456789,
+    987654321
+  ]
 }
