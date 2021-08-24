@@ -1,7 +1,10 @@
 """
 Dayong's entry point.
 """
-from dayong import bot
+from dayong.cli import SetupCLI, command_line, display_banner
 
 if __name__ == "__main__":
-    bot.run()
+    args = command_line()
+    display_banner()
+    setup = SetupCLI()
+    setup.run_dayong(args.use_config)
