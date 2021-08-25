@@ -4,68 +4,65 @@ dayong.cogs.devtools
 
 This extension provides utilities for managing extensions used by Dayong.
 """
-from functools import wraps
+from typing import Union
 
 from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
 from discord.ext.commands.errors import (  # type: ignore
-    ExtensionAlreadyLoaded,
-    ExtensionFailed,
-    ExtensionNotFound,
-    ExtensionNotLoaded,
-    NoEntryPointError,
+    CommandError,
+    CommandInvokeError,
+    DiscordException,
 )
 
 
-def ext_exception_handler(func):
-    """Handle any raised `discord.ext.commands.errors.ExtensionError`
-    subclass.
-    """
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        async def tmp():
-            failed_msg = "Failed to load {ext}. "
-            try:
-                await func(*args, **kwargs)
-            except ExtensionNotFound as enf:
-                return (
-                    "Unable to find {ext}",
-                    f"```python\n{enf}\n```",
-                )
-            except NoEntryPointError as npe:
-                return (
-                    failed_msg + "Check its `setup` entry point.",
-                    f"```python\n{npe}\n```",
-                )
-            except ExtensionFailed as efe:
-                return (
-                    failed_msg + "Check its module or `setup` entry point.",
-                    f"```python\n{efe}\n```",
-                )
-            except ExtensionAlreadyLoaded:
-                pass
-            except ExtensionNotLoaded:
-                pass
-
-        return tmp()
-
-    return wrapper
-
-
 class Utility(Cog):
-    """Simple ping command for checking the reachability of the bot's host or
-    the latency.
-    """
+    """Class containing commands for managing bot extensions or cogs."""
 
     def __init__(self, bot: Bot):
         self.bot = bot
+        self.ext = ""
 
-    @ext_exception_handler
+    async def handle_ext_error(
+        self,
+        error: DiscordException,
+    ) -> Union[str, None]:
+        """Callback method for handling extension errors.
+
+        Instead of checking the exception type to determine the error and
+        execute approriate actions, this uses the string representation of
+        `CommandInvokeError`.
+
+        Args:
+            error (DiscordException): An instance of `DiscordException`.
+
+        Returns:
+            Union[str, None]: A helpful message related to the error, None if
+                the exception isn't extension related.
+        """
+        error = str(error)
+        error_msg = f"```python\n{error}\n```"
+        reply_msg = f"Failed to load {self.ext}."
+
+        if "ExtensionNotFound" in error:
+            tip = "Unable to find"
+            return f"{tip} {self.ext}\n{error_msg}"
+        if "NoEntryPointError" in error:
+            tip = "Check its `setup` entry point."
+            return f"{reply_msg} {tip}\n{error_msg}"
+        if "ExtensionFailed" in error:
+            tip = "Check its module or `setup` entry point"
+            return f"{reply_msg} {tip}.\n{error_msg}"
+        if "ExtensionAlreadyLoaded" in error:
+            pass
+        if "ExtensionNotLoaded" in error:
+            pass
+
+        return None
+
     async def manage_ext(
         self,
-        ext: str,
         _load: bool = False,
         _unload: bool = False,
+        unload_load: bool = False,
     ) -> None:
         """Load or _unload the specified extension.
 
@@ -75,11 +72,31 @@ class Utility(Cog):
                 False.
             _unload (bool, optional): If True, unload the extension. Defaults
                 to False.
+            unload_load (bool, optional): If True, perform an unload-load
+                operation. Defaults to False.
         """
         if _load:
-            self.bot.load_extension(ext)
+            self.bot.load_extension(self.ext)
+            return
         if _unload:
-            self.bot.unload_extension(ext)
+            self.bot.unload_extension(self.ext)
+            return
+        if unload_load:
+            self.bot.unload_extension(self.ext)
+            self.bot.load_extension(self.ext)
+            return
+
+    @Cog.listener()
+    async def on_command_error(self, ctx: Context, error: CommandError):
+        """Listener for incoming commands.
+
+        Args:
+            ctx (Context): Context in which a command is being invoked under.
+            error (str): [description]
+        """
+        if isinstance(error, CommandInvokeError):
+            message = await self.handle_ext_error(error)
+            await ctx.send(message)
 
     @command()
     async def load(self, ctx: Context, ext: str) -> None:
@@ -89,9 +106,9 @@ class Utility(Cog):
             ctx (Context): `discord.ext.commands.Context` object.
             ext (str): The extension name.
         """
-        ext = f"cogs.{ext}"
-        res = await self.manage_ext(ext, _load=True) or f"Loaded {ext}!"
-        ctx.send(res)
+        self.ext = f"cogs.{ext}"
+        await self.manage_ext(_load=True)
+        await ctx.send(f"Loaded {self.ext}!")
 
     @command()
     async def unload(self, ctx: Context, ext: str) -> None:
@@ -101,9 +118,9 @@ class Utility(Cog):
             ctx (Context): `discord.ext.commands.Context` object.
             ext (str): The extension name.
         """
-        ext = f"cogs.{ext}"
-        res = await self.manage_ext(ext, _unload=True) or f"Unloaded {ext}!"
-        ctx.send(res)
+        self.ext = f"cogs.{ext}"
+        await self.manage_ext(_unload=True)
+        await ctx.send(f"Unloaded {self.ext}!")
 
     @command()
     async def reload(self, ctx: Context, ext: str) -> None:
@@ -113,16 +130,9 @@ class Utility(Cog):
             ctx (Context): `discord.ext.commands.Context` object.
             ext (str): The extension name.
         """
-        ext = f"cogs.{ext}"
-        res = (
-            await self.manage_ext(
-                ext,
-                _load=True,
-                _unload=True,
-            )
-            or f"Reloaded {ext}!"
-        )
-        ctx.send(res)
+        self.ext = f"cogs.{ext}"
+        await self.manage_ext(unload_load=True)
+        await ctx.send(f"Reloaded {self.ext}!")
 
 
 def setup(bot: Bot) -> None:
