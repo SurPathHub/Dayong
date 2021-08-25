@@ -5,9 +5,52 @@ dayong.cogs.devtools
 This module provides debugging utilities that are used within Dayong that are
 also be useful for the other Discord bots.
 """
-from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
+from functools import wraps
 
-from dayong.exceptions import ext_exception_handler
+from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
+from discord.ext.commands.errors import (  # type: ignore
+    ExtensionAlreadyLoaded,
+    ExtensionFailed,
+    ExtensionNotFound,
+    ExtensionNotLoaded,
+    NoEntryPointError,
+)
+
+
+def ext_exception_handler(func):
+    """Handle any raised `discord.ext.commands.errors.ExtensionError`
+    subclass.
+    """
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        async def tmp():
+            failed_msg = "Failed to load {ext}. "
+            try:
+                await func(*args, **kwargs)
+            except ExtensionNotFound as enf:
+                return (
+                    "Unable to find {ext}",
+                    f"```python\n{enf}\n```",
+                )
+            except NoEntryPointError as npe:
+                return (
+                    failed_msg + "Check its `setup` entry point.",
+                    f"```python\n{npe}\n```",
+                )
+            except ExtensionFailed as efe:
+                return (
+                    failed_msg + "Check its module or `setup` entry point.",
+                    f"```python\n{efe}\n```",
+                )
+            except ExtensionAlreadyLoaded:
+                pass
+            except ExtensionNotLoaded:
+                pass
+
+        return tmp()
+
+    return wrapper
 
 
 class Utility(Cog):
