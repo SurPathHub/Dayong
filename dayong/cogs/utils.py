@@ -2,8 +2,7 @@
 dayong.cogs.devtools
 ~~~~~~~~~~~~~~~~~~~~
 
-This module provides debugging utilities that are used within Dayong that are
-also be useful for the other Discord bots.
+This extension provides utilities for managing extensions used by Dayong.
 """
 from functools import wraps
 
@@ -85,8 +84,6 @@ class Utility(Cog):
     @command()
     async def load(self, ctx: Context, ext: str) -> None:
         """Load specified extension from the cogs directory.
-
-        This a command that can be invoked from a Discord application.
 
         Args:
             ctx (Context): `discord.ext.commands.Context` object.
