@@ -1,4 +1,5 @@
 # Dayong
+<<<<<<< HEAD
 ![License mit](https://img.shields.io/badge/license-MIT-brightgreen)
 [![Python version](https://img.shields.io/badge/python-3.9.7-blue.svg)](https://www.python.org/downloads/release/python-397/)
 ![Codestyle](https://img.shields.io/badge/code%20style-black-black)
@@ -42,3 +43,55 @@ Read our [Code of Conduct](https://github.com/SurPathHub/support/blob/main/CODE_
 ## License
 
 Distributed under the MIT License. See [LICENSE](/LICENSE) for more information.
+=======
+
+## Installation
+
+Download the source code:
+
+```
+git clone https://github.com/SurPathHub/Dayong.git
+```
+
+## Bot Account Setup
+
+Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord.html
+
+## Project Setup
+
+1. Go to the project root directory.
+
+    ```
+    cd Dayong
+    ```
+
+2. Create a copy of `.env.example`. Don't forget to omit the `.example` at the end.
+
+    On Linux and Unix
+    ```
+    cp .env.example .env
+    ```
+
+    On Windows
+    ```
+    copy .env.example .env
+    ```
+
+3. Edit the `.env` file and add your credentials to the corresponding variables.
+
+4. Install [poetry](https://github.com/python-poetry/poetry#installation). Check if poetry is installed by running `poetry --version`.
+
+5. Run `poetry shell`. This will create or start the virtual environment.
+
+6. Run `poetry install`. This will install the project and its dependencies.
+
+## Usage
+
+1. From the project root directory, run:
+
+    ```
+    python dayong
+    ```
+
+2. Open your Discord application. Go to the server where you invited the bot and run `[your command prefix]help`. For instance: `.help` or `!help`. The dot prefix is the default.
+>>>>>>> c0e265d... docs: explain setup and usage
