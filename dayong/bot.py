@@ -103,9 +103,9 @@ class Setup:
         `config.json` or `.env` file.
         """
         pref, exts = self.setup_bot(use_config=use_config)
-        
+
         intents = Intents.default()
-        intents.member = True
+        intents.members = True
 
         self.dayong = Bot(pref, intents=intents)
 
