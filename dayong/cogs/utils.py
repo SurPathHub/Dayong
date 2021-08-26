@@ -6,7 +6,7 @@ This extension provides utilities for managing extensions used by Dayong.
 """
 from typing import Union
 
-from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
+from discord.ext.commands import Bot, Cog, Context, command, is_owner  # type: ignore
 from discord.ext.commands.errors import (  # type: ignore
     CommandError,
     CommandInvokeError,
@@ -133,6 +133,15 @@ class Utility(Cog):
         self.ext = f"cogs.{ext}"
         await self.manage_ext(unload_load=True)
         await ctx.send(f"Reloaded {self.ext}!")
+
+    @command()
+    @is_owner()
+    async def end(self, ctx):
+        """ Terminates the bot from processing.
+            This can only be done if you're an owner of the Bot.
+        """
+        await ctx.send("Process terminated.")
+        await ctx.bot.logout()
 
 
 def setup(bot: Bot) -> None:
