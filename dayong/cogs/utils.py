@@ -141,7 +141,7 @@ class Utility(Cog):
             This can only be done if you're an owner of the Bot.
         """
         await ctx.send("Process terminated.")
-        await ctx.bot.logout()
+        await ctx.bot.close()
 
 
 def setup(bot: Bot) -> None:
