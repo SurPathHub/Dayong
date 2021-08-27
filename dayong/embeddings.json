@@ -1,5 +1,35 @@
 {
-	"greet":{
-			"1": "12"
-		}
+	"greetings_channel":"test-bot",
+
+	"title": "Maligayang pagdating sa {}!",
+	"description": "Please make sure to check the #readme channel to access the other channels and connect with our members. \n\nCheck us on:",
+	"color":11828958,
+
+	"greetings_field":{
+		"0": {
+				"name":"Website :surpath_in_blackandgreen:",
+				"value":"[surpathofficial](https://surpathhub.github.io/)"
+			 },
+		"1": {
+				"name":"Github :github:",
+				"value":"[SurPathHub](https://github.com/SurPathHub)"
+			 },
+		"2": {
+				"name":"Facebook :facebook:",
+				"value":"[SurPath Hub](https://web.facebook.com/SurPathHub)"
+			 },
+		"3": {
+				"name":"Twitter :twitter:",
+				"value":"[SurPathHub](https://twitter.com/SurPathHub)"
+			 },
+		"4": {
+				"name":"LinkedIn :linkedin:",
+				"value":"[SurPathHub](https://www.linkedin.com/company/surpathhub)"
+			 },
+		"5": {
+				"name":"Youtube :youtube:",
+				"value":"[SurPathHub](https://www.youtube.com/channel/UCjA75ni_WO_AoyWsLxnnwjA)"
+			 }
+	}
+	
 }
