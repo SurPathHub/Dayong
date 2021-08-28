@@ -44,10 +44,9 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 4. Install [poetry](https://github.com/python-poetry/poetry#installation). Check if poetry is installed by running `poetry --version`.
 
-5. Run `poetry shell`. This will create a virtual environment and finds the pyproject.toml in the current directory.
+5. Run `poetry shell`. This will create or start the virtual environment.
 
-6. Run `poetry install`. This will install all the dependencies listed in poetry.lock.
-> NOTE: Poetry uses the exact versions listed in lock file to ensure that all the package versions are the same for all the developers working on Dayong.
+6. Run `poetry install`. This will install the project and its dependencies.
 
 ## Usage
 
@@ -59,9 +58,9 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 2. Open your Discord application. Go to the server where you invited the bot and run `[your command prefix]help`. For instance: `.help` or `!help`. The dot prefix is the default.
 
-## Changing the greetings-for-new-member setup
+## Welcome Message for New Member
 
-1. You can change the following on `Dayong\dayong\embeddings.json`
+1. Modify the welcome message by changing the value(s) of the following in `Dayong\dayong\embeddings.json`.
     ```
     "greetings_channel":"<channel name where the greetings will be prompted>",
     "readme_channel_id": <id of the channel you want to tag>,
