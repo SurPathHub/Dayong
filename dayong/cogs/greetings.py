@@ -18,6 +18,7 @@ class Greetings(Cog):
     """
     Greets new member of the guild.
     """
+
     def __init__(self, bot: Bot):
         self.bot = bot
 
@@ -26,7 +27,10 @@ class Greetings(Cog):
         """
         This is called when a new member arrived on the server
         """
-        channel = utils.get(member.guild.channels, name=embeddings["greetings_channel"])
+        channel = utils.get(
+            member.guild.channels,
+            name=embeddings["greetings_channel"],
+        )
 
         embed = Embed(
             description=embeddings["description"].format(
