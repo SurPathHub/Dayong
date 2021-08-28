@@ -105,7 +105,7 @@ class Setup:
         pref, exts = self.setup_bot(use_config=use_config)
 
         intents = Intents.default()
-        intents.members = True
+        intents.members = True  # pylint: disable=E0237
 
         self.dayong = Bot(pref, intents=intents)
 
