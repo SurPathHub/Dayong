@@ -1,8 +1,8 @@
 """
-dayong.cogs.devtools
-~~~~~~~~~~~~~~~~~~~~
+dayong.cogs.admin
+~~~~~~~~~~~~~~~~~
 
-This extension provides utilities for managing extensions used by Dayong.
+This extension contains administrative tools.
 """
 from typing import Union
 
@@ -15,7 +15,9 @@ from discord.ext.commands.errors import (  # type: ignore
 
 
 class Utility(Cog):
-    """Class containing commands for managing bot extensions or cogs."""
+    """Class providing utility commands for managing dayong and its
+    extensions.
+    """
 
     def __init__(self, bot: Bot):
         self.bot = bot
@@ -96,7 +98,8 @@ class Utility(Cog):
         """
         if isinstance(error, CommandInvokeError):
             message = await self.handle_ext_error(error)
-            await ctx.send(message)
+            if message is not None:
+                await ctx.send(message)
 
     @command()
     async def load(self, ctx: Context, ext: str) -> None:
@@ -136,7 +139,7 @@ class Utility(Cog):
 
     @command()
     @is_owner()
-    async def end(self, ctx):
+    async def end(self, ctx: Context):
         """Terminates the bot from processing.
         This can only be done if you're an owner of the Bot.
         """
