@@ -103,7 +103,11 @@ class Setup:
         `config.json` or `.env` file.
         """
         pref, exts = self.setup_bot(use_config=use_config)
-        self.dayong = Bot(pref, intents=Intents.default())
+
+        intents = Intents.default()
+        intents.members = True
+
+        self.dayong = Bot(pref, intents=intents)
 
         for ext in exts:
             self.dayong.load_extension(f"cogs.{ext}")

@@ -57,3 +57,22 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
     ```
 
 2. Open your Discord application. Go to the server where you invited the bot and run `[your command prefix]help`. For instance: `.help` or `!help`. The dot prefix is the default.
+
+## Welcome Message for New Member
+
+1. Modify the welcome message by changing the value(s) of the following in `Dayong\dayong\embeddings.json`.
+    ```
+    "greetings_channel":"<channel name where the greetings will be prompted>",
+    "readme_channel_id": <id of the channel you want to tag>,
+    "description": "<your greetings>",
+    "color": <integer value of the color you want to use>
+
+    "greetings_field": {
+        "<n>": {
+            "name": "field's name"
+            "value": "field's value"
+        }
+        , ...
+    }
+    ```
+> You can have as many as `greetings_field`s you want. However, make sure that its inner key(s) is an integer (starting with 0) since it will be used inside a `for` loop.
