@@ -15,8 +15,8 @@ class Ping(Cog):
     def __init__(self, bot: Bot):
         self.bot = bot
 
-    @Cog.listener()
-    async def on_ready(self) -> None:
+    @Cog.listener("on_ready")
+    async def log_bot_info(self) -> None:
         """Log bot information on server connection."""
         print("Bot is ready!")
         print("Bot Name:", self.bot.user)

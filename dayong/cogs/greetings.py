@@ -21,8 +21,8 @@ class Greetings(Cog):
     def __init__(self, bot: Bot):
         self.bot = bot
 
-    @Cog.listener()
-    async def on_member_join(self, member: Member):
+    @Cog.listener("on_member_join")
+    async def welcome_member(self, member: Member):
         """
         This is called when a new member arrived on the server
         """
