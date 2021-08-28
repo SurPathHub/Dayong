@@ -88,8 +88,8 @@ class Utility(Cog):
             self.bot.load_extension(self.ext)
             return
 
-    @Cog.listener()
-    async def on_command_error(self, ctx: Context, error: CommandError):
+    @Cog.listener("on_command_error")
+    async def on_ext_error(self, ctx: Context, error: CommandError):
         """Listener for incoming commands.
 
         Args:
