@@ -137,8 +137,8 @@ class Utility(Cog):
     @command()
     @is_owner()
     async def end(self, ctx):
-        """ Terminates the bot from processing.
-            This can only be done if you're an owner of the Bot.
+        """Terminates the bot from processing.
+        This can only be done if you're an owner of the Bot.
         """
         await ctx.send("Process terminated.")
         await ctx.bot.close()
