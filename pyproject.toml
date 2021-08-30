@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.9"
 "discord.py" = "^1.7.3"
 python-dotenv = "^0.19.0"
+sqlmodel = "^0.0.4"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"
