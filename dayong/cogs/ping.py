@@ -4,7 +4,10 @@ dayong.cogs.pingpong
 
 A minimal ping command.
 """
+from discord import Embed  # type: ignore
 from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
+
+from dayong.bot import EMBEDDINGS
 
 
 class Ping(Cog):
@@ -29,7 +32,11 @@ class Ping(Cog):
         Args:
             ctx (Context): `discord.ext.commands.Context` instance.
         """
-        await ctx.send(f"pong! time {round(self.bot.latency *1000)} ms")
+        embed = Embed(
+            description=f"pong! time {round(self.bot.latency *1000)} ms",
+            color=EMBEDDINGS["color"],
+        )
+        await ctx.send(embed=embed)
 
 
 def setup(bot: Bot) -> None:
