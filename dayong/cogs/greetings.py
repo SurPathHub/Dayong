@@ -1,17 +1,13 @@
 """
 dayong.cogs.greetings
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 Greets new member of the guild.
 """
-import json
-from os import getcwd
+from discord import Embed, Member, utils  # type: ignore
+from discord.ext.commands import Bot, Cog  # type: ignore
 
-from discord import Embed, Member, utils
-from discord.ext.commands import Bot, Cog
-
-with open(getcwd() + "/dayong/embeddings.json", "r", encoding="utf-8") as file:
-    embeddings = json.load(file)
+from dayong.bot import EMBEDDINGS
 
 
 class Greetings(Cog):
@@ -25,22 +21,22 @@ class Greetings(Cog):
     @Cog.listener("on_member_join")
     async def welcome_member(self, member: Member):
         """
-        This is called when a new member arrived on the server
+        This is called when a new member arrives on the server.
         """
         channel = utils.get(
             member.guild.channels,
-            name=embeddings["greetings_channel"],
+            name=EMBEDDINGS["greetings_channel"],
         )
 
         embed = Embed(
-            description=embeddings["description"].format(
-                member.guild, member.id, embeddings["readme_channel_id"]
+            description=EMBEDDINGS["description"].format(
+                member.guild, member.id, EMBEDDINGS["readme_channel_id"]
             ),
-            color=embeddings["color"],
+            color=EMBEDDINGS["color"],
         )
 
-        for i in range(len(embeddings["greetings_field"])):
-            inner_dict = embeddings["greetings_field"][str(i)]
+        for i in range(len(EMBEDDINGS["greetings_field"])):
+            inner_dict = EMBEDDINGS["greetings_field"][str(i)]
             embed.add_field(
                 name=inner_dict["name"], value=inner_dict["value"], inline=True
             )
