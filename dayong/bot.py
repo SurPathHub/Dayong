@@ -15,6 +15,10 @@ from dayong.exceptions import exception_handler
 
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
+EMBED_FILE = "embeddings.json"
+
+with open(os.path.join(BASE_DIR, EMBED_FILE), encoding="utf-8") as embedfile:
+    EMBEDDINGS = json.load(embedfile)
 
 # Parse the .env file and _load the environment variables.
 load_dotenv()
