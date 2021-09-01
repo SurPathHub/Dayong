@@ -6,7 +6,13 @@ This extension contains administrative tools.
 """
 from typing import Union
 
-from discord.ext.commands import Bot, Cog, Context, command, is_owner  # type: ignore # noqa: E501
+from discord.ext.commands import (  # type: ignore # placeholder
+    Bot,
+    Cog,
+    Context,
+    command,
+    is_owner,
+)
 from discord.ext.commands.errors import (  # type: ignore
     CommandError,
     CommandInvokeError,
