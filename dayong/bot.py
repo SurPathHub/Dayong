@@ -14,17 +14,18 @@ from dotenv import load_dotenv
 
 from dayong.exceptions import exception_handler
 
-BASE_DIR = Path(__file__).resolve().parent
-ROOT_DIR = BASE_DIR.parent
-EMBED_FILE = "embeddings.json"
-
-with open(os.path.join(BASE_DIR, EMBED_FILE), encoding="utf-8") as embedfile:
-    EMBEDDINGS = json.load(embedfile)
-
 # Parse the .env file and _load the environment variables.
 load_dotenv()
 
-# Load any environment variables or secrets necessary for Dayong to run.
+BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent
+CONFIG_FILE = "config.json"
+EMBED_FILE = os.path.join(ROOT_DIR, "config.json")
+
+with open(os.path.join(BASE_DIR, EMBED_FILE), encoding="utf-8") as embedfile:
+    EMBEDDINGS = json.load(embedfile)["embeddings"]
+
+# Environment variables or secrets.
 BOT_COMMAND_PREFIX: Union[str, None] = os.getenv("BOT_COMMAND_PREFIX")
 TOKEN: Union[str, None] = os.getenv("TOKEN")
 APPLICATION_ID: Union[str, None] = os.getenv("APPLICATION_ID")
@@ -38,7 +39,6 @@ class Setup:
     """Base Setup class."""
 
     dayong: Bot
-    config_file = "config.json"
 
     @staticmethod
     def load_configs() -> Any:
@@ -47,7 +47,7 @@ class Setup:
         Returns:
             Any: The key-value pair contained in the file.
         """
-        conf = Setup.config_file
+        conf = CONFIG_FILE
         if not os.path.isfile(os.path.join(ROOT_DIR, conf)):
             sys.exit(f"Cannot locate {conf}!")
 
@@ -98,7 +98,7 @@ class Setup:
         exts = self.load_extensions()
 
         if use_config is True or pref is None:
-            pref = self.load_configs()["bot_command_prefix"]
+            pref = self.load_configs()["credentials"]["bot_command_prefix"]
 
         return pref, exts
 
