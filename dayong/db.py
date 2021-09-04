@@ -38,8 +38,8 @@ class Database(ABC):
         """Add row to type of `db.TableModel`."""
 
 
-class PostgreSQLDatabase(Database):
-    """Class for handling PostgresSQL database connection."""
+class SQLDatabase(Database):
+    """Class for handling SQL database connections."""
 
     def __init__(self, connection_uri: str):
         self.engine = create_async_engine(connection_uri)
