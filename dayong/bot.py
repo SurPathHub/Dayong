@@ -18,11 +18,12 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
-CONFIG_FILE = "config.json"
-EMBED_FILE = os.path.join(ROOT_DIR, "config.json")
+CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
 
-with open(os.path.join(BASE_DIR, EMBED_FILE), encoding="utf-8") as embedfile:
-    EMBEDDINGS = json.load(embedfile)["embeddings"]
+with open(CONFIG_FILE, encoding="utf-8") as conf_file:
+    config = json.load(conf_file)
+    DB_CONNECTION_URI: str = config["databse_connection_uri"]
+    EMBEDDINGS: dict = config["embeddings"]
 
 # Environment variables or secrets.
 BOT_COMMAND_PREFIX: Union[str, None] = os.getenv("BOT_COMMAND_PREFIX")
