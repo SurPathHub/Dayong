@@ -22,7 +22,7 @@ CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
 
 with open(CONFIG_FILE, encoding="utf-8") as conf_file:
     config = json.load(conf_file)
-    DB_CONNECTION_URI: str = config["databse_connection_uri"]
+    DATABASE_URI: str = config["database_uri"]
     EMBEDDINGS: dict = config["embeddings"]
 
 # Environment variables or secrets.
