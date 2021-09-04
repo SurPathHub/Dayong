@@ -5,6 +5,7 @@
     "application_id": "your application_id",
     "owners": [123456789, 987654321]
   },
+  "databse_connection_uri": "",
   "embeddings": {
     "greetings_channel": "welcome",
     "readme_channel_id": 790110106809401344,
