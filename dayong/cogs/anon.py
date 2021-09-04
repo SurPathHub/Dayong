@@ -8,7 +8,8 @@ from discord import Embed, TextChannel  # type: ignore
 from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
 from discord.message import Message  # type: ignore
 
-from dayong.bot import EMBEDDINGS
+from dayong.bot import DB_CONNECTION_URI, EMBEDDINGS
+from dayong.db import AnonymousMessageTB, PostgreSQLDatabase
 
 
 class AnonymousMessage(Cog):
@@ -16,6 +17,30 @@ class AnonymousMessage(Cog):
 
     def __init__(self, bot: Bot):
         self.bot = bot
+
+    async def record_message(
+        self,
+        user_id: str,
+        username: str,
+        nickname: str,
+        message: str,
+    ) -> None:
+        """Save the message and its sender for moderation.
+
+        Args:
+            username ([type]): The Discord username of the sender.
+            message (Message): The sender's message.
+        """
+        database = PostgreSQLDatabase(connection_uri=DB_CONNECTION_URI)
+        await database.create_table()
+        await database.add_row(
+            AnonymousMessageTB(
+                user_id=user_id,
+                username=username,
+                nickname=nickname,
+                message=message,
+            )
+        )
 
     @Cog.listener("on_message")
     async def anon_message(self, message: Message) -> None:
@@ -33,6 +58,12 @@ class AnonymousMessage(Cog):
             TextChannel,
         ):
             await message.delete()
+            await self.record_message(
+                user_id=str(message.author.id),
+                username=str(message.author.display_name),
+                nickname=str(message.author.nick),
+                message=content,
+            )
 
     @command(name="anon")
     async def anon_command(self, ctx: Context, *messages):
