@@ -12,7 +12,7 @@ from dayong.models import TableModel
 
 
 class DBConnection:
-    """Provides methods for interacting with the table models."""
+    """Provides methods for interacting with table models."""
 
     def __init__(self, connection_uri: str):
         self.engine = create_async_engine(connection_uri)
@@ -23,7 +23,7 @@ class DBConnection:
             await conn.run_sync(SQLModel.metadata.create_all)
 
     async def add_row(self, model: TableModel) -> None:
-        """Add row to type of `db.TableModel`."""
+        """Add row to instance of `db.TableModel`."""
         async with AsyncSession(self.engine) as session:
             session.add(model)
             await session.commit()
