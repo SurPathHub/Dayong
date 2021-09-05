@@ -13,7 +13,9 @@ from sqlmodel import Field, SQLModel
 class TableModel(SQLModel):  # pylint: disable=R0903
     """Base class for table models.
 
-    NOTE: Do not use this for things other than annotations.
+    Do not modify or use this for things other than annotations as it is not
+    advised to inherit from table models. See:
+    https://sqlmodel.tiangolo.com/tutorial/fastapi/multiple-models/
     """
 
 
