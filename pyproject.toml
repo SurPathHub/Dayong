@@ -11,6 +11,7 @@ python = "3.9.7"
 python-dotenv = "^0.19.0"
 sqlmodel = "^0.0.4"
 <<<<<<< HEAD
+<<<<<<< HEAD
 asyncpg = "^0.24.0"
 uvloop = "^0.16.0"
 hikari = "^2.0.0.dev103"
@@ -21,6 +22,9 @@ celery = {extras = ["redis"], version = "^5.1.2"}
 celery-redbeat = "^2.0.0"
 =======
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+asyncpg = "^0.24.0"
+>>>>>>> 89e51bc... feat: moderate anon messages on sql database
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
