@@ -2,26 +2,24 @@
 dayong.models
 ~~~~~~~~~~~~~
 
-A model maps to a single database table. It contains fields and behaviors of the data
-stored in the database.
+A model maps to a single database table. It contains fields and behaviors of
+the data stored in the database.
 """
 from typing import Optional
 
 from sqlmodel import Field, SQLModel
 
 
-class Message(SQLModel):
-    """Base model class for message table models."""
+class TableModel(SQLModel):  # pylint: disable=R0903
+    """Base class for table models.
 
-    message_id: str
+    NOTE: Do not use this for things other than annotations.
+    """
 
 
-class AnonMessage(Message, table=True):
-    """Table model for anonymized guild messages."""
+class AnonymousMessageTable(TableModel, table=True):
+    """Table model for anonymous messages."""
 
-    # pyright cannot recognize the type of SQLModel.__tablename__
-    # See: https://github.com/tiangolo/sqlmodel/issues/98
-    __tablename__ = "anon_messages"  # type: ignore
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: str
     username: str

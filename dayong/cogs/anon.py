@@ -9,7 +9,8 @@ from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
 from discord.message import Message  # type: ignore
 
 from dayong.bot import DATABASE_URI, EMBEDDINGS
-from dayong.db import AnonymousMessageTB, SQLDatabase
+from dayong.db import DBConnection
+from dayong.models import AnonymousMessageTable
 
 
 class AnonymousMessage(Cog):
@@ -31,10 +32,10 @@ class AnonymousMessage(Cog):
             username ([type]): The Discord username of the sender.
             message (Message): The sender's message.
         """
-        database = SQLDatabase(connection_uri=DATABASE_URI)
+        database = DBConnection(connection_uri=DATABASE_URI)
         await database.create_table()
         await database.add_row(
-            AnonymousMessageTB(
+            AnonymousMessageTable(
                 user_id=user_id,
                 username=username,
                 nickname=nickname,
