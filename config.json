@@ -1,10 +1,4 @@
 {
-  "credentials": {
-    "bot_command_prefix": ".",
-    "token": "your bot token",
-    "application_id": "your application_id",
-    "owners": [123456789, 987654321]
-  },
   "database_uri": "",
   "embeddings": {
     "greetings_channel": "welcome",

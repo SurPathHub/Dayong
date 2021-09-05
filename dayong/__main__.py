@@ -7,4 +7,5 @@ if __name__ == "__main__":
     args = command_line()
     display_banner()
     setup = SetupCLI()
-    setup.run_dayong(args.use_config)
+    setup.check_configs()
+    setup.run_dayong()
