@@ -20,22 +20,17 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
 CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
-DATABASE_URI: str
 EMBEDDINGS: dict
 
 with open(CONFIG_FILE, encoding="utf-8") as cfp:
     config = json.load(cfp)
-    DATABASE_URI = config["database_uri"]
     EMBEDDINGS = config["embeddings"]
 
 # Environment variables or secrets.
 BOT_COMMAND_PREFIX: Union[str, None] = os.getenv("BOT_COMMAND_PREFIX")
 TOKEN: Union[str, None] = os.getenv("TOKEN")
 APPLICATION_ID: Union[str, None] = os.getenv("APPLICATION_ID")
-OWNERS: Union[str, list, None] = os.getenv("OWNERS")
-
-if isinstance(OWNERS, str) and "," in OWNERS:
-    OWNERS = OWNERS.split(",")
+DATABASE_URI: Union[str, None] = os.getenv("DATABASE_URI")
 
 
 class Setup:
@@ -68,8 +63,7 @@ class Setup:
 
     @exception_handler
     def run_dayong(self) -> None:
-        """Run Dayong with the configurations and the owner's bot credentials.
-        """
+        """Run Dayong with the configurations and the owner's bot credentials."""
         pref = BOT_COMMAND_PREFIX
         exts = self.load_extensions()
 
