@@ -26,12 +26,6 @@ def command_line() -> argparse.Namespace:
             "https://github.com/SurPathHub/Dayong."
         )
     )
-    parser.add_argument(
-        "--use_config",
-        default="False",
-        type=bool,
-        help="Use the config.json to configure the bot (default: False)",
-    )
 
     return parser.parse_args()
 
