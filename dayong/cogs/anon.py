@@ -2,7 +2,8 @@
 dayong.cogs.anon
 ~~~~~~~~~~~~~~~~
 
-This module allows users or members to send anonymous messages on Discord.
+This module allows users or server members to send anonymous messages on
+Discord.
 """
 from discord import Embed, TextChannel  # type: ignore
 from discord.ext.commands import Bot, Cog, Context, command  # type: ignore
@@ -14,7 +15,7 @@ from dayong.models import AnonymousMessageTable
 
 
 class AnonymousMessage(Cog):
-    """Cog containing commands for sending anonymous messages."""
+    """Cog containing commands for anonymously sending messages."""
 
     def __init__(self, bot: Bot):
         self.bot = bot
@@ -26,11 +27,13 @@ class AnonymousMessage(Cog):
         nickname: str,
         message: str,
     ) -> None:
-        """Save the message and its sender for moderation.
+        """Save the message and its author for moderation.
 
         Args:
-            username ([type]): The Discord username of the sender.
-            message (Message): The sender's message.
+            user_id (str): The Discord user's ID.
+            username (str): The Discord username of the sender.
+            nickname (str): The Server member's nickname.
+            message (str): The sender's message.
         """
         database = DBConnection(connection_uri=DATABASE_URI)
         await database.create_table()

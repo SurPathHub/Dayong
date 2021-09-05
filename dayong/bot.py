@@ -68,7 +68,8 @@ class Setup:
 
     @exception_handler
     def run_dayong(self) -> None:
-        """Run Dayong with the configuration specified in the `.env` file."""
+        """Run Dayong with the configurations and the owner's bot credentials.
+        """
         pref = BOT_COMMAND_PREFIX
         exts = self.load_extensions()
 
