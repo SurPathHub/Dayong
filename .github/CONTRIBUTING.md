@@ -65,12 +65,12 @@ Ready to contribute? Here's how to set up `Dayong` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8, pylint, and pyright.
+5. When you're done making changes, check that your changes pass flake8, pylint and mypy.
 
     ```
-    $ flake8 dayong
-    $ pylint dayong
-    $ pyright dayong
+    $ flake8 Dayong
+    $ pylint Dayong
+    $ mypy Dayong
     ```
 
 ## Commit Message Guidelines
@@ -79,6 +79,7 @@ Dayong uses precise rules over how git commit messages can be formatted. This le
 ```
 $ git add .
 $ git commit -m "<type>(<scope>): <subject>"
+$ git push origin name-of-your-bugfix-or-feature
 ```
 
 ## Pull Request Guidelines
@@ -99,9 +100,19 @@ $ poetry install
 Before committing, stage your files and run style and linter checks
 
 ```
-$ black dayong/  # apply codestyle
-$ isort --profile black dayong/  # sort imports
-$ flake8 dayong/
-$ pylint dayong/
-$ pyright dayong/  # optional static type checking
+$ black Dayong  # apply codestyle
+$ isort --profile black Dayong  # sort imports
+$ flake8 Dayong
+$ pylint Dayong
+$ mypy Dayong  # optional type checking
+```
+
+## Tips
+
+- Running tests
+
+To run a subset of tests
+
+```
+$ pytest -v tests/test_clients.py
 ```
