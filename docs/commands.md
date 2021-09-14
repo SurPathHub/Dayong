@@ -1,15 +1,17 @@
 Here's the list of commands available in Dayong.
 
-## Message Commands
+### General
 
-| Name                | Description                      | Usage                | Permission                | Cooldown |
-| ------------------- | -------------------------------- | :------------------: | :-----------------------: | :------: |
-| **ping**            | Shows bot reachability.          | `<prefix>ping`       |    View Audit Log (128)   |   null   |
-| **whois**           | Shows information about a user   | `<prefix>whois <id>` |    View Audit Log (128)   |   null   |
+| Name                | Description                                  | Usage                               | Cooldown  |
+| ------------------- | -------------------------------------------- | ----------------------------------- | --------- |
+| **anon**            | Sends an anonymized message.                 | `<prefix>anon <message>`            |    null   |
+| **ping**            | Shows bot reachability.                      | `<prefix>ping`                      |    null   |
 
-## Slash Commands
+### Owner
 
-| Name                | Description                      | Usage                            | Cooldown  |
-| ------------------- | -------------------------------- | :------------------------------: | :-------: |
-| **anon**            | Sends an anonymized message.     | `/anon message: <message>`       |    null   |
-| **content**         | Schedules a recurring task that retrieves content from a microservice, API, or email subscription. For `source`, see [vendors](./vendors.md#content-providers). | `/content source: <content provider> interval: <seconds> action: <start \| stop>` |    null   |
+| Name                | Description                                  | Usage                               | Cooldown  |
+| ------------------- | -------------------------------------------- | ----------------------------------- | --------- |
+| **end**             | Terminates the bot.                          | `<prefix>end`                       |    null   |
+| **load**            | Loads an extension or command.               | `<prefix>load <extension>`          |    null   |
+| **reload**          | Reloads an extension or command.             | `<prefix>reload <extension>`        |    null   |
+| **unload**          | Unloads an extension or command.             | `<prefix>unload <extension>`        |    null   |

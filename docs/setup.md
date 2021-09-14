@@ -4,57 +4,13 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 ## Bot Setup
 
-| ❗❗ Before you start, fork your own copy of SurPathHub/Dayong. |
-|-----------------------------------------|
-
-| ❗❗ You can also perform the steps below directly on your copy of Dayong on GitHub |
-|-----------------------------------------|
-
-| ❗❗ Your copy of the GitHub repository can be used to deploy changes automatically.|
-|-----------------------------------------|
-
-1. Clone your fork to your local machine.
-
-    HTTP
-    ```
-    git clone https://github.com/<your username>/Dayong.git
-    ```
-
-    SSH
-    ```
-    git clone git@github.com:<your username>/Dayong.git
-    ```
-
-    GitHub CLI
-    ```
-    gh repo clone <your username>/Dayong.git
-    ```
-
-2. Go to the project root directory.
+1. Go to the project root directory.
 
     ```
     cd Dayong
     ```
 
-3. Edit the `config.json` file and its values as necessary.
-
-    The `config.json` file stores public options, settings, properties, configuration, and preferences.
-
-4. After setting up Dayong, `commit` and `push` your changes.
-
-5. [Deploy!](../README.md#deployment)
-
-### For local development
-
-1. `git clone` Dayong to your local machine.
-
-2. Go to the project root directory.
-
-    ```
-    cd Dayong
-    ```
-
-3. Create a copy of `.env.example`. Don't forget to omit the `.example` at the end.
+2. Create a copy of `.env.example`. Don't forget to omit the `.example` at the end.
 
     On Linux and Unix
     ```
@@ -66,22 +22,33 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
     copy .env.example .env
     ```
 
-4. Edit the `.env` file and add your credentials to the corresponding variables.
+3. Edit the `.env` file and add your credentials to the corresponding variables.
 
-5. Install [poetry](https://github.com/python-poetry/poetry#installation). Check if poetry is installed by running `poetry --version`.
+4. Install [poetry](https://github.com/python-poetry/poetry#installation). Check if poetry is installed by running `poetry --version`.
 
-6. Run `poetry shell`. This will create or start the virtual environment.
+5. Run `poetry shell`. This will create or start the virtual environment.
 
-7. Run `poetry install`. This will install the project and its dependencies.
+6. Run `poetry install`. This will install the project and its dependencies.
 
-8. Edit the `config.json` file and its values as necessary.
+## Welcome Message for New Member
 
-    The `config.json` file stores public options, settings, properties, configuration, and preferences.
-
-9. Quickly test if the configuration works by running:
-
+1. Modify the welcome message by changing the value(s) of the following in `Dayong/dayong/config.json`.
     ```
-    python dayong
-    ```
+    {
+        "embeddings": {
+            "greetings_channel":"<channel name where the greetings will be prompted>",
+            "readme_channel_id": <id of the channel you want to tag>,
+            "description": "<your greetings>",
+            "color": <integer value of the color you want to use>
 
-10. After setting up Dayong, `git commit` and `git push` your changes.
+            "greetings_field": {
+                "<n>": {
+                    "name": "field's name"
+                    "value": "field's value"
+                },
+                ...
+            }
+        }
+    }
+    ```
+> You can have as many `greetings_field` you want. However, make sure that its inner key(s) is an integer (starting with 0) since it will be used inside a `for` loop.
