@@ -100,11 +100,11 @@ $ poetry install
 Before committing, stage your files and run style and linter checks
 
 ```
-$ black Dayong  # apply codestyle
-$ isort --profile black Dayong  # sort imports
-$ flake8 Dayong
-$ pylint Dayong
-$ mypy Dayong  # optional type checking
+$ black dayong/  # apply codestyle
+$ isort --profile black dayong/  # sort imports
+$ flake8 dayong/
+$ pylint dayong/
+$ mypy dayong/  # optional type checking
 ```
 
 ## Tips
