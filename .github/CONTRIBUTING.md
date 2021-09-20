@@ -113,10 +113,14 @@ Before committing, stage your files and run style and linter checks
 
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5cd392b... docs: amend contributing guidelines
 $ black dayong/  # apply codestyle
 $ isort --profile black dayong/  # sort imports
 $ flake8 dayong/
 $ pylint dayong/
+<<<<<<< HEAD
 $ pyright dayong/  # optional static type checking
 =======
 $ black Dayong  # apply codestyle
@@ -124,6 +128,9 @@ $ isort --profile black Dayong  # sort imports
 $ flake8 Dayong
 $ pylint Dayong
 $ mypy Dayong  # optional type checking
+=======
+$ mypy dayong/  # optional type checking
+>>>>>>> 5cd392b... docs: amend contributing guidelines
 ```
 
 ## Tips
