@@ -1,4 +1,5 @@
 {
+  "bot_prefix": ".",
   "embeddings": {
     "greetings_channel": "welcome",
     "readme_channel_id": 790110106809401344,

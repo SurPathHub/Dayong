@@ -1,85 +1,67 @@
-"""
-dayong.bot
-~~~~~~~~~~
-
-This module defines the startup logic for Dayong.
-"""
 import os
-from pathlib import Path
 from typing import Union
 
-from discord import Intents  # type: ignore
-from discord.ext.commands import Bot  # type: ignore
-from dotenv import load_dotenv
+import hikari
+import tanjun
 
-from dayong.exceptions import exception_handler
+from dayong.config import DayongConfig, DayongConfigLoader
+from dayong.impls import DatabaseImpl
+from dayong.protocols import DatabaseProto
+from dayong.settings import BASE_DIR
 
-# Parse the .env file and load the environment variables.
-load_dotenv()
+if os.name != "nt":
+    import uvloop
 
-BASE_DIR = Path(__file__).resolve().parent
-ROOT_DIR = BASE_DIR.parent
-CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
-EMBEDDINGS: dict
-
-with open(CONFIG_FILE, encoding="utf-8") as cfp:
-    config = json.load(cfp)
-    EMBEDDINGS = config["embeddings"]
-
-# Environment variables or secrets.
-BOT_COMMAND_PREFIX: Union[str, None] = os.getenv("BOT_COMMAND_PREFIX")
-TOKEN: Union[str, None] = os.getenv("TOKEN")
-APPLICATION_ID: Union[str, None] = os.getenv("APPLICATION_ID")
-DATABASE_URI: Union[str, None] = os.getenv("DATABASE_URI")
+    uvloop.install()
 
 
-class Setup:
-    """Base Setup class."""
+async def get_prefix(
+    ctx: tanjun.abc.MessageContext,
+    db: DatabaseProto = tanjun.injected(type=DatabaseProto),
+) -> Union[list[str], tuple[()]]:
+    if ctx.guild_id and (guild_info := await db.get_guild_info(ctx.guild_id)):
+        return guild_info.prefixes
 
-    dayong: Bot
+    return ()
 
-    @staticmethod
-    def check_configs() -> None:
-        """Check if `config.json` exists."""
-        if not os.path.isfile(CONFIG_FILE):
-            sys.exit(f"config.json missing from {ROOT_DIR}!")
 
-    @staticmethod
-    def load_extensions() -> list[str]:
-        """Traverse the `cogs` directory and collect cog modules.
+def fetch_component() -> list[str]:
+    """Traverse the components directory and collect component modules.
 
-        Returns:
-            list[str]: A list of Python modules. The `.py` extension should be
-                omitted.
-        """
-        extensions: list[str] = []
+    This will fetch the module from the components directory, remove its
+    extension and convert it to `sys.path`.
 
-        for file in os.listdir(os.path.join(BASE_DIR, "cogs")):
-            # Append cog modules and ignore dunder files.
-            if file.endswith(".py") and "__" not in file:
-                extensions.append(file.replace(".py", ""))
+    Returns:
+        list[str]: Sequence of python modules.
+    """
+    extensions: list[str] = []
+    components = os.path.join(BASE_DIR, "components")
 
-        return extensions
+    for file in os.listdir(components):
+        if file.endswith(".py") and "__" not in file:
+            file = f"components.{file}".replace(".py", "")
+            extensions.append(file)
 
-    @exception_handler
-    def run_dayong(self) -> None:
-        """Run Dayong with the configurations and the owner's bot credentials."""
-        pref = BOT_COMMAND_PREFIX
-        exts = self.load_extensions()
+    return extensions
 
-        intents = Intents.default()
-        intents.members = True  # pylint: disable=E0237
 
-        self.dayong = Bot(pref, intents=intents)
-
-        for ext in exts:
-            self.dayong.load_extension(f"cogs.{ext}")
-
-        if TOKEN is None:
-            raise Exception("Bot token missing: {TOKEN}")
-
-        self.dayong.run(TOKEN)
+def run() -> None:
+    """Run Dayong using configs and deps."""
+    loaded_config = DayongConfig(**DayongConfigLoader().__dict__)
+    bot = hikari.GatewayBot(loaded_config.bot_token)
+    (
+        tanjun.Client.from_gateway_bot(bot)
+        .load_modules(*fetch_component())
+        .add_prefix(loaded_config.bot_prefix)
+        .set_prefix_getter(get_prefix)
+        .set_type_dependency(DayongConfig, lambda: loaded_config)
+        .set_type_dependency(
+            DatabaseProto,
+            tanjun.cache_callback(DatabaseImpl.connect),
+        )
+    )
+    bot.run()
 
 
 if __name__ == "__main__":
-    pass
+    run()
