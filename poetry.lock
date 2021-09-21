@@ -18,22 +18,8 @@ yarl = ">=1.0,<2.0"
 speedups = ["aiodns", "brotlipy", "cchardet"]
 
 [[package]]
-<<<<<<< HEAD
-name = "amqp"
-version = "5.0.6"
-description = "Low-level AMQP client for Python (fork of amqplib)."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-vine = "5.0.0"
-
-[[package]]
-=======
->>>>>>> 6df8a76... build: update build dependencies
 name = "astroid"
-version = "2.8.2"
+version = "2.8.0"
 description = "An abstract syntax tree for Python with inference support."
 category = "dev"
 optional = false
@@ -110,10 +96,14 @@ python-versions = "*"
 [[package]]
 name = "black"
 <<<<<<< HEAD
+<<<<<<< HEAD
 version = "21.9b0"
 =======
 version = "21.8b0"
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+version = "21.9b0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "The uncompromising code formatter."
 category = "dev"
 optional = false
@@ -288,6 +278,7 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
+<<<<<<< HEAD
 
 [package.extras]
 development = ["black", "flake8", "mypy", "pytest", "types-colorama"]
@@ -301,6 +292,21 @@ optional = false
 python-versions = "*"
 
 [package.extras]
+=======
+
+[package.extras]
+development = ["black", "flake8", "mypy", "pytest", "types-colorama"]
+
+[[package]]
+name = "commonmark"
+version = "0.9.1"
+description = "Python parser for the CommonMark Markdown spec"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 test = ["flake8 (==3.7.8)", "hypothesis (==3.55.3)"]
 
 [[package]]
@@ -353,8 +359,13 @@ docs = ["sphinx"]
 
 [[package]]
 <<<<<<< HEAD
+<<<<<<< HEAD
 name = "hikari"
 version = "2.0.0.dev103"
+=======
+name = "hikari"
+version = "2.0.0.dev102"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "A sane Discord API for Python 3 built on asyncio and good intentions"
 category = "main"
 optional = false
@@ -364,7 +375,11 @@ python-versions = ">=3.8.0,<3.11"
 aiohttp = "3.7.4.post0"
 attrs = "21.2.0"
 colorlog = "6.4.1"
+<<<<<<< HEAD
 multidict = "5.2.0"
+=======
+multidict = "5.1.0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 pure25519 = "0.0.1"
 
 [package.extras]
@@ -372,13 +387,18 @@ speedups = ["aiodns (==3.0.0)", "cchardet (==2.1.7)", "Brotli (==1.0.9)", "ciso8
 
 [[package]]
 name = "hikari-tanjun"
+<<<<<<< HEAD
 version = "2.1.1a1"
+=======
+version = "2.0.0a4"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "A flexible command framework designed to extend Hikari."
 category = "main"
 optional = false
 python-versions = ">=3.9.0,<3.12"
 
 [package.dependencies]
+<<<<<<< HEAD
 hikari = ">=2.0.0.dev103,<2.1.0"
 
 [package.extras]
@@ -395,6 +415,21 @@ type_checking = ["pyright (==0.0.10)"]
 >>>>>>> 6df8a76... build: update build dependencies
 name = "identify"
 version = "2.3.0"
+=======
+hikari = ">=2.0.0.dev101,<2.1.0"
+
+[package.extras]
+docs = ["pdoc (==7.4.0)"]
+flake8 = ["flake8 (==3.9.2)", "flake8-bandit (>=2.1.2,<2.2.0)", "flake8-black (==0.2.3)", "flake8-broken-line (==0.3.0)", "flake8-builtins (==1.5.3)", "flake8-coding (==1.3.2)", "flake8-comprehensions (==3.6.1)", "flake8-deprecated (==1.3)", "flake8-docstrings (==1.6.0)", "flake8-executable (==2.1.1)", "flake8-fixme (==1.1.1)", "flake8-functions (==0.0.6)", "flake8-html (==0.4.1)", "flake8-if-statements (==0.1.0)", "flake8-isort (==4.0.0)", "flake8-mutable (==1.2.0)", "flake8-pep3101 (==1.3.0)", "flake8-print (==4.0.0)", "flake8-printf-formatting (==1.1.2)", "flake8-pytest-style (==1.5.0)", "flake8-raise (==0.0.5)"]
+lint = ["codespell (==2.1.0)"]
+publish = ["flit (>=3.3,<4.0)"]
+reformat = ["black (>=21.7b0,<22.0.0)", "isort (==5.9.3)"]
+tests = ["pytest (==6.2.5)", "pytest-asyncio (==0.15.1)", "pytest-cov (==2.12.1)"]
+
+[[package]]
+name = "identify"
+version = "2.2.15"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -522,7 +557,11 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
 name = "platformdirs"
+<<<<<<< HEAD
 version = "2.4.0"
+=======
+version = "2.3.0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 category = "dev"
 optional = false
@@ -543,6 +582,7 @@ python-versions = ">=3.6"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+<<<<<<< HEAD
 
 [[package]]
 name = "pragmail"
@@ -559,6 +599,12 @@ version = "2.15.0"
 =======
 version = "2.14.1"
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+
+[[package]]
+name = "pre-commit"
+version = "2.15.0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
@@ -573,6 +619,7 @@ toml = "*"
 virtualenv = ">=20.0.8"
 
 [[package]]
+<<<<<<< HEAD
 name = "prompt-toolkit"
 version = "3.0.20"
 description = "Library for building powerful interactive command lines in Python"
@@ -584,6 +631,8 @@ python-versions = ">=3.6.2"
 wcwidth = "*"
 
 [[package]]
+=======
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 name = "pure25519"
 version = "0.0.1"
 description = "pure-python curve25519/ed25519 routines"
@@ -762,11 +811,19 @@ python-versions = "*"
 
 [[package]]
 name = "rich"
+<<<<<<< HEAD
 version = "10.12.0"
 description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
 category = "main"
 optional = false
 python-versions = ">=3.6.2,<4.0.0"
+=======
+version = "10.10.0"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+category = "main"
+optional = false
+python-versions = ">=3.6,<4.0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 
 [package.dependencies]
 colorama = ">=0.4.0,<0.5.0"
@@ -895,18 +952,23 @@ python-versions = ">=3.6"
 name = "typing-extensions"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 version = "3.10.0.2"
 =======
 version = "3.7.4.3"
 =======
 version = "3.10.0.1"
 >>>>>>> 89e51bc... feat: moderate anon messages on sql database
+=======
+version = "3.10.0.2"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "main"
 optional = false
 python-versions = "*"
 
 [[package]]
+<<<<<<< HEAD
 name = "typing-extensions"
 <<<<<<< HEAD
 version = "3.10.0.1"
@@ -915,9 +977,19 @@ version = "3.10.0.1"
 version = "3.10.0.2"
 >>>>>>> 89e51bc... feat: moderate anon messages on sql database
 description = "Backported and Experimental Type Hints for Python 3.5+"
+=======
+name = "uvloop"
+version = "0.16.0"
+description = "Fast implementation of asyncio event loop on top of libuv"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
+
+[package.extras]
+dev = ["Cython (>=0.29.24,<0.30.0)", "pytest (>=3.6.0)", "Sphinx (>=4.1.2,<4.2.0)", "sphinxcontrib-asyncio (>=0.3.0,<0.4.0)", "sphinx-rtd-theme (>=0.5.2,<0.6.0)", "aiohttp", "flake8 (>=3.9.2,<3.10.0)", "psutil", "pycodestyle (>=2.7.0,<2.8.0)", "pyOpenSSL (>=19.0.0,<19.1.0)", "mypy (>=0.800)"]
+docs = ["Sphinx (>=4.1.2,<4.2.0)", "sphinxcontrib-asyncio (>=0.3.0,<0.4.0)", "sphinx-rtd-theme (>=0.5.2,<0.6.0)"]
+test = ["aiohttp", "flake8 (>=3.9.2,<3.10.0)", "psutil", "pycodestyle (>=2.7.0,<2.8.0)", "pyOpenSSL (>=19.0.0,<19.1.0)", "mypy (>=0.800)"]
 
 [[package]]
 name = "uvloop"
@@ -942,7 +1014,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "virtualenv"
+<<<<<<< HEAD
 version = "20.8.1"
+=======
+version = "20.8.0"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -988,6 +1064,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [extras]
+<<<<<<< HEAD
 flake8-extras = []
 
 [metadata]
@@ -1003,6 +1080,14 @@ content-hash = "0c7274774d739ed99064f830b549ac21efcaea8f30ccd4065db68f87eed566ef
 =======
 content-hash = "3d2087f1cc71007a9fcfc031efa16c9c02091685840c80a59635d3c935a623e2"
 >>>>>>> 89e51bc... feat: moderate anon messages on sql database
+=======
+flake8 = []
+
+[metadata]
+lock-version = "1.1"
+python-versions = ">=3.9,<3.11"
+content-hash = "73f1ab1fa4d94bbb97e92fe7f8d20f4c189fa47c6470e203fed96b4add073f11"
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 
 [metadata.files]
 aiohttp = [
@@ -1052,8 +1137,13 @@ amqp = [
 =======
 >>>>>>> 6df8a76... build: update build dependencies
 astroid = [
+<<<<<<< HEAD
     {file = "astroid-2.8.2-py3-none-any.whl", hash = "sha256:9eaeaf92b3e21b70bec1a262e7eb118d2e96294892a5de595c92a12adc80dfc2"},
     {file = "astroid-2.8.2.tar.gz", hash = "sha256:304e99c129794f2cfda584a12b71fde85205da950e2f330f4be09150525ae949"},
+=======
+    {file = "astroid-2.8.0-py3-none-any.whl", hash = "sha256:dcc06f6165f415220013801642bd6c9808a02967070919c4b746c6864c205471"},
+    {file = "astroid-2.8.0.tar.gz", hash = "sha256:fe81f80c0b35264acb5653302ffbd935d394f1775c5e4487df745bf9c2442708"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 async-timeout = [
     {file = "async-timeout-3.0.1.tar.gz", hash = "sha256:0c3c816a028d47f659d6ff5c745cb2acf1f966da1fe5c19c77a70282b25f4c5f"},
@@ -1092,6 +1182,7 @@ billiard = [
 ]
 black = [
 <<<<<<< HEAD
+<<<<<<< HEAD
     {file = "black-21.9b0-py3-none-any.whl", hash = "sha256:380f1b5da05e5a1429225676655dddb96f5ae8c75bdf91e53d798871b902a115"},
     {file = "black-21.9b0.tar.gz", hash = "sha256:7de4cfc7eb6b710de325712d40125689101d21d25283eed7e9998722cf10eb91"},
 ]
@@ -1105,6 +1196,10 @@ celery-redbeat = [
     {file = "black-21.8b0-py3-none-any.whl", hash = "sha256:2a0f9a8c2b2a60dbcf1ccb058842fb22bdbbcb2f32c6cc02d9578f90b92ce8b7"},
     {file = "black-21.8b0.tar.gz", hash = "sha256:570608d28aa3af1792b98c4a337dbac6367877b47b12b88ab42095cfc1a627c2"},
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+    {file = "black-21.9b0-py3-none-any.whl", hash = "sha256:380f1b5da05e5a1429225676655dddb96f5ae8c75bdf91e53d798871b902a115"},
+    {file = "black-21.9b0.tar.gz", hash = "sha256:7de4cfc7eb6b710de325712d40125689101d21d25283eed7e9998722cf10eb91"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 cfgv = [
     {file = "cfgv-3.3.1-py2.py3-none-any.whl", hash = "sha256:c6a0883f3917a037485059700b9e75da2464e6c27051014ad85ba6aaa5884426"},
@@ -1267,9 +1362,22 @@ hikari-tanjun = [
     {file = "greenlet-1.1.1.tar.gz", hash = "sha256:c0f22774cd8294078bdf7392ac73cf00bfa1e5e0ed644bd064fdabc5f2a2f481"},
 >>>>>>> 6df8a76... build: update build dependencies
 ]
+hikari = [
+    {file = "hikari-2.0.0.dev102-py3-none-any.whl", hash = "sha256:5660aad9b12954d6acd9948ed853fb3d5329dc8ea10888768235f132c80dc176"},
+    {file = "hikari-2.0.0.dev102.tar.gz", hash = "sha256:1f39a8161c39c4bfc046c81ef07d284fcaa2912cbe7134c3b9783d3192bdb201"},
+]
+hikari-tanjun = [
+    {file = "hikari-tanjun-2.0.0a4.tar.gz", hash = "sha256:80a15910dd79db2b3ad9634b2bc4497df05537f3e156a8181c2d2332199b44f4"},
+    {file = "hikari_tanjun-2.0.0a4-py3-none-any.whl", hash = "sha256:58497b6a58cd2b9ac89a39ab1a46d24b4c449a64f99d277430e26f988ce18fd9"},
+]
 identify = [
+<<<<<<< HEAD
     {file = "identify-2.3.0-py2.py3-none-any.whl", hash = "sha256:d1e82c83d063571bb88087676f81261a4eae913c492dafde184067c584bc7c05"},
     {file = "identify-2.3.0.tar.gz", hash = "sha256:fd08c97f23ceee72784081f1ce5125c8f53a02d3f2716dde79a6ab8f1039fea5"},
+=======
+    {file = "identify-2.2.15-py2.py3-none-any.whl", hash = "sha256:de83a84d774921669774a2000bf87ebba46b4d1c04775f4a5d37deff0cf39f73"},
+    {file = "identify-2.2.15.tar.gz", hash = "sha256:528a88021749035d5a39fe2ba67c0642b8341aaf71889da0e1ed669a429b87f0"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 idna = [
     {file = "idna-3.2-py3-none-any.whl", hash = "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a"},
@@ -1406,12 +1514,18 @@ pathspec = [
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
 ]
 platformdirs = [
+<<<<<<< HEAD
     {file = "platformdirs-2.4.0-py3-none-any.whl", hash = "sha256:8868bbe3c3c80d42f20156f22e7131d2fb321f5bc86a2a345375c6481a67021d"},
     {file = "platformdirs-2.4.0.tar.gz", hash = "sha256:367a5e80b3d04d2428ffa76d33f124cf11e8fff2acdaa9b43d545f5c7d661ef2"},
+=======
+    {file = "platformdirs-2.3.0-py3-none-any.whl", hash = "sha256:8003ac87717ae2c7ee1ea5a84a1a61e87f3fbd16eb5aadba194ea30a9019f648"},
+    {file = "platformdirs-2.3.0.tar.gz", hash = "sha256:15b056538719b1c94bdaccb29e5f81879c7f7f0f4a153f46086d155dffcd4f0f"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
+<<<<<<< HEAD
 ]
 pragmail = [
     {file = "pragmail-0.2.4-py3-none-any.whl", hash = "sha256:d58bb112d9ebc05fa3cbbbbc53221a3e5c797ebfb304b3779a8684ee8cac464b"},
@@ -1432,6 +1546,15 @@ pure25519 = [
     {file = "pre_commit-2.14.1-py2.py3-none-any.whl", hash = "sha256:a22d12a02da4d8df314187dfe7a61bda6291d57992060522feed30c8cd658b68"},
     {file = "pre_commit-2.14.1.tar.gz", hash = "sha256:7977a3103927932d4823178cbe4719ab55bb336f42a9f3bb2776cff99007a117"},
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+]
+pre-commit = [
+    {file = "pre_commit-2.15.0-py2.py3-none-any.whl", hash = "sha256:a4ed01000afcb484d9eb8d504272e642c4c4099bbad3a6b27e519bd6a3e928a6"},
+    {file = "pre_commit-2.15.0.tar.gz", hash = "sha256:3c25add78dbdfb6a28a651780d5c311ac40dd17f160eb3954a0c59da40a505a7"},
+]
+pure25519 = [
+    {file = "pure25519-0.0.1.tar.gz", hash = "sha256:8982b990294efc7bef12d8e89e3e3d0a8249ef7e21adf567660941fce255033d"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 py = [
     {file = "py-1.10.0-py2.py3-none-any.whl", hash = "sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a"},
@@ -1488,10 +1611,13 @@ pyright = [
 pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
     {file = "pytest-6.2.5.tar.gz", hash = "sha256:131b36680866a76e6781d13f101efb86cf674ebb9762eb70d3082b6f29889e89"},
+<<<<<<< HEAD
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
+=======
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 python-dotenv = [
     {file = "python-dotenv-0.19.1.tar.gz", hash = "sha256:14f8185cc8d494662683e6914addcb7e95374771e707601dfc70166946b4c4b8"},
@@ -1627,6 +1753,10 @@ rich = [
     {file = "regex-2021.8.28.tar.gz", hash = "sha256:f585cbbeecb35f35609edccb95efd95a3e35824cd7752b586503f7e6087303f1"},
 >>>>>>> 6df8a76... build: update build dependencies
 ]
+rich = [
+    {file = "rich-10.10.0-py3-none-any.whl", hash = "sha256:0b8cbcb0b8d476a7f002feaed9f35e51615f673c6c291d76ddf0c555574fd3c7"},
+    {file = "rich-10.10.0.tar.gz", hash = "sha256:bacf58b25fea6b920446fe4e7abdc6c7664c4530c4098e7a1bc79b16b8551dfa"},
+]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
@@ -1726,6 +1856,7 @@ tomli = [
 typing-extensions = [
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
     {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
     {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
@@ -1763,18 +1894,43 @@ vine = [
     {file = "typing_extensions-3.10.0.1-py2-none-any.whl", hash = "sha256:8bbffbd37fbeb9747a0241fdfde5ae99d4531ad1d1a41ccaea62100e15a5814c"},
     {file = "typing_extensions-3.10.0.1-py3-none-any.whl", hash = "sha256:045dd532231acfa03628df5e0c66dba64e2cc8fc8b844538d4ad6d5dd6cb82dc"},
     {file = "typing_extensions-3.10.0.1.tar.gz", hash = "sha256:83af6730a045fda60f46510f7f1f094776d90321caa4d97d20ef38871bef4bd3"},
+=======
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
     {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
     {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
     {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
 >>>>>>> 89e51bc... feat: moderate anon messages on sql database
 ]
+uvloop = [
+    {file = "uvloop-0.16.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:6224f1401025b748ffecb7a6e2652b17768f30b1a6a3f7b44660e5b5b690b12d"},
+    {file = "uvloop-0.16.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:30ba9dcbd0965f5c812b7c2112a1ddf60cf904c1c160f398e7eed3a6b82dcd9c"},
+    {file = "uvloop-0.16.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:bd53f7f5db562f37cd64a3af5012df8cac2c464c97e732ed556800129505bd64"},
+    {file = "uvloop-0.16.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:772206116b9b57cd625c8a88f2413df2fcfd0b496eb188b82a43bed7af2c2ec9"},
+    {file = "uvloop-0.16.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:b572256409f194521a9895aef274cea88731d14732343da3ecdb175228881638"},
+    {file = "uvloop-0.16.0-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:04ff57aa137230d8cc968f03481176041ae789308b4d5079118331ab01112450"},
+    {file = "uvloop-0.16.0-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3a19828c4f15687675ea912cc28bbcb48e9bb907c801873bd1519b96b04fb805"},
+    {file = "uvloop-0.16.0-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:e814ac2c6f9daf4c36eb8e85266859f42174a4ff0d71b99405ed559257750382"},
+    {file = "uvloop-0.16.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:bd8f42ea1ea8f4e84d265769089964ddda95eb2bb38b5cbe26712b0616c3edee"},
+    {file = "uvloop-0.16.0-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:647e481940379eebd314c00440314c81ea547aa636056f554d491e40503c8464"},
+    {file = "uvloop-0.16.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:8e0d26fa5875d43ddbb0d9d79a447d2ace4180d9e3239788208527c4784f7cab"},
+    {file = "uvloop-0.16.0-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:6ccd57ae8db17d677e9e06192e9c9ec4bd2066b77790f9aa7dede2cc4008ee8f"},
+    {file = "uvloop-0.16.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:089b4834fd299d82d83a25e3335372f12117a7d38525217c2258e9b9f4578897"},
+    {file = "uvloop-0.16.0-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:98d117332cc9e5ea8dfdc2b28b0a23f60370d02e1395f88f40d1effd2cb86c4f"},
+    {file = "uvloop-0.16.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1e5f2e2ff51aefe6c19ee98af12b4ae61f5be456cd24396953244a30880ad861"},
+    {file = "uvloop-0.16.0.tar.gz", hash = "sha256:f74bc20c7b67d1c27c72601c78cf95be99d5c2cdd4514502b4f3eb0933ff1228"},
+]
 virtualenv = [
+<<<<<<< HEAD
     {file = "virtualenv-20.8.1-py2.py3-none-any.whl", hash = "sha256:10062e34c204b5e4ec5f62e6ef2473f8ba76513a9a617e873f1f8fb4a519d300"},
     {file = "virtualenv-20.8.1.tar.gz", hash = "sha256:bcc17f0b3a29670dd777d6f0755a4c04f28815395bca279cdcb213b97199a6b8"},
 ]
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
     {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
+=======
+    {file = "virtualenv-20.8.0-py2.py3-none-any.whl", hash = "sha256:a4b987ec31c3c9996cf1bc865332f967fe4a0512c41b39652d6224f696e69da5"},
+    {file = "virtualenv-20.8.0.tar.gz", hash = "sha256:4da4ac43888e97de9cf4fdd870f48ed864bbfd133d2c46cbdec941fed4a25aef"},
+>>>>>>> 4de878c... chore: rewrite codebase (#4)
 ]
 wrapt = [
     {file = "wrapt-1.12.1.tar.gz", hash = "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7"},
