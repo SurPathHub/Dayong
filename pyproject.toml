@@ -35,6 +35,7 @@ rich = "^10.10.0"
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
 isort = "^5.9.3"
+<<<<<<< HEAD
 flake8 = "^3.9.2"
 pylint = "^2.10.2"
 pytest = "^6.2.4"
@@ -86,13 +87,14 @@ pythonVersion = "3.9"
 pythonPlatform = "Linux"
 
 [tool.poetry.extras]
+=======
+>>>>>>> 8616820... chore: follow up rewrite
 flake8 = [
     "flake8==3.9.2",
 
     # Flake8 plugins
     # Ref: https://github.com/DmytroLitvinov/awesome-flake8-extensions
 
-    "flake8-bandit~=2.1.2",             # runs bandit
     "flake8-black==0.2.3",              # runs black
     "flake8-broken-line==0.3.0",        # forbey "\" linebreaks
     "flake8-builtins==1.5.3",           # builtin shadowing checks
@@ -112,6 +114,10 @@ flake8 = [
     "flake8-pytest-style==1.5.0",       # pytest checks
     "flake8-raise==0.0.5",              # exception raising linting
 ]
+pylint = "^2.10.2"
+mypy = "^0.910"
+pytest = "^6.2.4"
+pre-commit = "^2.14.0"
 
 [tool.isort]
 profile = "black"
