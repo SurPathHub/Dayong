@@ -2,8 +2,8 @@
 dayong.impls
 ~~~~~~~~~~~~
 
-Implementaion of protocols and the logic for injecting them. We want to
-separate the code here from protocols for maintability.
+Implementaion of interfaces and the logic for injecting them. We want to separate the
+code here from the interfaces module for maintainability.
 
 NOTE: Explicitly declare that a class implements a protocol.
 """
@@ -12,8 +12,8 @@ from typing import Any, Optional
 # import sqlmodel
 from tanjun import injected
 
-from dayong.config import DayongConfig
-from dayong.protocols import DatabaseProto, GuildConfig, UserInfo
+from dayong.configs import DayongConfig
+from dayong.interfaces import DatabaseProto, GuildConfig, UserInfo
 
 
 async def connect_to_database(*args: Any, **kwargs: Any) -> Any:

@@ -1,18 +1,20 @@
 """
-dayong.config
-~~~~~~~~~~~~~
+dayong.configs
+~~~~~~~~~~~~~~
 
 Initial setup and configuration logic.
 """
 import json
 import os
 
-from pydantic import BaseModel
+from pydantic.main import BaseModel
 
 from dayong.settings import CONFIG_FILE
 
 
 class DayongConfigLoader:
+    """Configuration loader for Dayong."""
+
     def __init__(self) -> None:
         self.load_cfg()
         self.load_env()
@@ -22,6 +24,7 @@ class DayongConfigLoader:
         with open(CONFIG_FILE, encoding="utf-8") as cfp:
             config = dict(json.load(cfp))
         self.bot_prefix = config["bot_prefix"]
+        self.guild_id = config["guild_id"]
 
     def load_env(self) -> None:
         """Load environment variables."""
@@ -30,9 +33,12 @@ class DayongConfigLoader:
 
 
 class DayongConfig(BaseModel):
+    """Data model for Dayong's configuration."""
+
     bot_prefix: str
     bot_token: str
     database_uri: str
+    guild_id: int
 
     @classmethod
     def load(
@@ -41,6 +47,11 @@ class DayongConfig(BaseModel):
         bot_token: str,
         database_uri: str,
     ) -> "DayongConfig":
+        """Constructor for DayongConfig.
+
+        Returns:
+            An instance of `dayong.configs.DayongConfig`.
+        """
         return cls(
             bot_prefix=bot_prefix,
             bot_token=bot_token,
