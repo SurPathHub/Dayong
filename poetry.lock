@@ -887,13 +887,10 @@ python-versions = ">=3.6"
 idna = ">=2.0"
 multidict = ">=4.0"
 
-[extras]
-flake8 = []
-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "73f1ab1fa4d94bbb97e92fe7f8d20f4c189fa47c6470e203fed96b4add073f11"
+content-hash = "b13148da9c6ab1c9fd807df7e966cabee21a8e8186c683fbd7cca4f67bc987a8"
 
 [metadata.files]
 aiohttp = [

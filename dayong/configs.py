@@ -1,4 +1,3 @@
-# pylint: disable=R0903
 """
 dayong.configs
 ~~~~~~~~~~~~~~
@@ -7,69 +6,10 @@ Initial setup and configuration logic.
 """
 import json
 import os
-from typing import Any, Union
 
-from pydantic import BaseModel
+from pydantic.main import BaseModel
 
 from dayong.settings import CONFIG_FILE
-from dayong.utils import format_db_url
-
-
-class ConfigFile(BaseModel):
-    """Configuration model."""
-
-    bot_prefix: str
-    embeddings: dict[str, Union[str, dict[str, Any]]]
-    guild_id: int
-    imap_host: str
-
-
-class EnvironVariables(BaseModel):
-    """Env model."""
-
-    bot_token: str
-    database_uri: str
-    email: str
-    email_password: str
-
-
-class DayongConfig(EnvironVariables, ConfigFile):
-    """Data model for Dayong's configuration."""
-
-    @classmethod
-    def load(
-        cls,
-        **kwargs: Any,
-    ) -> "DayongConfig":
-        """Construct an instance of `dayong.configs.DayongConfig`.
-
-        Returns:
-            An instance of `dayong.configs.DayongConfig`.
-        """
-        return cls(
-            bot_prefix=kwargs["bot_prefix"],
-            bot_token=kwargs["bot_token"],
-            database_uri=kwargs["database_uri"],
-            embeddings=kwargs["embeddings"],
-            email=kwargs["email"],
-            email_password=kwargs["email_password"],
-            guild_id=kwargs["guild_id"],
-            imap_host=kwargs["imap_host"],
-        )
-
-
-class DayongEnvLoader:
-    """Environment variable loader for Dayong."""
-
-    def __init__(self) -> None:
-        self.load_env()
-
-    def load_env(self) -> None:
-        """Load environment variables."""
-        self.bot_token = os.environ["BOT_TOKEN"]
-        self.database_uri = format_db_url(os.environ["DATABASE_URL"])
-        self.email = os.environ["EMAIL"]
-        self.email_password = os.environ["EMAIL_PASSWORD"]
 
 
 class DayongConfigLoader:
@@ -77,28 +17,43 @@ class DayongConfigLoader:
 
     def __init__(self) -> None:
         self.load_cfg()
+        self.load_env()
 
     def load_cfg(self) -> None:
         """Load comments, flags, settings, and paths from config file."""
         with open(CONFIG_FILE, encoding="utf-8") as cfp:
             config = dict(json.load(cfp))
-
         self.bot_prefix = config["bot_prefix"]
         self.guild_id = config["guild_id"]
-        self.embeddings = config["embeddings"]
-        self.imap_host = config["imap_host"]
+
+    def load_env(self) -> None:
+        """Load environment variables."""
+        self.bot_token = os.environ["BOT_TOKEN"]
+        self.database_uri = os.environ["DATABASE_URI"]
 
 
-class DayongDynamicLoader:
-    """Dayong dynamic loader"""
+class DayongConfig(BaseModel):
+    """Data model for Dayong's configuration."""
 
-    @staticmethod
-    def load() -> DayongConfig:
-        """Load configs into `dayong.configs.DayongConfig`.
+    bot_prefix: str
+    bot_token: str
+    database_uri: str
+    guild_id: int
+
+    @classmethod
+    def load(
+        cls,
+        bot_prefix: str,
+        bot_token: str,
+        database_uri: str,
+    ) -> "DayongConfig":
+        """Constructor for DayongConfig.
 
         Returns:
-            DayongConfig: An instance of `dayong.configs.DayongConfig`.
+            An instance of `dayong.configs.DayongConfig`.
         """
-        return DayongConfig.load(
-            **DayongConfigLoader().__dict__ | DayongEnvLoader().__dict__
+        return cls(
+            bot_prefix=bot_prefix,
+            bot_token=bot_token,
+            database_uri=database_uri,
         )
