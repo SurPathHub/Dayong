@@ -1,9 +1,8 @@
 """
-dayong.protocols
-~~~~~~~~~~~~~
+dayong.interfaces
+~~~~~~~~~~~~~~~~~
 
-Interfaces used within Dayong. We use protocol classes for structural
-subtyping.
+Interfaces used within Dayong. We use protocol classes for structural subtyping.
 """
 from typing import Optional, Protocol
 
@@ -21,7 +20,7 @@ class GuildConfig(Protocol):
 
 
 class UserInfo(Protocol):
-    """Interface for user information.
+    """Protocol for user information.
 
     Args:
         Protocol ([type]): The base class for Protocol classes.
@@ -31,7 +30,7 @@ class UserInfo(Protocol):
 
 
 class DatabaseProto(Protocol):
-    """Interface of a database connection.
+    """Protocol of a database connection.
 
     Args:
         Protocol ([type]): The base class for Protocol classes.
