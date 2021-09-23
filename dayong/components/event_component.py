@@ -1,19 +1,32 @@
 """
 dayong.components.event_component
+<<<<<<< HEAD
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Organization of events and event listeners.
 """
 from typing import Optional, Sequence
+=======
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Organization of events and event listeners.
+"""
+from typing import Optional
+>>>>>>> 0cf3e58... chore: use more aprop component names
 
 import hikari
 import tanjun
 
+<<<<<<< HEAD
 from dayong.configs import DayongConfig
+=======
+from dayong.settings import CONFIG
+>>>>>>> 0cf3e58... chore: use more aprop component names
 
 component = tanjun.Component()
 
 
+<<<<<<< HEAD
 async def get_channel(
     channels: Sequence[hikari.GuildChannel],
     channel_name: str,
@@ -72,6 +85,42 @@ async def greet_new_member(
             color=embeddings["color"],
         )
 
+=======
+@component.with_listener(hikari.MemberCreateEvent)
+async def greet_new_member(event: hikari.MemberCreateEvent) -> None:
+    """Welcome new guild members.
+
+    This will dynamically search for welcome channels, sort the channels by name length
+    and send a greeting to the channel with the shortest name.
+
+    Args:
+        event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`.
+    """
+    embeddings = CONFIG.embeddings
+    wc_channel: Optional[hikari.TextableChannel] = None
+    channels = await event.app.rest.fetch_guild_channels(event.guild_id)
+
+    if isinstance(channels, list):
+        channels.sort(key=len)
+
+    for channel in channels:
+        if "welcome" in channel.name:
+            wc_channel = (
+                wc
+                if isinstance(
+                    (wc := await event.app.rest.fetch_channel(channel.id)),
+                    hikari.TextableChannel,
+                )
+                else None
+            )
+            break
+
+    if wc_channel:
+        embed = hikari.Embed(
+            description=embeddings["description"],
+            color=embeddings["color"],
+        )
+>>>>>>> 0cf3e58... chore: use more aprop component names
         for info in range(len(embeddings["greetings_field"])):
             inner_dict = embeddings["greetings_field"][info]
             embed.add_field(
@@ -80,14 +129,21 @@ async def greet_new_member(
                 inline=True,
             )
 
+<<<<<<< HEAD
         await wc_txtable.send(embed)
+=======
+        await wc_channel.send(embed)
+>>>>>>> 0cf3e58... chore: use more aprop component names
 
 
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
+<<<<<<< HEAD
     """The loader for this component.
 
     Args:
         client (tanjun.Client): The client instance that will load this module.
     """
+=======
+>>>>>>> 0cf3e58... chore: use more aprop component names
     client.add_component(component.copy())
