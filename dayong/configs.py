@@ -25,6 +25,7 @@ class DayongConfigLoader:
             config = dict(json.load(cfp))
         self.bot_prefix = config["bot_prefix"]
         self.guild_id = config["guild_id"]
+        self.embeddings = config["embeddings"]
 
     def load_env(self) -> None:
         """Load environment variables."""
@@ -39,6 +40,7 @@ class DayongConfig(BaseModel):
     bot_token: str
     database_uri: str
     guild_id: int
+    embeddings: dict
 
     @classmethod
     def load(
@@ -46,6 +48,8 @@ class DayongConfig(BaseModel):
         bot_prefix: str,
         bot_token: str,
         database_uri: str,
+        guild_id: int,
+        embeddings: dict,
     ) -> "DayongConfig":
         """Constructor for DayongConfig.
 
@@ -56,4 +60,6 @@ class DayongConfig(BaseModel):
             bot_prefix=bot_prefix,
             bot_token=bot_token,
             database_uri=database_uri,
+            guild_id=guild_id,
+            embeddings=embeddings,
         )
