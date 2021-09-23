@@ -1,7 +1,7 @@
 """
 Dayong's entry point.
 """
-from dayong.bot import DayongSetup
+from dayong import bot
 
 if __name__ == "__main__":
-    DayongSetup().run()
+    bot.run()

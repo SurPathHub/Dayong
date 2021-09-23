@@ -2,7 +2,7 @@
 dayong.components.privilege
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Commands and utilites for guild members with permissions.
+Message commands and utilites for guild members with permissions.
 """
 import time
 
@@ -14,7 +14,7 @@ component = tanjun.Component()
 @component.with_command
 @tanjun.with_author_permission_check(32)
 @tanjun.as_message_command("ping")
-async def ping(ctx: tanjun.abc.Context, /) -> None:
+async def ping(ctx: tanjun.abc.Context) -> None:
     """Respond with pong and the time it takes for it to reach the Discord using
     WebSocket and REST API endpoints.
 
