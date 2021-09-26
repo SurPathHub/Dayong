@@ -1,6 +1,6 @@
 """
 dayong.components.event_component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Organization of events and event listeners.
 """
@@ -9,13 +9,16 @@ from typing import Optional
 import hikari
 import tanjun
 
-from dayong.settings import CONFIG
+from dayong.configs import DayongConfig
 
 component = tanjun.Component()
 
 
 @component.with_listener(hikari.MemberCreateEvent)
-async def greet_new_member(event: hikari.MemberCreateEvent) -> None:
+async def greet_new_member(
+    event: hikari.MemberCreateEvent,
+    config: DayongConfig = tanjun.injected(type=DayongConfig),
+) -> None:
     """Welcome new guild members.
 
     This will dynamically search for welcome channels, sort the channels by name length
@@ -24,7 +27,7 @@ async def greet_new_member(event: hikari.MemberCreateEvent) -> None:
     Args:
         event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`.
     """
-    embeddings = CONFIG.embeddings
+    embeddings = config.embeddings["new_member_greetings"]
     wc_channel: Optional[hikari.TextableChannel] = None
     channels = await event.app.rest.fetch_guild_channels(event.guild_id)
 
@@ -32,11 +35,11 @@ async def greet_new_member(event: hikari.MemberCreateEvent) -> None:
         channels.sort(key=len)
 
     for channel in channels:
-        if "welcome" in channel.name:
+        if "welcome" in str(channel.name):
             wc_channel = (
-                wc
+                wch
                 if isinstance(
-                    (wc := await event.app.rest.fetch_channel(channel.id)),
+                    (wch := await event.app.rest.fetch_channel(channel.id)),
                     hikari.TextableChannel,
                 )
                 else None
@@ -44,8 +47,13 @@ async def greet_new_member(event: hikari.MemberCreateEvent) -> None:
             break
 
     if wc_channel:
+        wc_channel
         embed = hikari.Embed(
-            description=embeddings["description"],
+            description=embeddings["description"].format(
+                hikari.OwnGuild.name,
+                event.member.id,
+                embeddings["readme_channel_id"],
+            ),
             color=embeddings["color"],
         )
         for info in range(len(embeddings["greetings_field"])):

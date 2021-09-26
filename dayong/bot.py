@@ -6,35 +6,32 @@ This module defines the startup logic for Dayong.
 """
 import os
 from pathlib import Path
-from typing import Union
 
 import hikari
 import tanjun
 
-from dayong.interfaces import DatabaseProto
-from dayong.settings import BASE_DIR, CONFIG
-
-
-async def get_prefix(
-    ctx: tanjun.abc.MessageContext,
-    db: DatabaseProto = tanjun.injected(type=DatabaseProto),
-) -> Union[list[str], tuple[()]]:
-    if ctx.guild_id and (guild_info := await db.get_guild_info(ctx.guild_id)):
-        return guild_info.prefixes
-
-    return ()
+from dayong.configs import DayongConfig, DayongConfigLoader
+from dayong.impls import MessageDBImpl
+from dayong.settings import BASE_DIR
 
 
 def run() -> None:
     """Run Dayong with configs and deps."""
+    loaded_config = DayongConfigLoader.load()
     bot = hikari.GatewayBot(
-        CONFIG.bot_token,
+        loaded_config.bot_token,
         banner="dayong",
         intents=hikari.Intents.ALL,
     )
     (
-        tanjun.Client.from_gateway_bot(bot, set_global_commands=CONFIG.guild_id)
+        tanjun.Client.from_gateway_bot(
+            bot, set_global_commands=hikari.Snowflake(loaded_config.guild_id)
+        )
         .load_modules(*Path(os.path.join(BASE_DIR, "components")).glob("*.py"))
-        .add_prefix(CONFIG.bot_prefix)
+        .add_prefix(loaded_config.bot_prefix)
+        .set_type_dependency(DayongConfig, lambda: loaded_config)
+        .set_type_dependency(
+            MessageDBImpl, tanjun.cache_callback(MessageDBImpl.connect)
+        )
     )
     bot.run()
