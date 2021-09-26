@@ -1,3 +1,4 @@
+# pylint: disable=R0913,R0903
 """
 dayong.configs
 ~~~~~~~~~~~~~~
@@ -7,7 +8,7 @@ Initial setup and configuration logic.
 import json
 import os
 
-from pydantic.main import BaseModel
+from pydantic import BaseModel
 
 from dayong.settings import CONFIG_FILE
 
@@ -30,7 +31,7 @@ class DayongConfig(BaseModel):
         embeddings: dict,
         guild_id: int,
     ) -> "DayongConfig":
-        """Constructor for DayongConfig.
+        """Construct an instance of `dayong.configs.DayongConfig`.
 
         Returns:
             An instance of `dayong.configs.DayongConfig`.
@@ -66,5 +67,10 @@ class DayongConfigLoader:
 
     @staticmethod
     def load() -> DayongConfig:
+        """Load configs into `dayong.configs.DayongConfig`.
+
+        Returns:
+            DayongConfig: An instance of `dayong.configs.DayongConfig`.
+        """
         loader = DayongConfigLoader().__dict__
         return DayongConfig.load(*tuple(loader[key] for key in sorted(loader.keys())))

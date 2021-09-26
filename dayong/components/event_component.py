@@ -105,7 +105,8 @@ async def greet_new_member(
     and send a greeting to the channel with the shortest name.
 
     Args:
-        event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`.
+        event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
+            is a registered type dependency and is injected by the client.
     """
     embeddings = config.embeddings["new_member_greetings"]
     wc_channel: Optional[hikari.TextableChannel] = None
