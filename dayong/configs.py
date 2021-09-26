@@ -12,6 +12,38 @@ from pydantic.main import BaseModel
 from dayong.settings import CONFIG_FILE
 
 
+class DayongConfig(BaseModel):
+    """Data model for Dayong's configuration."""
+
+    bot_prefix: str
+    bot_token: str
+    database_uri: str
+    embeddings: dict
+    guild_id: int
+
+    @classmethod
+    def load(
+        cls,
+        bot_prefix: str,
+        bot_token: str,
+        database_uri: str,
+        embeddings: dict,
+        guild_id: int,
+    ) -> "DayongConfig":
+        """Constructor for DayongConfig.
+
+        Returns:
+            An instance of `dayong.configs.DayongConfig`.
+        """
+        return cls(
+            bot_prefix=bot_prefix,
+            bot_token=bot_token,
+            database_uri=database_uri,
+            guild_id=guild_id,
+            embeddings=embeddings,
+        )
+
+
 class DayongConfigLoader:
     """Configuration loader for Dayong."""
 
@@ -32,34 +64,7 @@ class DayongConfigLoader:
         self.bot_token = os.environ["BOT_TOKEN"]
         self.database_uri = os.environ["DATABASE_URI"]
 
-
-class DayongConfig(BaseModel):
-    """Data model for Dayong's configuration."""
-
-    bot_prefix: str
-    bot_token: str
-    database_uri: str
-    guild_id: int
-    embeddings: dict
-
-    @classmethod
-    def load(
-        cls,
-        bot_prefix: str,
-        bot_token: str,
-        database_uri: str,
-        guild_id: int,
-        embeddings: dict,
-    ) -> "DayongConfig":
-        """Constructor for DayongConfig.
-
-        Returns:
-            An instance of `dayong.configs.DayongConfig`.
-        """
-        return cls(
-            bot_prefix=bot_prefix,
-            bot_token=bot_token,
-            database_uri=database_uri,
-            guild_id=guild_id,
-            embeddings=embeddings,
-        )
+    @staticmethod
+    def load() -> DayongConfig:
+        loader = DayongConfigLoader().__dict__
+        return DayongConfig.load(*tuple(loader[key] for key in sorted(loader.keys())))
