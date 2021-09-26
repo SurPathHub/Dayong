@@ -18,8 +18,16 @@ from dayong.models import AnonMessage
 component = tanjun.Component()
 
 
-async def generate_random_id(string: str) -> str:
-    shuffle(rand_id := list(md5(string.encode()).hexdigest()))
+async def randomize_id(id: str) -> str:
+    """Make hash values or strings more unique.
+
+    Args:
+        id (str): The ID to shuffle.
+
+    Returns:
+        str: A random-like ID
+    """
+    shuffle(rand_id := list(md5(id.encode()).hexdigest()))
     return "".join(rand_id)
 
 
@@ -32,12 +40,22 @@ async def anon_command(
     database: MessageDBProto = tanjun.injected(type=MessageDBImpl),
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
+    """Allow a user or server member to send anonymous messages on Discord.
+
+    Args:
+        ctx (tanjun.abc.SlashContext): Interface of a context.
+        message (str): The message to anonymize.
+        database (MessageDBProto): Interface for database message tables. This is a
+            registered type dependency and is injected by the client.
+        config (DayongConfig): An instance of `dayong.configs.DayongConfig`. Also a
+            registered type dependency and is injected by the client.
+    """
     await ctx.defer()
     if isinstance(ctx.member, hikari.InteractionMember) and isinstance(
         channel := await ctx.fetch_channel(), hikari.TextableChannel
     ):
         await database.create_table()
-        message_id = await generate_random_id(ctx.member.username)
+        message_id = await randomize_id(ctx.member.username)
         await database.add_row(
             AnonMessage(
                 message_id=message_id,
