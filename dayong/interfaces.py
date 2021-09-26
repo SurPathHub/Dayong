@@ -2,16 +2,20 @@
 dayong.interfaces
 ~~~~~~~~~~~~~~~~~
 
-Interfaces used within Dayong. We use protocol classes for structural subtyping.
+Interfaces used within Dayong.
+
+NOTE: We use protocol classes for structural subtyping.
 """
-from typing import Optional, Protocol
+from typing import Any, Protocol
+
+from dayong.models import Message
 
 
 class GuildConfig(Protocol):
     """Protocol class for guild configuration.
 
     Args:
-        Protocol ([type]): The base class for Protocol classes.
+        Protocol (Generic): The base class for Protocol classes.
     """
 
     @property
@@ -23,24 +27,27 @@ class UserInfo(Protocol):
     """Protocol for user information.
 
     Args:
-        Protocol ([type]): The base class for Protocol classes.
+        Protocol (Generic): The base class for Protocol classes.
     """
 
     ...
 
 
-class DatabaseProto(Protocol):
-    """Protocol of a database connection.
+class MessageDBProto(Protocol):
+    """Protocol for a generic database interface.
 
     Args:
-        Protocol ([type]): The base class for Protocol classes.
+        Protocol (Generic): [description]
     """
 
-    async def get_guild_info(self, guild_id: int) -> Optional[GuildConfig]:
+    async def create_table(self) -> None:
         ...
 
-    async def get_user_info(self, user_id: int) -> Optional[UserInfo]:
+    async def add_row(self, table_model_object: Message) -> None:
         ...
 
-    async def remove_user(self, user_id: int) -> None:
+    async def remove_row(self, table_model_object: Message) -> None:
+        ...
+
+    async def get_row(self, tabe_model_object: Message) -> Any:
         ...
