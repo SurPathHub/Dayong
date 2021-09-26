@@ -1,6 +1,6 @@
 """
-dayong.components.privilege
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dayong.components.privilege_component
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Message commands and utilites for guild members with permissions.
 """
@@ -14,9 +14,9 @@ component = tanjun.Component()
 @component.with_command
 @tanjun.with_author_permission_check(32)
 @tanjun.as_message_command("ping")
-async def ping(ctx: tanjun.abc.Context) -> None:
-    """Respond with pong and the time it takes for it to reach the Discord using
-    WebSocket and REST API endpoints.
+async def ping_command(ctx: tanjun.abc.Context) -> None:
+    """Respond with pong and the time it takes for data to be transferred beetween
+    Dayong and Discord's WebSocket server and REST API endpoints.
 
     Args:
         ctx (Context): Instantiated subclass of `tanjun.abc.Context`.
