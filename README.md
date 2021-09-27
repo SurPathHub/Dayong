@@ -25,4 +25,4 @@ Check the [contributing guide](./.github/CONTRIBUTING.md) to learn more about th
 
 ## Code of Conduct
 
-Read our [Code of Conduct](https://github.com/SurPathHub/hacktoberfest-philippines/blob/b113d2d96eb86368757cd4cdaaf4813d1b7801f6/CODE_OF_CONDUCT.md).
+Read our [Code of Conduct](https://github.com/SurPathHub/support/blob/main/CODE_OF_CONDUCT.md).
