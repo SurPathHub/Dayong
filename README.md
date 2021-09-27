@@ -18,3 +18,11 @@ Dayong is dedicated to helping Discord servers build and manage their communitie
     ```
 
 2. Open your Discord application. Go to the server where you invited the bot and enter a [command](./docs/commands.md)!
+
+## Contributing
+
+Check the [contributing guide](./.github/CONTRIBUTING.md) to learn more about the development process and how you can test your changes.
+
+## Code of Conduct
+
+Read our [Code of Conduct](https://github.com/SurPathHub/hacktoberfest-philippines/blob/b113d2d96eb86368757cd4cdaaf4813d1b7801f6/CODE_OF_CONDUCT.md).
