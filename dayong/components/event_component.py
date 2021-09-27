@@ -48,7 +48,6 @@ async def greet_new_member(
             break
 
     if wc_channel:
-        wc_channel
         embed = hikari.Embed(
             description=embeddings["description"].format(
                 hikari.OwnGuild.name,
