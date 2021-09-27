@@ -10,7 +10,8 @@ from typing import Optional
 import tanjun
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel, select
-from sqlmodel.ext.asyncio.session import AsyncSession, ScalarResult
+from sqlmodel.engine.result import ScalarResult
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from dayong.configs import DayongConfig, DayongConfigLoader
 from dayong.models import Message
