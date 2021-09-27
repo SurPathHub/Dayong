@@ -65,12 +65,12 @@ Ready to contribute? Here's how to set up `Dayong` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8, pylint, and mypy.
+5. When you're done making changes, check that your changes pass flake8, pylint, and pyright.
 
     ```
     $ flake8 Dayong
     $ pylint Dayong
-    $ mypy Dayong
+    $ pyright Dayong
     ```
 
 ## Commit Message Guidelines
@@ -109,6 +109,7 @@ $ flake8 dayong/
 $ pylint dayong/
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 $ pyright dayong/  # optional static type checking
 =======
 $ black Dayong  # apply codestyle
@@ -133,4 +134,7 @@ $ pytest -v tests/test_clients.py
 =======
 $ mypy dayong/  # optional static type checking
 >>>>>>> c954f96... docs: update contributing guide
+=======
+$ pyright dayong/  # optional static type checking
+>>>>>>> 05fc323... chore: update contributing guide
 ```
