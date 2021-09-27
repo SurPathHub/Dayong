@@ -59,6 +59,7 @@ async def randomize_id(id: str) -> str:
 @component.with_slash_command
 @tanjun.with_str_slash_option("message", "your anonymous message")
 <<<<<<< HEAD
+<<<<<<< HEAD
 @tanjun.as_slash_command("anon", "Send anonymized messages", default_to_ephemeral=True)
 async def anon_command(
     ctx: tanjun.abc.SlashContext,
@@ -107,6 +108,9 @@ async def anon_command(
         await ctx.edit_initial_response(f"Something went wrong ❌\n`{err}`")
 =======
 @tanjun.as_slash_command("anon", "Send anonymized message", default_to_ephemeral=True)
+=======
+@tanjun.as_slash_command("anon", "Send anonymized messages", default_to_ephemeral=True)
+>>>>>>> 94a35c7... docs: update docs
 async def anon_command(
     ctx: tanjun.abc.SlashContext,
     message: str,
