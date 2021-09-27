@@ -17,8 +17,11 @@ from dayong.configs import DayongConfig
 =======
 
 from dayong.configs import DayongConfig
+<<<<<<< HEAD
 from dayong.impls import MessageDBImpl
 >>>>>>> a34eab6... feat: add functional slash command
+=======
+>>>>>>> fd9070d... refactor: apply pyright
 from dayong.interfaces import MessageDBProto
 from dayong.models import AnonMessage
 
@@ -114,7 +117,7 @@ async def anon_command(
 async def anon_command(
     ctx: tanjun.abc.SlashContext,
     message: str,
-    database: MessageDBProto = tanjun.injected(type=MessageDBImpl),
+    database: MessageDBProto = tanjun.injected(type=MessageDBProto),
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
     """Allow a user or server member to send anonymous messages on Discord.
@@ -137,7 +140,7 @@ async def anon_command(
             await database.add_row(
                 AnonMessage(
                     message_id=message_id,
-                    user_id=ctx.member.id,
+                    user_id=str(ctx.member.id),
                     username=ctx.member.username,
                     nickname=ctx.member.nickname
                     if ctx.member.nickname
