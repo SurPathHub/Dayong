@@ -65,7 +65,7 @@ Ready to contribute? Here's how to set up `Dayong` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8, pylint and mypy.
+5. When you're done making changes, check that your changes pass flake8, pylint, and mypy.
 
     ```
     $ flake8 Dayong
@@ -79,7 +79,6 @@ Dayong uses precise rules over how git commit messages can be formatted. This le
 ```
 $ git add .
 $ git commit -m "<type>(<scope>): <subject>"
-$ git push origin name-of-your-bugfix-or-feature
 ```
 
 ## Pull Request Guidelines
@@ -109,6 +108,7 @@ $ isort --profile black dayong/  # sort imports
 $ flake8 dayong/
 $ pylint dayong/
 <<<<<<< HEAD
+<<<<<<< HEAD
 $ pyright dayong/  # optional static type checking
 =======
 $ black Dayong  # apply codestyle
@@ -130,4 +130,7 @@ To run a subset of tests
 ```
 $ pytest -v tests/test_clients.py
 >>>>>>> 9368de9... docs: add contributing guidelines
+=======
+$ mypy dayong/  # optional static type checking
+>>>>>>> c954f96... docs: update contributing guide
 ```
