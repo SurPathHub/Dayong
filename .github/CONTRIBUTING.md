@@ -65,12 +65,12 @@ Ready to contribute? Here's how to set up `Dayong` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8, pylint, and mypy.
+5. When you're done making changes, check that your changes pass flake8, pylint, and pyright.
 
     ```
     $ flake8 Dayong
     $ pylint Dayong
-    $ mypy Dayong
+    $ pyright Dayong
     ```
 
 ## Commit Message Guidelines
@@ -103,5 +103,5 @@ $ black dayong/  # apply codestyle
 $ isort --profile black dayong/  # sort imports
 $ flake8 dayong/
 $ pylint dayong/
-$ mypy dayong/  # optional static type checking
+$ pyright dayong/  # optional static type checking
 ```
