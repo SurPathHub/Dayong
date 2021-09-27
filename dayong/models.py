@@ -2,13 +2,8 @@
 dayong.models
 ~~~~~~~~~~~~~
 
-<<<<<<< HEAD
-A model maps to a single database table. It contains fields and behaviors of
-the data stored in the database.
-=======
 A model maps to a single database table. It contains fields and behaviors of the data
 stored in the database.
->>>>>>> a34eab6... feat: add functional slash command
 """
 from typing import Optional
 
