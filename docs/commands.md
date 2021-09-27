@@ -8,6 +8,6 @@ Here's the list of commands available in Dayong.
 
 ### Slash Commands
 
-| Name                | Description                      | Usage              | Cooldown  |
-| ------------------- | -------------------------------- | ------------------ | --------- |
-| **anon**            | Sends an anonymized message.     | `/anon <message>`  |    null   |
+| Name                | Description                      | Usage                            | Cooldown  |
+| ------------------- | -------------------------------- | -------------------------------- | --------- |
+| **anon**            | Sends an anonymized message.     | `/anon message: <message>`       |    null   |
