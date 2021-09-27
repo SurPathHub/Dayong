@@ -19,13 +19,13 @@ component = tanjun.Component()
 
 
 async def randomize_id(id: str) -> str:
-    """Make hash values or strings more unique.
+    """Helper function to make IDs more unique and unexploitable.
 
     Args:
-        id (str): The ID to shuffle.
+        id (str): The ID to randomize.
 
     Returns:
-        str: A random-like ID
+        str: A random-like ID.
     """
     shuffle(rand_id := list(md5(id.encode()).hexdigest()))
     return "".join(rand_id)
