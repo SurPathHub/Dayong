@@ -11,7 +11,6 @@ import hikari
 import tanjun
 
 from dayong.configs import DayongConfig
-from dayong.impls import MessageDBImpl
 from dayong.interfaces import MessageDBProto
 from dayong.models import AnonMessage
 
@@ -37,7 +36,7 @@ async def randomize_id(id: str) -> str:
 async def anon_command(
     ctx: tanjun.abc.SlashContext,
     message: str,
-    database: MessageDBProto = tanjun.injected(type=MessageDBImpl),
+    database: MessageDBProto = tanjun.injected(type=MessageDBProto),
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
     """Allow a user or server member to send anonymous messages on Discord.
@@ -60,7 +59,7 @@ async def anon_command(
             await database.add_row(
                 AnonMessage(
                     message_id=message_id,
-                    user_id=ctx.member.id,
+                    user_id=str(ctx.member.id),
                     username=ctx.member.username,
                     nickname=ctx.member.nickname
                     if ctx.member.nickname
