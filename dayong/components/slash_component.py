@@ -43,13 +43,13 @@ async def generate_random_id(string: str) -> str:
 >>>>>>> a34eab6... feat: add functional slash command
 =======
 async def randomize_id(id: str) -> str:
-    """Make hash values or strings more unique.
+    """Helper function to make IDs more unique and unexploitable.
 
     Args:
-        id (str): The ID to shuffle.
+        id (str): The ID to randomize.
 
     Returns:
-        str: A random-like ID
+        str: A random-like ID.
     """
     shuffle(rand_id := list(md5(id.encode()).hexdigest()))
 >>>>>>> e6bbba2... docs: add function and method docstring
