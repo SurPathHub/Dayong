@@ -115,9 +115,9 @@ flake8 = [
     "flake8-raise==0.0.5",              # exception raising linting
 ]
 pylint = "^2.10.2"
-mypy = "^0.910"
 pytest = "^6.2.4"
 pre-commit = "^2.14.0"
+pyright = "^0.0.10"
 
 [tool.isort]
 profile = "black"
