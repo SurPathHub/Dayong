@@ -6,7 +6,11 @@ Message commands and utilites for guild members with permissions.
 """
 import time
 
+import hikari
 import tanjun
+
+from dayong.interfaces import MessageDBProto
+from dayong.models import AnonMessage
 
 component = tanjun.Component()
 
@@ -30,6 +34,72 @@ async def ping_command(ctx: tanjun.abc.Context) -> None:
     await ctx.edit_last_response(
         f"PONG\n - REST: {time_taken:.0f}ms\n - Gateway: {heartbeat_latency:.0f}ms"
     )
+
+
+@component.with_command
+@tanjun.with_author_permission_check(6)
+@tanjun.with_argument("id")
+@tanjun.with_parser
+@tanjun.as_message_command("whois")
+async def get_user_info(
+    ctx: tanjun.abc.Context,
+    id: str,
+    database: MessageDBProto = tanjun.injected(type=MessageDBProto),
+) -> None:
+    """Reveal information on a user."
+
+    Args:
+        ctx (tanjun.abc.Context): Instance of `tanjun.abc.Context`.
+        id (str): This can be a hash or the object or the ID of an
+            existing user.
+        database (MessageDBProto): Interface for a database message table. This is a
+            registered type dependency and is injected by the client.
+    """
+    await ctx.respond(content="Fetching user information, please wait...")
+    try:
+        if len(id) == 32 and id.isalnum():
+            result = await database.get_row(
+                AnonMessage(
+                    message_id=id,
+                    user_id="",
+                    username="",
+                    nickname="",
+                    message="",
+                )
+            )
+            info = result.first()
+            if isinstance(info, (AnonMessage,)):
+                await ctx.edit_last_response(
+                    (
+                        f"```ID: {info.user_id}\n"
+                        f"Username: {info.username}\n"
+                        f"Nickname: {info.nickname}```"
+                    )
+                )
+            else:
+                raise Exception(f"This ID does not exist: {id}")
+        if id.isdigit():
+            info = await ctx.rest.fetch_user(hikari.Snowflake(id))
+            if isinstance(info, hikari.User):
+                await ctx.edit_last_response(
+                    (
+                        f"Username: {info.username}\n"
+                        f"Avatar Hash: {info.avatar_hash}\n"
+                        f"Avatar URL: {info.avatar_url}\n"
+                        f"Default Avatar URL: {info.default_avatar_url}\n"
+                        f"Discriminator: {info.discriminator}\n"
+                        f"Flags: {info.flags}\n"
+                        f"is Bot: {info.is_bot}\n"
+                        f"is System: {info.is_system}\n"
+                        f"Mention: {info.mention}```"
+                    )
+                )
+                return
+        raise TypeError(
+            f"This ID is invalid or of unknown type: {id}, length: {len(id)}"
+        )
+    except Exception as err:
+        await ctx.edit_last_response(f"Something went wrong!\n`{err}`")
 
 
 @tanjun.as_loader
