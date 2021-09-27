@@ -19,7 +19,9 @@ class Message(SQLModel):
 class AnonMessage(Message, table=True):
     """Table model for anonymized guild messages."""
 
-    __tablename__ = "anon_messages"
+    # pyright cannot recognize the type of SQLModel.__tablename__
+    # See: https://github.com/tiangolo/sqlmodel/issues/98
+    __tablename__ = "anon_messages"  # type: ignore
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: str
     username: str

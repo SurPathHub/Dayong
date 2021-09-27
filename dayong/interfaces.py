@@ -9,7 +9,7 @@ NOTE: We use protocol classes for structural subtyping.
 """
 from typing import Protocol
 
-from sqlmodel.ext.asyncio.session import ScalarResult
+from sqlmodel.engine.result import ScalarResult
 
 from dayong.models import Message
 
