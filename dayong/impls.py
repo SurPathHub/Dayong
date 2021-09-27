@@ -40,7 +40,7 @@ class MessageDBImpl:
         """Insert a row in the message table.
 
         Args:
-            tabe_model_object (Message): An instance of `dayong.models.Message` or one
+            table_model_object (Message): An instance of `dayong.models.Message` or one
             of its subclasses.
         """
         async with AsyncSession(self.engine) as session:
@@ -52,7 +52,7 @@ class MessageDBImpl:
         """Delete a row in the message table.
 
         Args:
-            tabe_model_object (Message): An instance of `dayong.models.Message` or one
+            table_model_object (Message): An instance of `dayong.models.Message` or one
             of its subclasses.
         """
         table_model = type(tabe_model_object)
@@ -69,13 +69,15 @@ class MessageDBImpl:
             await session.commit()
 
     async def get_row(self, tabe_model_object: Message) -> ScalarResult:
-        """Fetch a row from the message table. The row is specified in the table model object.
+        """Fetch a row from the message table.
 
         Args:
-            tabe_model_object (Message): [description]
+            tabe_model_object (Message): An instance of `dayong.models.Message` or one
+            of its subclasses.
 
         Returns:
-            ScalarResult: [description]
+            ScalarResult: An `ScalarResult` object which contains a scalar value or
+                sequence of scalar values.
         """
         table_model = type(tabe_model_object)
         async with AsyncSession(self.engine) as session:
@@ -90,14 +92,18 @@ class MessageDBImpl:
         return row
 
     @classmethod
-    async def connect(cls, config: DayongConfig = tanjun.injected(type=DayongConfig)):
-        """Constuct an instance of `dayong.impls.MessageDBImpl`.
+    async def connect(
+        cls,
+        config: DayongConfig = tanjun.injected(type=DayongConfig),
+    ) -> "MessageDBImpl":
+        """Constuct an instance of `dayong.impls.MessageDBImpl`. This is used to
+        register `MessageDBImpl` as a type dependency.
 
         Args:
             config (DayongConfig, optional): The config class to use. Defaults to
                 `tanjun.injected(type=DayongConfig)`.
 
         Returns:
-            [type]: An instance `dayong.impls.MessageDBImpl`.
+            MessageDBImpl: An instance `dayong.impls.MessageDBImpl`.
         """
         return cls(database_uri=config.database_uri)
