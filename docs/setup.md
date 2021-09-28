@@ -30,6 +30,6 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 6. Run `poetry install`. This will install the project and its dependencies.
 
-7. Edit the `config.json` file and edit the values if necessary.
+7. Edit the `config.json` file and its values if necessary.
 
     The `config.json` file stores public options, settings, properties, configuration, and preferences.
