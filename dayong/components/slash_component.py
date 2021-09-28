@@ -184,10 +184,14 @@ async def anon_command(
 def load_examples(client: tanjun.abc.Client) -> None:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     """The loader for this component.
 =======
     """The loader this component.
 >>>>>>> f22a397... refactor: apply linter on components
+=======
+    """The loader for this component.
+>>>>>>> 7b2c057... docs: fix wording
 
     Args:
         client (tanjun.Client): The client instance that will load this module.
