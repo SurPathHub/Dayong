@@ -9,6 +9,8 @@ from random import shuffle
 
 import hikari
 import tanjun
+from pydantic import ValidationError
+from sqlalchemy.exc import SQLAlchemyError
 
 from dayong.configs import DayongConfig
 from dayong.interfaces import MessageDBProto
@@ -17,16 +19,16 @@ from dayong.models import AnonMessage
 component = tanjun.Component()
 
 
-async def randomize_id(id: str) -> str:
+async def randomize_id(str_id: str) -> str:
     """Helper function to make IDs more unique and unexploitable.
 
     Args:
-        id (str): The ID to randomize.
+        str_id (str): The ID to randomize.
 
     Returns:
         str: A random-like ID.
     """
-    shuffle(rand_id := list(md5(id.encode()).hexdigest()))
+    shuffle(rand_id := list(md5(str_id.encode()).hexdigest()))
     return "".join(rand_id)
 
 
@@ -76,10 +78,15 @@ async def anon_command(
                 )
             )
             await ctx.edit_initial_response("Message sent ✅")
-    except Exception as err:
+    except (SQLAlchemyError, ValidationError, hikari.HikariError) as err:
         await ctx.edit_initial_response(f"Something went wrong ❌\n`{err}`")
 
 
 @tanjun.as_loader
 def load_examples(client: tanjun.abc.Client) -> None:
+    """The loader this component.
+
+    Args:
+        client (tanjun.Client): The client instance that will load this module.
+    """
     client.add_component(component.copy())
