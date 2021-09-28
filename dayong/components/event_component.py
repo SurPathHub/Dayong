@@ -69,4 +69,9 @@ async def greet_new_member(
 
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
+    """The loader this component.
+
+    Args:
+        client (tanjun.Client): The client instance that will load this module.
+    """
     client.add_component(component.copy())

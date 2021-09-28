@@ -8,6 +8,8 @@ import time
 
 import hikari
 import tanjun
+from pydantic import ValidationError
+from sqlalchemy.exc import SQLAlchemyError
 
 from dayong.interfaces import MessageDBProto
 from dayong.models import AnonMessage
@@ -43,24 +45,24 @@ async def ping_command(ctx: tanjun.abc.Context) -> None:
 @tanjun.as_message_command("whois")
 async def get_user_info(
     ctx: tanjun.abc.Context,
-    id: str,
+    str_id: str,
     database: MessageDBProto = tanjun.injected(type=MessageDBProto),
 ) -> None:
     """Reveal information on a user."
 
     Args:
         ctx (tanjun.abc.Context): Instance of `tanjun.abc.Context`.
-        id (str): This can be a hash or the object or the ID of an
+        str_id (str): This can be a hash or the object or the ID of an
             existing user.
         database (MessageDBProto): Interface for a database message table. This is a
             registered type dependency and is injected by the client.
     """
     await ctx.respond(content="Fetching user information, please wait...")
     try:
-        if len(id) == 32 and id.isalnum():
+        if len(str_id) == 32 and str_id.isalnum():
             result = await database.get_row(
                 AnonMessage(
-                    message_id=id,
+                    message_id=str_id,
                     user_id="",
                     username="",
                     nickname="",
@@ -77,9 +79,9 @@ async def get_user_info(
                     )
                 )
             else:
-                raise Exception(f"This ID does not exist: {id}")
-        if id.isdigit():
-            info = await ctx.rest.fetch_user(hikari.Snowflake(id))
+                raise Exception(f"This ID does not exist: {str_id}")
+        if str_id.isdigit():
+            info = await ctx.rest.fetch_user(hikari.Snowflake(str_id))
             if isinstance(info, hikari.User):
                 await ctx.edit_last_response(
                     (
@@ -96,12 +98,17 @@ async def get_user_info(
                 )
                 return
         raise TypeError(
-            f"This ID is invalid or of unknown type: {id}, length: {len(id)}"
+            f"This ID is invalid or of unknown type: {str_id}, length: {len(str_id)}"
         )
-    except Exception as err:
+    except (SQLAlchemyError, TypeError, ValidationError, hikari.HikariError) as err:
         await ctx.edit_last_response(f"Something went wrong!\n`{err}`")
 
 
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
+    """The loader this component.
+
+    Args:
+        client (tanjun.Client): The client instance that will load this module.
+    """
     client.add_component(component.copy())
