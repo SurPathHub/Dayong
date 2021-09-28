@@ -10,6 +10,9 @@ from random import shuffle
 import hikari
 import tanjun
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f22a397... refactor: apply linter on components
 from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -30,6 +33,7 @@ component = tanjun.Component()
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 async def randomize_id(str_id: str) -> str:
     """Helper function to make IDs more unique and unexploitable.
 
@@ -46,16 +50,23 @@ async def generate_random_id(string: str) -> str:
 >>>>>>> a34eab6... feat: add functional slash command
 =======
 async def randomize_id(id: str) -> str:
+=======
+async def randomize_id(str_id: str) -> str:
+>>>>>>> f22a397... refactor: apply linter on components
     """Helper function to make IDs more unique and unexploitable.
 
     Args:
-        id (str): The ID to randomize.
+        str_id (str): The ID to randomize.
 
     Returns:
         str: A random-like ID.
     """
+<<<<<<< HEAD
     shuffle(rand_id := list(md5(id.encode()).hexdigest()))
 >>>>>>> e6bbba2... docs: add function and method docstring
+=======
+    shuffle(rand_id := list(md5(str_id.encode()).hexdigest()))
+>>>>>>> f22a397... refactor: apply linter on components
     return "".join(rand_id)
 
 
@@ -164,7 +175,7 @@ async def anon_command(
 >>>>>>> a34eab6... feat: add functional slash command
 =======
             await ctx.edit_initial_response("Message sent ✅")
-    except Exception as err:
+    except (SQLAlchemyError, ValidationError, hikari.HikariError) as err:
         await ctx.edit_initial_response(f"Something went wrong ❌\n`{err}`")
 >>>>>>> 0686459... docs: update docstrings
 
@@ -172,11 +183,18 @@ async def anon_command(
 @tanjun.as_loader
 def load_examples(client: tanjun.abc.Client) -> None:
 <<<<<<< HEAD
+<<<<<<< HEAD
     """The loader for this component.
+=======
+    """The loader this component.
+>>>>>>> f22a397... refactor: apply linter on components
 
     Args:
         client (tanjun.Client): The client instance that will load this module.
     """
+<<<<<<< HEAD
 =======
 >>>>>>> a34eab6... feat: add functional slash command
+=======
+>>>>>>> f22a397... refactor: apply linter on components
     client.add_component(component.copy())

@@ -155,11 +155,18 @@ async def greet_new_member(
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
 <<<<<<< HEAD
+<<<<<<< HEAD
     """The loader for this component.
+=======
+    """The loader this component.
+>>>>>>> f22a397... refactor: apply linter on components
 
     Args:
         client (tanjun.Client): The client instance that will load this module.
     """
+<<<<<<< HEAD
 =======
 >>>>>>> 0cf3e58... chore: use more aprop component names
+=======
+>>>>>>> f22a397... refactor: apply linter on components
     client.add_component(component.copy())
