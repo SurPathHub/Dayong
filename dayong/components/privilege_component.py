@@ -106,7 +106,7 @@ async def get_user_info(
 
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
-    """The loader this component.
+    """The loader for this component.
 
     Args:
         client (tanjun.Client): The client instance that will load this module.

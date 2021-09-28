@@ -84,7 +84,7 @@ async def anon_command(
 
 @tanjun.as_loader
 def load_examples(client: tanjun.abc.Client) -> None:
-    """The loader this component.
+    """The loader for this component.
 
     Args:
         client (tanjun.Client): The client instance that will load this module.
