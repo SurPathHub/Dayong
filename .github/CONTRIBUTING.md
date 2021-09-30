@@ -68,9 +68,9 @@ Ready to contribute? Here's how to set up `Dayong` for local development.
 5. When you're done making changes, check that your changes pass flake8, pylint, and pyright.
 
     ```
-    $ flake8 Dayong
-    $ pylint Dayong
-    $ pyright Dayong
+    $ flake8 dayong
+    $ pylint dayong
+    $ pyright dayong
     ```
 
 ## Commit Message Guidelines
