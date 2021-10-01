@@ -1,5 +1,5 @@
 name: Lint Python
-on: pull_request
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,8 +9,6 @@ jobs:
     - name: Install Python 
       uses: actions/setup-python@v2
       with:
-          python-version: 3.9
+          python-version: 3.8
     - name: flake8 Lint
       uses: py-actions/flake8@v1
-      with:
-        max-line-length: "88"
