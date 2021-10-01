@@ -1,0 +1,16 @@
+name: Lint Python
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout source repo
+      uses: actions/checkout@v2
+    - name: Install Python 
+      uses: actions/setup-python@v2
+      with:
+          python-version: 3.9
+    - name: flake8 Lint
+      uses: py-actions/flake8@v1
+      with:
+        max-line-length: "88"
