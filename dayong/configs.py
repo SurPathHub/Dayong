@@ -12,6 +12,7 @@ from typing import Any, Union
 from pydantic import BaseModel
 
 from dayong.settings import CONFIG_FILE
+from dayong.utils import format_db_url
 
 
 class DayongConfig(BaseModel):
@@ -64,7 +65,7 @@ class DayongConfigLoader:
     def load_env(self) -> None:
         """Load environment variables."""
         self.bot_token = os.environ["BOT_TOKEN"]
-        self.database_uri = os.environ["DATABASE_URL"]
+        self.database_uri = format_db_url(os.environ["DATABASE_URL"])
 
     @staticmethod
     def load() -> DayongConfig:
