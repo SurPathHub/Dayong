@@ -7,7 +7,7 @@ Interfaces used within Dayong.
 
 NOTE: We use protocol classes for structural subtyping.
 """
-from typing import Protocol
+from typing import Any, Protocol
 
 from sqlmodel.engine.result import ScalarResult
 
@@ -54,7 +54,7 @@ class MessageDBProto(Protocol):
             of its subclasses.
         """
 
-    async def get_row(self, tabe_model_object: Message) -> ScalarResult:
+    async def get_row(self, tabe_model_object: Message) -> ScalarResult[Any]:
         """Get data from the message table.
 
         Args:
