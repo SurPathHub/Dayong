@@ -12,6 +12,24 @@ Dayong is dedicated to helping Discord servers build and manage their communitie
 
 > For setup and installation instructions, please refer to the [documentation](./docs).
 
+# Deployment
+
+### Setup
+
+Please make sure you've set up Dayong, do so by following the [setup instructions](./docs/setup.md).
+
+Dayong comes with an `app.json` file for creating an app on Heroku from a GitHub repository.
+
+If your fork is public, you can use the following button:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) 
+
+Otherwise, access the following link and replace `$YOUR_REPOSITORY_LINK$` with your repository link.
+
+```
+https://heroku.com/deploy?template=$YOUR_REPOSITORY_LINK$
+```
+
 ## Usage
 
 1. From the project root directory, run:
