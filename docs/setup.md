@@ -4,11 +4,40 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 ## Bot Setup
 
-> Before you start, fork your own copy of SurPathHub/Dayong.
+<div class="warning" style="padding:0.1em; background-color: 	#ff9966;">
+    <p style="margin-top:1em; text-align:center">
+        <p style="margin-left:1em;">
+            Before you start, fork your own copy of SurPathHub/Dayong.
+        </p>
+    </p>
+</div>
+<br>
+<div class="warning" style="padding:0.1em; background-color: 	#ff9966;">
+<span>
+    <p style="margin-top:1em; text-align:center">
+        <p style="margin-left:1em;">
+            You may also perform the steps below directly on your copy of Dayong on GitHub, which can be used to deploy changes automatically.
+        </p>
+    </p>
+</span>
+</div>
 
-> You may also perform the steps below directly on your copy of Dayong on GitHub, which can be used to deploy changes automatically.
+1. Clone your fork to your local machine.
 
-1. `git clone` Dayong to your local machine.
+    HTTP
+    ```
+    git clone https://github.com/<your username>/Dayong.git
+    ```
+
+    SSH
+    ```
+    git clone git@github.com:<your username>/Dayong.git
+    ```
+
+    GitHub CLI
+    ```
+    gh repo clone <your username>/Dayong.git
+    ```
 
 2. Go to the project root directory.
 
@@ -20,9 +49,9 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
     The `config.json` file stores public options, settings, properties, configuration, and preferences.
 
-4. After setting up Dayong, `git commit` and `git push` your changes.
+4. After setting up Dayong, `commit` and `push` your changes.
 
-10. [Deploy!](../README.md#deployment)
+5. [Deploy!](../README.md#deployment)
 
 ### For local development
 
