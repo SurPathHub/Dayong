@@ -919,7 +919,7 @@ flake8-extras = []
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.7"
-content-hash = "ee7fa68c6b31d24183e966424a994d6217a94191e4d25716eca9d23f41793e42"
+content-hash = "f74accf74df91572c644538c78338a19299eb8b88190964bd268e95b1af2e1f8"
 
 [metadata.files]
 aiohttp = [
