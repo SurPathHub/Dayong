@@ -142,10 +142,9 @@ async def anon_command(
             registered type dependency and is injected by the client.
     """
     await ctx.defer()
+    channel = await ctx.fetch_channel()
     try:
-        if isinstance(ctx.member, hikari.InteractionMember) and isinstance(
-            channel := await ctx.fetch_channel(), hikari.TextableChannel
-        ):
+        if isinstance(ctx.member, hikari.InteractionMember):
             await database.create_table()
             message_id = await randomize_id(ctx.member.username)
             await database.add_row(
@@ -160,12 +159,15 @@ async def anon_command(
                 )
             )
             embeddings = config.embeddings["anonymous_message"]
-            await channel.send(
-                embed=hikari.Embed(
-                    title=f"""{embeddings["title"]} • {message_id}""",
-                    description=f"`{message}`",
-                    color=embeddings["color"],
+            if isinstance(embeddings, dict):
+                await channel.send(
+                    embed=hikari.Embed(
+                        title=f"""{embeddings["title"]} • {message_id}""",
+                        description=f"`{message}`",
+                        color=embeddings["color"],
+                    )
                 )
+<<<<<<< HEAD
             )
 <<<<<<< HEAD
         )
@@ -174,6 +176,8 @@ async def anon_command(
     await ctx.edit_initial_response("Something went wrong ❌")
 >>>>>>> a34eab6... feat: add functional slash command
 =======
+=======
+>>>>>>> fa179fc... refactor: improve typing parity
             await ctx.edit_initial_response("Message sent ✅")
     except (SQLAlchemyError, ValidationError, hikari.HikariError) as err:
         await ctx.edit_initial_response(f"Something went wrong ❌\n`{err}`")
