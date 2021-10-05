@@ -1,0 +1,50 @@
+{
+  "logo": "https://raw.githubusercontent.com/SurPathHub/brand-assets/main/Resources/SurPath%20Hub%20Logos/SPH_transparent.png",
+  "name": "Dayong",
+  "description": "Discord Bot for SurPath Hub's server",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "The jumble of letters and numbers that acts as a key to controlling a Discord Bot"
+    },
+    "EMAIL": {
+      "description": "The email address subscribed to a service (i.e. Medium Daily Digest)"
+    },
+    "EMAIL_PASSWORD": {
+      "description": "The email account's password."
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:hobby-dev",
+      "options": {
+        "version": "13"
+      },
+      "as": "DATABASE"
+    },
+    {
+      "plan": "heroku-redis:hobby-dev",
+      "options": {
+        "version": "6"
+      },
+      "as": "REDIS"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/moneymeets/python-poetry-buildpack.git"
+    },
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
