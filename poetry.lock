@@ -128,6 +128,7 @@ platformdirs = ">=2"
 regex = ">=2020.1.8"
 tomli = ">=0.2.6,<2.0.0"
 <<<<<<< HEAD
+<<<<<<< HEAD
 typing-extensions = ">=3.10.0.0"
 =======
 typing-extensions = [
@@ -135,6 +136,9 @@ typing-extensions = [
     {version = "!=3.10.0.1", markers = "python_version >= \"3.10\""},
 ]
 >>>>>>> 6df8a76... build: update build dependencies
+=======
+typing-extensions = ">=3.10.0.0"
+>>>>>>> 67f3819... build: specify exact python version
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -1217,9 +1221,14 @@ flake8-extras = []
 
 [metadata]
 lock-version = "1.1"
+<<<<<<< HEAD
 python-versions = ">=3.9,<3.11"
 content-hash = "ffff396bb88db42fab2ce554cd2af19b12b69f35f4cd7cf12bbb9816b5ed62aa"
 >>>>>>> 57807cc... build: update sections and dependencies
+=======
+python-versions = "3.9.7"
+content-hash = "ee7fa68c6b31d24183e966424a994d6217a94191e4d25716eca9d23f41793e42"
+>>>>>>> 67f3819... build: specify exact python version
 
 [metadata.files]
 aiohttp = [
