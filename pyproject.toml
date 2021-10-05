@@ -30,17 +30,27 @@ asyncpg = "^0.24.0"
 hikari = "^2.0.0-alpha.101"
 hikari-tanjun = "^2.0.0-alpha.4"
 rich = "^10.10.0"
+<<<<<<< HEAD
 >>>>>>> 4de878c... chore: rewrite codebase (#4)
+=======
+pragmail = "^0.2.4"
+celery = {extras = ["redis"], version = "^5.1.2"}
+celery-redbeat = "^2.0.0"
+>>>>>>> 57807cc... build: update sections and dependencies
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
 isort = "^5.9.3"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 57807cc... build: update sections and dependencies
 flake8 = "^3.9.2"
 pylint = "^2.10.2"
 pytest = "^6.2.4"
 pre-commit = "^2.14.0"
 pyright = "^0.0.10"
+<<<<<<< HEAD
 
 [tool.poetry.extras]
 flake8-extras = [
@@ -91,7 +101,11 @@ pythonPlatform = "Linux"
 >>>>>>> 8616820... chore: follow up rewrite
 flake8 = [
     "flake8==3.9.2",
+=======
+>>>>>>> 57807cc... build: update sections and dependencies
 
+[tool.poetry.extras]
+flake8-extras = [
     # Flake8 plugins
     # Ref: https://github.com/DmytroLitvinov/awesome-flake8-extensions
 
@@ -114,13 +128,22 @@ flake8 = [
     "flake8-pytest-style==1.5.0",       # pytest checks
     "flake8-raise==0.0.5",              # exception raising linting
 ]
-pylint = "^2.10.2"
-pytest = "^6.2.4"
-pre-commit = "^2.14.0"
-pyright = "^0.0.10"
 
 [tool.isort]
 profile = "black"
+
+[tool.pyright]
+typeCheckingMode = "strict"
+useLibraryCodeForTypes = true
+
+include = ["dayong"]
+exclude = ["**/__pycache__"]
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
