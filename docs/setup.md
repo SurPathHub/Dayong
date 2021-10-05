@@ -4,23 +4,14 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 ## Bot Setup
 
-<div class="warning" style="padding:0.1em; background-color: 	#ff9966;">
-    <p style="margin-top:1em; text-align:center">
-        <p style="margin-left:1em;">
-            Before you start, fork your own copy of SurPathHub/Dayong.
-        </p>
-    </p>
-</div>
-<br>
-<div class="warning" style="padding:0.1em; background-color: 	#ff9966;">
-<span>
-    <p style="margin-top:1em; text-align:center">
-        <p style="margin-left:1em;">
-            You may also perform the steps below directly on your copy of Dayong on GitHub, which can be used to deploy changes automatically.
-        </p>
-    </p>
-</span>
-</div>
+| ❗❗ Before you start, fork your own copy of SurPathHub/Dayong. |
+|-----------------------------------------|
+
+| ❗❗ You can also perform the steps below directly on your copy of Dayong on GitHub |
+|-----------------------------------------|
+
+| ❗❗ Your copy of the GitHub repository can be used to deploy changes automatically.|
+|-----------------------------------------|
 
 1. Clone your fork to your local machine.
 
