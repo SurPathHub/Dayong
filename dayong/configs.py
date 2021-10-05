@@ -64,7 +64,7 @@ class DayongConfigLoader:
     def load_env(self) -> None:
         """Load environment variables."""
         self.bot_token = os.environ["BOT_TOKEN"]
-        self.database_uri = os.environ["DATABASE_URI"]
+        self.database_uri = os.environ["DATABASE_URL"]
 
     @staticmethod
     def load() -> DayongConfig:
