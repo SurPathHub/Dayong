@@ -1,6 +1,6 @@
 # Table of contents
 
 * [Introduction](../README.md)
-* [Installation](./installation.md)
+* [Deployment](./deployment.md)
 * [Setup](./setup.md)
 * [Commands](./commands.md)
