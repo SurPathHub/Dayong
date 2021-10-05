@@ -5,7 +5,7 @@ dayong.impls
 Implementaion of interfaces and the logic for injecting them.
 """
 import asyncio
-from typing import Optional
+from typing import Any, Optional
 
 import tanjun
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -61,7 +61,7 @@ class MessageDBImpl:
             # Temp ignore incompatible type passed to `exec()`. See:
             # https://github.com/tiangolo/sqlmodel/issues/54
             # https://github.com/tiangolo/sqlmodel/pull/58
-            row: ScalarResult = await session.exec(
+            row: ScalarResult[Any] = await session.exec(
                 select(table_model).where(  # type: ignore
                     table_model.message_id == tabe_model_object.message_id
                 )
@@ -69,7 +69,7 @@ class MessageDBImpl:
             await session.delete(row)
             await session.commit()
 
-    async def get_row(self, tabe_model_object: Message) -> ScalarResult:
+    async def get_row(self, tabe_model_object: Message) -> ScalarResult[Any]:
         """Fetch a row from the message table.
 
         Args:
@@ -85,7 +85,7 @@ class MessageDBImpl:
             # Temp ignore incompatible type passed to `exec()`. See:
             # https://github.com/tiangolo/sqlmodel/issues/54
             # https://github.com/tiangolo/sqlmodel/pull/58
-            row: ScalarResult = await session.exec(
+            row: ScalarResult[Any] = await session.exec(
                 select(table_model).where(  # type: ignore
                     table_model.message_id == tabe_model_object.message_id
                 )
