@@ -32,6 +32,10 @@ def format_db_url(database_url: str) -> str:
         return database_url
 
     db_name = db_scheme.replace("://", "")
+
+    if db_name == "postgres":
+        db_name = db_name.replace("postgres", "postgresql")
+
     return database_url.replace(db_scheme, f"{db_name}+asyncpg://")
 
 
