@@ -1227,8 +1227,12 @@ content-hash = "ffff396bb88db42fab2ce554cd2af19b12b69f35f4cd7cf12bbb9816b5ed62aa
 >>>>>>> 57807cc... build: update sections and dependencies
 =======
 python-versions = "3.9.7"
+<<<<<<< HEAD
 content-hash = "ee7fa68c6b31d24183e966424a994d6217a94191e4d25716eca9d23f41793e42"
 >>>>>>> 67f3819... build: specify exact python version
+=======
+content-hash = "f74accf74df91572c644538c78338a19299eb8b88190964bd268e95b1af2e1f8"
+>>>>>>> 6d3a492... build: bump hikari version
 
 [metadata.files]
 aiohttp = [
