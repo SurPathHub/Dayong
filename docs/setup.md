@@ -4,9 +4,29 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 ## Bot Setup
 
-> You may also perform the steps listed below directly on your fork of the GitHub repository.
+> Before you start, fork your own copy of SurPathHub/Dayong.
 
-1. `git clone` Your fork of Dayong to your local machine.
+> You may also perform the steps below directly on your copy of Dayong, which can be used to deploy changes automatically.
+
+1. `git clone` Dayong to your local machine.
+
+2. Go to the project root directory.
+
+    ```
+    cd Dayong
+    ```
+
+3. Edit the `config.json` file and its values as necessary.
+
+    The `config.json` file stores public options, settings, properties, configuration, and preferences.
+
+4. After setting up Dayong, `git commit` and `git push` your changes.
+
+10. [Deploy!](../README.md#deployment)
+
+### For local development
+
+1. `git clone` Dayong to your local machine.
 
 2. Go to the project root directory.
 
@@ -38,12 +58,10 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
     The `config.json` file stores public options, settings, properties, configuration, and preferences.
 
-9. Generate an up-to-date `requirements.txt` file containing Dayong's dependencies.
+9. Quickly test if the configuration works by running:
 
     ```
-    poetry export -f requirements.txt -o requirements.txt
+    python dayong
     ```
 
 10. After setting up Dayong, `git commit` and `git push` your changes.
-
-11. [Deploy!](../README.md#deployment)
