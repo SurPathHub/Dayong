@@ -119,10 +119,7 @@ pathspec = ">=0.9.0,<1"
 platformdirs = ">=2"
 regex = ">=2020.1.8"
 tomli = ">=0.2.6,<2.0.0"
-typing-extensions = [
-    {version = ">=3.10.0.0", markers = "python_version < \"3.10\""},
-    {version = "!=3.10.0.1", markers = "python_version >= \"3.10\""},
-]
+typing-extensions = ">=3.10.0.0"
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -921,8 +918,8 @@ flake8-extras = []
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.9,<3.11"
-content-hash = "ffff396bb88db42fab2ce554cd2af19b12b69f35f4cd7cf12bbb9816b5ed62aa"
+python-versions = "3.9.7"
+content-hash = "ee7fa68c6b31d24183e966424a994d6217a94191e4d25716eca9d23f41793e42"
 
 [metadata.files]
 aiohttp = [
