@@ -82,21 +82,20 @@ async def get_user_info(
                 raise Exception(f"This ID does not exist: {str_id}")
         if str_id.isdigit():
             info = await ctx.rest.fetch_user(hikari.Snowflake(str_id))
-            if isinstance(info, hikari.User):
-                await ctx.edit_last_response(
-                    (
-                        f"Username: {info.username}\n"
-                        f"Avatar Hash: {info.avatar_hash}\n"
-                        f"Avatar URL: {info.avatar_url}\n"
-                        f"Default Avatar URL: {info.default_avatar_url}\n"
-                        f"Discriminator: {info.discriminator}\n"
-                        f"Flags: {info.flags}\n"
-                        f"is Bot: {info.is_bot}\n"
-                        f"is System: {info.is_system}\n"
-                        f"Mention: {info.mention}```"
-                    )
+            await ctx.edit_last_response(
+                (
+                    f"Username: {info.username}\n"
+                    f"Avatar Hash: {info.avatar_hash}\n"
+                    f"Avatar URL: {info.avatar_url}\n"
+                    f"Default Avatar URL: {info.default_avatar_url}\n"
+                    f"Discriminator: {info.discriminator}\n"
+                    f"Flags: {info.flags}\n"
+                    f"is Bot: {info.is_bot}\n"
+                    f"is System: {info.is_system}\n"
+                    f"Mention: {info.mention}```"
                 )
-                return
+            )
+            return
         raise TypeError(
             f"This ID is invalid or of unknown type: {str_id}, length: {len(str_id)}"
         )
