@@ -13,8 +13,12 @@ from typing import Any, Awaitable, Callable
 SUPPORTED_DB = ("postgres://",)
 =======
 
+<<<<<<< HEAD
 SUPPORTED_DB = ["postgres://"]
 >>>>>>> 5bf9d73... feat: format str from automatically provisioned db
+=======
+SUPPORTED_DB = ("postgres://",)
+>>>>>>> bb08dcf... perf: optimize `format_db_url()`
 
 
 def format_db_url(database_url: str) -> str:
@@ -30,6 +34,7 @@ def format_db_url(database_url: str) -> str:
         str: A unique sequence of characters that identifies the database.
     """
 <<<<<<< HEAD
+<<<<<<< HEAD
     db_scheme = next(
         se_scheme if se_scheme in database_url else "" for se_scheme in SUPPORTED_DB
     )
@@ -41,15 +46,24 @@ def format_db_url(database_url: str) -> str:
             db_scheme = se_scheme
             break
 >>>>>>> 5bf9d73... feat: format str from automatically provisioned db
+=======
+    db_scheme = next(
+        se_scheme if se_scheme in database_url else "" for se_scheme in SUPPORTED_DB
+    )
+>>>>>>> bb08dcf... perf: optimize `format_db_url()`
 
     if not db_scheme:
         return database_url
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bb08dcf... perf: optimize `format_db_url()`
     if db_scheme == "postgres://":
         db_name = "postgresql://"
     else:
         db_name = db_scheme
+<<<<<<< HEAD
 
     return database_url.replace(
         db_scheme, f"""{db_name.replace("://", "+asyncpg://")}"""
@@ -104,6 +118,12 @@ def validate_cfg(config: dict[str, Any], valid: dict[str, Any]) -> None:
 
     return database_url.replace(db_scheme, f"{db_name}+asyncpg://")
 >>>>>>> 5bf9d73... feat: format str from automatically provisioned db
+=======
+
+    return database_url.replace(
+        db_scheme, f"""{db_name.replace("://", "+asyncpg://")}"""
+    )
+>>>>>>> bb08dcf... perf: optimize `format_db_url()`
 
 
 if __name__ == "__main__":
