@@ -6,7 +6,7 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 > Before you start, fork your own copy of SurPathHub/Dayong.
 
-> You may also perform the steps below directly on your copy of Dayong, which can be used to deploy changes automatically.
+> You may also perform the steps below directly on your copy of Dayong on GitHub, which can be used to deploy changes automatically.
 
 1. `git clone` Dayong to your local machine.
 
