@@ -98,6 +98,10 @@ def validate_cfg(config: dict[str, Any], valid: dict[str, Any]) -> None:
             )
 =======
     db_name = db_scheme.replace("://", "")
+
+    if db_name == "postgres":
+        db_name = db_name.replace("postgres", "postgresql")
+
     return database_url.replace(db_scheme, f"{db_name}+asyncpg://")
 >>>>>>> 5bf9d73... feat: format str from automatically provisioned db
 
