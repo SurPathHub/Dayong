@@ -5,11 +5,16 @@ dayong.utils
 This module provides useful functions that facilitate some of Dayong's routine
 operations.
 """
+<<<<<<< HEAD
 import asyncio
 import functools
 from typing import Any, Awaitable, Callable
 
 SUPPORTED_DB = ("postgres://",)
+=======
+
+SUPPORTED_DB = ["postgres://"]
+>>>>>>> 5bf9d73... feat: format str from automatically provisioned db
 
 
 def format_db_url(database_url: str) -> str:
@@ -24,13 +29,23 @@ def format_db_url(database_url: str) -> str:
     Returns:
         str: A unique sequence of characters that identifies the database.
     """
+<<<<<<< HEAD
     db_scheme = next(
         se_scheme if se_scheme in database_url else "" for se_scheme in SUPPORTED_DB
     )
+=======
+    db_scheme = ""
+
+    for se_scheme in SUPPORTED_DB:
+        if se_scheme in database_url:
+            db_scheme = se_scheme
+            break
+>>>>>>> 5bf9d73... feat: format str from automatically provisioned db
 
     if not db_scheme:
         return database_url
 
+<<<<<<< HEAD
     if db_scheme == "postgres://":
         db_name = "postgresql://"
     else:
@@ -81,6 +96,10 @@ def validate_cfg(config: dict[str, Any], valid: dict[str, Any]) -> None:
                 f'"{value}" in key {key} is the incorrect type'
                 f" {type(value)}, must be {valid[key]}",
             )
+=======
+    db_name = db_scheme.replace("://", "")
+    return database_url.replace(db_scheme, f"{db_name}+asyncpg://")
+>>>>>>> 5bf9d73... feat: format str from automatically provisioned db
 
 
 if __name__ == "__main__":
