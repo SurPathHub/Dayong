@@ -15,6 +15,7 @@ sqlmodel = "^0.0.4"
 asyncpg = "^0.24.0"
 uvloop = "^0.16.0"
 <<<<<<< HEAD
+<<<<<<< HEAD
 hikari = "^2.0.0.dev103"
 hikari-tanjun = "^2.1.1a1"
 rich = "^10.10.0"
@@ -28,6 +29,9 @@ asyncpg = "^0.24.0"
 >>>>>>> 89e51bc... feat: moderate anon messages on sql database
 =======
 hikari = "^2.0.0-alpha.101"
+=======
+hikari = "^2.0.0-alpha.102"
+>>>>>>> 6d3a492... build: bump hikari version
 hikari-tanjun = "^2.0.0-alpha.4"
 rich = "^10.10.0"
 <<<<<<< HEAD
