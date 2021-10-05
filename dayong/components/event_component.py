@@ -29,14 +29,20 @@ async def greet_new_member(
             is a registered type dependency and is injected by the client.
     """
     embeddings = config.embeddings["new_member_greetings"]
+    wc_channels: list[str] = []
     wc_channel: Optional[hikari.TextableChannel] = None
     channels = await event.app.rest.fetch_guild_channels(event.guild_id)
 
-    if isinstance(channels, list):
-        channels.sort(key=len)
+    # Collect welcome channels.
+    for channel in channels:
+        if channel.name is not None and "welcome" in channel.name:
+            wc_channels.append(channel.name)
+
+    if wc_channels:
+        wc_channels.sort(key=len)
 
     for channel in channels:
-        if "welcome" in str(channel.name):
+        if wc_channels[0] == channel.name:
             wc_channel = (
                 wch
                 if isinstance(
@@ -45,9 +51,8 @@ async def greet_new_member(
                 )
                 else None
             )
-            break
 
-    if wc_channel:
+    if wc_channel is not None and isinstance(embeddings, dict):
         embed = hikari.Embed(
             description=embeddings["description"].format(
                 hikari.OwnGuild.name,

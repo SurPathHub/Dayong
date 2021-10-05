@@ -7,6 +7,7 @@ Initial setup and configuration logic.
 """
 import json
 import os
+from typing import Any, Union
 
 from pydantic import BaseModel
 
@@ -19,7 +20,7 @@ class DayongConfig(BaseModel):
     bot_prefix: str
     bot_token: str
     database_uri: str
-    embeddings: dict
+    embeddings: dict[str, Union[str, dict[str, Any]]]
     guild_id: int
 
     @classmethod
@@ -28,7 +29,7 @@ class DayongConfig(BaseModel):
         bot_prefix: str,
         bot_token: str,
         database_uri: str,
-        embeddings: dict,
+        embeddings: dict[str, Union[str, dict[str, Any]]],
         guild_id: int,
     ) -> "DayongConfig":
         """Construct an instance of `dayong.configs.DayongConfig`.
