@@ -6,7 +6,7 @@ This module provides useful functions that facilitate some of Dayong's routine
 operations.
 """
 
-SUPPORTED_DB = ["postgres://"]
+SUPPORTED_DB = ("postgres://",)
 
 
 def format_db_url(database_url: str) -> str:
@@ -21,22 +21,21 @@ def format_db_url(database_url: str) -> str:
     Returns:
         str: A unique sequence of characters that identifies the database.
     """
-    db_scheme = ""
-
-    for se_scheme in SUPPORTED_DB:
-        if se_scheme in database_url:
-            db_scheme = se_scheme
-            break
+    db_scheme = next(
+        se_scheme if se_scheme in database_url else "" for se_scheme in SUPPORTED_DB
+    )
 
     if not db_scheme:
         return database_url
 
-    db_name = db_scheme.replace("://", "")
+    if db_scheme == "postgres://":
+        db_name = "postgresql://"
+    else:
+        db_name = db_scheme
 
-    if db_name == "postgres":
-        db_name = db_name.replace("postgres", "postgresql")
-
-    return database_url.replace(db_scheme, f"{db_name}+asyncpg://")
+    return database_url.replace(
+        db_scheme, f"""{db_name.replace("://", "+asyncpg://")}"""
+    )
 
 
 if __name__ == "__main__":
