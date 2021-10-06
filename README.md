@@ -1,6 +1,7 @@
 # Dayong
 ![License mit](https://img.shields.io/badge/license-MIT-brightgreen)
-![Python version](https://img.shields.io/badge/python-v3.9%20or%20above-red)
+[![Python version](https://img.shields.io/badge/python-3.9.7-blue.svg)](https://www.python.org/downloads/release/python-397/)
+![Codestyle](https://img.shields.io/badge/code%20style-black-black)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/SurPathHub/Dayong)
 
 Dayong is dedicated to helping Discord servers build and manage their communities.
