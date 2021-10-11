@@ -13,7 +13,7 @@ from sqlmodel import SQLModel, select
 from sqlmodel.engine.result import ScalarResult
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from dayong.configs import DayongConfig, DayongConfigLoader
+from dayong.configs import DayongConfig, DayongDynamicLoader
 from dayong.models import Message
 
 
@@ -35,14 +35,16 @@ class MessageDBImpl:
         the environment variables.
 
         Args:
-            config (DayongConfig, optional): [description]. Defaults to
+            config (DayongConfig, optional): A config interface. Defaults to
                 tanjun.injected(type=DayongConfig).
         """
         loop = asyncio.get_running_loop()
         self._conn = await loop.run_in_executor(
             None,
             create_async_engine,
-            config.database_uri if config.database_uri else DayongConfigLoader().load(),
+            config.database_uri
+            if config.database_uri
+            else DayongDynamicLoader().load(),
         )
 
     async def create_table(self) -> None:
