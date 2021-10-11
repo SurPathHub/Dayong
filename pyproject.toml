@@ -16,6 +16,7 @@ asyncpg = "^0.24.0"
 uvloop = "^0.16.0"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 hikari = "^2.0.0.dev103"
 hikari-tanjun = "^2.1.1a1"
 rich = "^10.10.0"
@@ -37,6 +38,10 @@ hikari-tanjun = "^2.0.0-alpha.4"
 =======
 hikari-tanjun = "^2.1.0a1"
 >>>>>>> 76677cb... fix: pass literal value to set_type_dependency rather than a callback
+=======
+hikari = "^2.0.0.dev103"
+hikari-tanjun = "^2.1.1a1"
+>>>>>>> 10aece0... build: bump minimum build dependencies
 rich = "^10.10.0"
 <<<<<<< HEAD
 >>>>>>> 4de878c... chore: rewrite codebase (#4)
