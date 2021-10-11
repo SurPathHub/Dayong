@@ -10,7 +10,7 @@ from pathlib import Path
 import hikari
 import tanjun
 
-from dayong.configs import DayongConfig, DayongConfigLoader
+from dayong.configs import DayongConfig, DayongDynamicLoader
 from dayong.impls import MessageDBImpl
 from dayong.interfaces import MessageDBProto
 from dayong.settings import BASE_DIR
@@ -18,7 +18,7 @@ from dayong.settings import BASE_DIR
 
 def run() -> None:
     """Run Dayong with configs and deps."""
-    loaded_config = DayongConfigLoader.load()
+    loaded_config = DayongDynamicLoader.load()
     bot = hikari.GatewayBot(
         loaded_config.bot_token,
         banner="dayong",
@@ -27,7 +27,7 @@ def run() -> None:
     database = MessageDBImpl()
     (
         tanjun.Client.from_gateway_bot(
-            bot, set_global_commands=hikari.Snowflake(loaded_config.guild_id)
+            bot, declare_global_commands=hikari.Snowflake(loaded_config.guild_id)
         )
         .load_modules(*Path(os.path.join(BASE_DIR, "components")).glob("*.py"))
         .add_prefix(loaded_config.bot_prefix)
