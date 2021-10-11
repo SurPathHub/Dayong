@@ -7,6 +7,7 @@ dayong.components.event_component
 Organization of events and event listeners.
 """
 from typing import Optional, Sequence
+<<<<<<< HEAD
 =======
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 =======
@@ -17,6 +18,8 @@ Organization of events and event listeners.
 """
 from typing import Optional
 >>>>>>> 0cf3e58... chore: use more aprop component names
+=======
+>>>>>>> 905dca6... perf: optimize command and event handling
 
 import hikari
 import tanjun
@@ -35,6 +38,9 @@ component = tanjun.Component()
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 905dca6... perf: optimize command and event handling
 async def get_channel(
     channels: Sequence[hikari.GuildChannel],
     channel_name: str,
@@ -59,6 +65,7 @@ async def get_channel(
     return target_channel
 
 
+<<<<<<< HEAD
 @component.with_listener(hikari.MemberCreateEvent)
 async def greet_new_member(
     event: hikari.MemberCreateEvent,
@@ -94,45 +101,33 @@ async def greet_new_member(
         )
 
 =======
+=======
+>>>>>>> 905dca6... perf: optimize command and event handling
 @component.with_listener(hikari.MemberCreateEvent)
 async def greet_new_member(
     event: hikari.MemberCreateEvent,
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
-    """Welcome new guild members.
-
-    This will dynamically search for welcome channels, sort the channels by name length
-    and send a greeting to the channel with the shortest name.
+    """Welcome new guild members. This will send a message greetings to a welcome
+    channel.
 
     Args:
         event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
             is a registered type dependency and is injected by the client.
+        config (DayongConfig, optional): An instance of `dayong.configs.DayongConfig`.
+            This is registered type dependency and is injected by the client. Defaults
+            to tanjun.injected(type=DayongConfig).
     """
     embeddings = config.embeddings["new_member_greetings"]
-    wc_channels: list[str] = []
-    wc_channel: Optional[hikari.TextableChannel] = None
     channels = await event.app.rest.fetch_guild_channels(event.guild_id)
+    wc_channel, wc_object = await get_channel(channels, "welcome")
 
-    # Collect welcome channels.
-    for channel in channels:
-        if channel.name is not None and "welcome" in channel.name:
-            wc_channels.append(channel.name)
+    if wc_channel and wc_object:
+        wc_txtable = await event.app.rest.fetch_channel(wc_object.id)
+    else:
+        wc_txtable = None
 
-    if wc_channels:
-        wc_channels.sort(key=len)
-
-    for channel in channels:
-        if wc_channels[0] == channel.name:
-            wc_channel = (
-                wch
-                if isinstance(
-                    (wch := await event.app.rest.fetch_channel(channel.id)),
-                    hikari.TextableChannel,
-                )
-                else None
-            )
-
-    if wc_channel is not None and isinstance(embeddings, dict):
+    if isinstance(wc_txtable, hikari.TextableChannel) and isinstance(embeddings, dict):
         embed = hikari.Embed(
             description=embeddings["description"].format(
                 hikari.OwnGuild.name,
@@ -141,7 +136,11 @@ async def greet_new_member(
             ),
             color=embeddings["color"],
         )
+<<<<<<< HEAD
 >>>>>>> 0cf3e58... chore: use more aprop component names
+=======
+
+>>>>>>> 905dca6... perf: optimize command and event handling
         for info in range(len(embeddings["greetings_field"])):
             inner_dict = embeddings["greetings_field"][info]
             embed.add_field(
@@ -151,10 +150,14 @@ async def greet_new_member(
             )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         await wc_txtable.send(embed)
 =======
         await wc_channel.send(embed)
 >>>>>>> 0cf3e58... chore: use more aprop component names
+=======
+        await wc_txtable.send(embed)
+>>>>>>> 905dca6... perf: optimize command and event handling
 
 
 @tanjun.as_loader
