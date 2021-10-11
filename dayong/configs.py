@@ -7,12 +7,55 @@ Initial setup and configuration logic.
 """
 import json
 import os
-from typing import Any, Union
+from typing import Any, Dict, Union
+from warnings import warn
 
 from pydantic import BaseModel
 
 from dayong.settings import CONFIG_FILE
 from dayong.utils import format_db_url
+
+VALID_CONFIG = {
+    "guild_id": int,
+    "bot_prefix": str,
+    "embeddings": {
+        "new_member_greetings": {
+            "readme_channel_id": int,
+            "description": str,
+            "color": int,
+            "greetings_field": {
+                "0": {
+                    "name": str,
+                    "value": str
+                },
+                "1": {
+                    "name": str,
+                    "value": str
+                },
+                "2": {
+                    "name": str,
+                    "value": str
+                },
+                "3": {
+                    "name": str,
+                    "value": str
+                },
+                "4": {
+                    "name": str,
+                    "value": str
+                },
+                "5": {
+                    "name": str,
+                    "value": str
+                }
+            }
+        },
+        "anonymous_message": {
+            "title": str,
+            "color": int
+        }
+    }
+}
 
 
 class DayongConfig(BaseModel):
@@ -58,6 +101,7 @@ class DayongConfigLoader:
         """Load comments, flags, settings, and paths from config file."""
         with open(CONFIG_FILE, encoding="utf-8") as cfp:
             config = dict(json.load(cfp))
+            self.validate_cfg(config, VALID_CONFIG)
         self.bot_prefix = config["bot_prefix"]
         self.guild_id = config["guild_id"]
         self.embeddings = config["embeddings"]
@@ -76,3 +120,24 @@ class DayongConfigLoader:
         """
         loader = DayongConfigLoader().__dict__
         return DayongConfig.load(*tuple(loader[key] for key in sorted(loader.keys())))
+
+    def validate_cfg(self, config: Dict[Any, Any], valid: Dict[Any, Any]) -> None:
+        config_copy = config.copy()
+        for key, value in list(config_copy.items()):
+            if type(value) is dict:
+                try:
+                    self.validate_cfg(config_copy[key], valid[key])
+                except KeyError:
+                    raise SyntaxError(f"key {key} is not in VALID_CONFIG")
+            elif type(value) is not valid[key]:
+                warn(
+                    f"Value {value} in key {key} is the incorrect type"
+                    f" ({type(value)}), must be ({valid[key]})",
+                    SyntaxWarning
+                )
+            del config_copy[key]
+        if config_copy != {}:
+            warn(
+                f"keys: {list(config_copy.keys())} are invalid keys",
+                SyntaxWarning
+            )
