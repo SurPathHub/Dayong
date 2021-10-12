@@ -42,6 +42,8 @@ class TaskManager:
         Returns:
             tuple[str, Task[Any]]: The task name and `asyncio.Task` object.
         """
+        if task_name in self.tasks:
+            raise RuntimeError
 
         async def wrapped_coro():
             try:
