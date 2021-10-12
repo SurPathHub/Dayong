@@ -128,6 +128,7 @@ async def share_content(
     try:
         task_nm, task_fn, interval = await assign_task(source, interval)
     except NotImplementedError:
+<<<<<<< HEAD
         description = [f"`{provider}`" for provider in CONTENT_PROVIDER]
         await ctx.respond(f"Oops! `{source}` isn't available.")
         await ctx.respond(
@@ -135,6 +136,12 @@ async def share_content(
                 title="Supported content providers:",
                 description="\n".join(description),
             )
+=======
+        await ctx.respond(
+            f"Oops! `{source}` isn't available yet. "
+            "Request it to be added by posting an issue here: "
+            "https://github.com/SurPathHub/Dayong/issues"
+>>>>>>> c29273c... fix: handle NotImplementedError
         )
         return
 
