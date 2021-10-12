@@ -24,8 +24,9 @@ async def _medium_daily_digest(
     """Extend `medium_daily_digest` and execute
     `dayong.tasks.get_medium_daily_digest` as a coro.
 
-    This function is tasked to retrieve medium content on email subscription and
-    deliver the content every 30 seconds. 30 seconds is set to avoid rate-limiting.
+    This function is tasked to send medium content on email subscription and will send
+    a url to an article or blog post for every 30 seconds. 30 seconds is set to avoid
+    rate-limiting
 
     Args:
         ctx (tanjun.abc.SlashContext): Slash command specific context.
@@ -53,8 +54,7 @@ async def _medium_daily_digest(
 
 async def assign_task(
     source: str,
-    interval: Union[int, float],
-) -> tuple[str, Callable[..., Coroutine[Any, Any, Any]], float]:
+) -> tuple[str, Callable[..., Coroutine[Any, Any, Any]]]:
     """Get the coroutine for the given task specified by source.
 
     Args:
@@ -68,33 +68,27 @@ async def assign_task(
         tuple[str, Callable[..., Coroutine[Any, Any, Any]]]: A tuple containing the
             task name and the callable for the task.
     """
-    task_cstr = {
-        "medium": (
-            _medium_daily_digest.__name__,
-            _medium_daily_digest,
-            interval if interval >= 86400.0 else 86400.0,
-        ),
-    }
-    interval = float(interval)
+    if source == "medium":
+        task_nm = _medium_daily_digest.__name__
+        task_fn = _medium_daily_digest
+    elif source == "dev.to":
+        raise NotImplementedError
+    else:
+        raise ValueError
 
-    try:
-        task_nm, task_fn, interval = task_cstr[source]
-    except KeyError as key_err:
-        raise NotImplementedError from key_err
-
-    return task_nm, task_fn, interval
+    return task_nm, task_fn
 
 
 @component.with_command
 @tanjun.with_author_permission_check(128)
-@tanjun.with_str_slash_option("action", '"start" or "stop"')
 @tanjun.with_str_slash_option(
     "interval",
     (
-        "wait time in seconds until next content delivery. "
-        "email sub-based content should be >= 86400.0 (24 hours)"
+        "the wait time in seconds until the next content delivery "
+        "(e.g. 86400.0 which is one day in seconds)"
     ),
 )
+@tanjun.with_str_slash_option("action", '"start" or "stop"')
 @tanjun.with_str_slash_option("source", "i.e. medium or dev.to)")
 @tanjun.as_slash_command(
     "content", "fetch content on email subscription, from a microservice, or API"
@@ -106,10 +100,7 @@ async def share_content(
     interval: Union[float, int],
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
-    """Fetch content on email subscription, from a microservice, or API.
-
-    An email account is required for getting content on email subscription. Special
-    keys may be required for using microservices and/or APIs.
+    """Command for fetching medium content on email subscription.
 
     Args:
         ctx (tanjun.abc.Context): Interface of a context.
@@ -117,8 +108,9 @@ async def share_content(
         config (DayongConfig, optional): An instance of `dayong.configs.DayongConfig`.
             Defaults to tanjun.injected(type=DayongConfig).
     """
+    interval = float(interval)
     action = action.lower()
-    task_nm, task_fn, interval = await assign_task(source, interval)
+    task_nm, task_fn = await assign_task(source)
 
     if action == "start":
         await ctx.respond("I'll comeback here to deliver articles and blog posts 📰")
