@@ -10,112 +10,23 @@ license = "MIT"
 python = "3.9.7"
 python-dotenv = "^0.19.0"
 sqlmodel = "^0.0.4"
-<<<<<<< HEAD
-<<<<<<< HEAD
 asyncpg = "^0.24.0"
 uvloop = "^0.16.0"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 hikari = "^2.0.0.dev103"
 hikari-tanjun = "^2.1.1a1"
 rich = "^10.10.0"
 pragmail = "^0.2.4"
 celery = {extras = ["redis"], version = "^5.1.2"}
 celery-redbeat = "^2.0.0"
-=======
->>>>>>> 6df8a76... build: update build dependencies
-=======
-asyncpg = "^0.24.0"
->>>>>>> 89e51bc... feat: moderate anon messages on sql database
-=======
-hikari = "^2.0.0-alpha.101"
-=======
-hikari = "^2.0.0-alpha.102"
-<<<<<<< HEAD
->>>>>>> 6d3a492... build: bump hikari version
-hikari-tanjun = "^2.0.0-alpha.4"
-=======
-hikari-tanjun = "^2.1.0a1"
->>>>>>> 76677cb... fix: pass literal value to set_type_dependency rather than a callback
-=======
-hikari = "^2.0.0.dev103"
-hikari-tanjun = "^2.1.1a1"
->>>>>>> 10aece0... build: bump minimum build dependencies
-rich = "^10.10.0"
-<<<<<<< HEAD
->>>>>>> 4de878c... chore: rewrite codebase (#4)
-=======
-pragmail = "^0.2.4"
-celery = {extras = ["redis"], version = "^5.1.2"}
-celery-redbeat = "^2.0.0"
->>>>>>> 57807cc... build: update sections and dependencies
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
 isort = "^5.9.3"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 57807cc... build: update sections and dependencies
 flake8 = "^3.9.2"
 pylint = "^2.10.2"
 pytest = "^6.2.4"
 pre-commit = "^2.14.0"
 pyright = "^0.0.10"
-<<<<<<< HEAD
-
-[tool.poetry.extras]
-flake8-extras = [
-    # Flake8 plugins
-    # Ref: https://github.com/DmytroLitvinov/awesome-flake8-extensions
-
-    "flake8-black==0.2.3",              # runs black
-    "flake8-broken-line==0.3.0",        # forbey "\" linebreaks
-    "flake8-builtins==1.5.3",           # builtin shadowing checks
-    "flake8-coding==1.3.2",             # coding magic-comment detection
-    "flake8-comprehensions==3.6.1",     # comprehension checks
-    "flake8-deprecated==1.3",           # deprecated call checks
-    "flake8-docstrings==1.6.0",         # pydocstyle support
-    "flake8-executable==2.1.1",         # shebangs
-    "flake8-fixme==1.1.1",              # "FIXME" and "TODO"counter
-    "flake8-functions==0.0.6",          # function linting
-    "flake8-if-statements==0.1.0",      # condition linting
-    "flake8-isort==4.0.0",              # runs isort
-    "flake8-mutable==1.2.0",            # mutable default argument detection
-    "flake8-pep3101==1.3.0",            # new-style format strings only
-    "flake8-print==4.0.0",              # complain about print statements in code
-    "flake8-printf-formatting==1.1.2",  # forbey printf-style python2 string formatting
-    "flake8-pytest-style==1.5.0",       # pytest checks
-    "flake8-raise==0.0.5",              # exception raising linting
-]
-
-[tool.black]
-target-version = ["py39"]
-
-[tool.isort]
-profile = "black"
-
-[tool.pyright]
-typeCheckingMode = "strict"
-useLibraryCodeForTypes = true
-
-include = ["dayong"]
-exclude = ["**/__pycache__"]
-
-reportMissingImports = true
-reportMissingTypeStubs = false
-
-pythonVersion = "3.9"
-pythonPlatform = "Linux"
-
-[tool.poetry.extras]
-=======
->>>>>>> 8616820... chore: follow up rewrite
-flake8 = [
-    "flake8==3.9.2",
-=======
->>>>>>> 57807cc... build: update sections and dependencies
 
 [tool.poetry.extras]
 flake8-extras = [

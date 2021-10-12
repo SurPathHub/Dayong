@@ -1,7 +1,6 @@
 """
 dayong.components.privilege_component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Message commands and utilites for guild members with permissions.
 """
 import time
@@ -23,7 +22,6 @@ component = tanjun.Component()
 async def ping_command(ctx: tanjun.abc.Context) -> None:
     """Respond with pong and the time it takes for data to be transferred beetween
     Dayong and Discord's WebSocket server and REST API endpoints.
-
     Args:
         ctx (Context): Instantiated subclass of `tanjun.abc.Context`.
     """
@@ -49,7 +47,6 @@ async def get_user_info(
     database: MessageDBProto = tanjun.injected(type=MessageDBProto),
 ) -> None:
     """Reveal information on a user."
-
     Args:
         ctx (tanjun.abc.Context): Instance of `tanjun.abc.Context`.
         str_id (str): This can be a hash or the object or the ID of an
@@ -106,7 +103,6 @@ async def get_user_info(
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
     """The loader for this component.
-
     Args:
         client (tanjun.Client): The client instance that will load this module.
     """
