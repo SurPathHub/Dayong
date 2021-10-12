@@ -7,7 +7,6 @@ Scheduled tasks that run in the background.
 import asyncio
 from typing import Any, Callable, Coroutine, NoReturn, Union
 
-import hikari
 import tanjun
 
 from dayong.configs import DayongConfig
@@ -17,11 +16,6 @@ from dayong.tasks.manager import TaskManager
 component = tanjun.Component()
 task_manager = TaskManager()
 ext_instance: dict[str, Any] = {}
-
-# Available 3rd party content providers.
-CONTENT_PROVIDER = {
-    "medium",
-}
 
 
 async def _medium_daily_digest(
@@ -81,6 +75,7 @@ async def assign_task(
             interval if interval >= 86400.0 else 86400.0,
         ),
     }
+    interval = float(interval)
 
     try:
         task_nm, task_fn, interval = task_cstr[source]
@@ -99,9 +94,8 @@ async def assign_task(
         "wait time in seconds until next content delivery. "
         "email sub-based content should be >= 86400.0 (24H)"
     ),
-    converters=float,
 )
-@tanjun.with_str_slash_option("source", "e.g. medium or dev.to")
+@tanjun.with_str_slash_option("source", "i.e. medium or dev.to)")
 @tanjun.as_slash_command(
     "content", "fetch content on email subscription, from a microservice, or API"
 )
@@ -109,7 +103,7 @@ async def share_content(
     ctx: tanjun.abc.Context,
     source: str,
     action: str,
-    interval: float,
+    interval: Union[float, int],
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
     """Fetch content on email subscription, from a microservice, or API.
@@ -127,33 +121,29 @@ async def share_content(
     try:
         task_nm, task_fn, interval = await assign_task(source, interval)
     except NotImplementedError:
-        description = [f"`{provider}`" for provider in CONTENT_PROVIDER]
-        await ctx.respond(f"Oops! `{source}` isn't available.")
         await ctx.respond(
-            hikari.Embed(
-                title="Supported content providers:",
-                description="\n".join(description),
-            )
+            f"Oops! `{source}` isn't available yet. "
+            "Request it to be added by posting an issue here: "
+            "https://github.com/SurPathHub/Dayong/issues"
         )
         return
 
     if action == "start":
-        try:
-            await task_manager.start_task(
-                task_fn,
-                task_nm,
-                interval,
-                ctx,
-                config,
-            )
-            await ctx.respond("I'll comeback here to deliver articles and blog posts 📰")
-        except RuntimeError:
-            await ctx.respond("I'm already doing that 👌")
+        await ctx.respond("I'll comeback here to deliver articles and blog posts 📰")
+        await task_manager.start_task(
+            task_fn,
+            task_nm,
+            interval,
+            ctx,
+            config,
+        )
+    elif "medium_daily_digest" in task_manager.tasks:
+        await ctx.respond("I'm already doing that 👌")
     elif action == "stop":
         task_manager.get_task(task_nm).cancel()
     else:
         await ctx.respond(
-            f"This doesn't seem to be a valid command argument: `{action}` 🤔"
+            "I'm not sure what you mean 🤔 Did you enter a valid command argument ❓"
         )
 
 
