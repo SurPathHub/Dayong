@@ -18,7 +18,7 @@ component = tanjun.Component()
 
 
 @component.with_command
-@tanjun.with_author_permission_check(128)
+@tanjun.with_author_permission_check(32)
 @tanjun.as_message_command("ping")
 async def ping_command(ctx: tanjun.abc.Context) -> None:
     """Respond with pong and the time it takes for data to be transferred beetween
@@ -39,7 +39,7 @@ async def ping_command(ctx: tanjun.abc.Context) -> None:
 
 
 @component.with_command
-@tanjun.with_author_permission_check(128)
+@tanjun.with_author_permission_check(6)
 @tanjun.with_argument("id")
 @tanjun.with_parser
 @tanjun.as_message_command("whois")
