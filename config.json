@@ -1,7 +1,6 @@
 {
   "guild_id": 790101969413865472,
   "bot_prefix": ".",
-  "imap_host": "imap.gmail.com",
   "embeddings": {
     "new_member_greetings": {
       "readme_channel_id": 790110106809401344,
