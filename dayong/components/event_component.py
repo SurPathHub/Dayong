@@ -1,57 +1,27 @@
 """
 dayong.components.event_component
-<<<<<<< HEAD
-<<<<<<< HEAD
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Organization of events and event listeners.
 """
 from typing import Optional, Sequence
-<<<<<<< HEAD
-=======
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-=======
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>>>>>> a34eab6... feat: add functional slash command
-
-Organization of events and event listeners.
-"""
-from typing import Optional
->>>>>>> 0cf3e58... chore: use more aprop component names
-=======
->>>>>>> 905dca6... perf: optimize command and event handling
 
 import hikari
 import tanjun
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 from dayong.configs import DayongConfig
-=======
-from dayong.settings import CONFIG
->>>>>>> 0cf3e58... chore: use more aprop component names
-=======
-from dayong.configs import DayongConfig
->>>>>>> a34eab6... feat: add functional slash command
 
 component = tanjun.Component()
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 905dca6... perf: optimize command and event handling
 async def get_channel(
     channels: Sequence[hikari.GuildChannel],
     channel_name: str,
 ) -> tuple[str, Optional[hikari.GuildChannel]]:
     """Search for channels use the first channel that matches the specified channel
     name.
-
     Args:
         channels (Sequence[hikari.GuildChannel]): An instance of `hikari.GuildChannel`.
         channel_name (str): The name of the target channel.
-
     Returns:
         list[str]: A list of channel names that matched the specified channel name.
     """
@@ -65,7 +35,6 @@ async def get_channel(
     return target_channel
 
 
-<<<<<<< HEAD
 @component.with_listener(hikari.MemberCreateEvent)
 async def greet_new_member(
     event: hikari.MemberCreateEvent,
@@ -73,7 +42,6 @@ async def greet_new_member(
 ) -> None:
     """Welcome new guild members. This will send a message greetings to a welcome
     channel.
-
     Args:
         event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
             is a registered type dependency and is injected by the client.
@@ -100,47 +68,6 @@ async def greet_new_member(
             color=embeddings["color"],
         )
 
-=======
-=======
->>>>>>> 905dca6... perf: optimize command and event handling
-@component.with_listener(hikari.MemberCreateEvent)
-async def greet_new_member(
-    event: hikari.MemberCreateEvent,
-    config: DayongConfig = tanjun.injected(type=DayongConfig),
-) -> None:
-    """Welcome new guild members. This will send a message greetings to a welcome
-    channel.
-
-    Args:
-        event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
-            is a registered type dependency and is injected by the client.
-        config (DayongConfig, optional): An instance of `dayong.configs.DayongConfig`.
-            This is registered type dependency and is injected by the client. Defaults
-            to tanjun.injected(type=DayongConfig).
-    """
-    embeddings = config.embeddings["new_member_greetings"]
-    channels = await event.app.rest.fetch_guild_channels(event.guild_id)
-    wc_channel, wc_object = await get_channel(channels, "welcome")
-
-    if wc_channel and wc_object:
-        wc_txtable = await event.app.rest.fetch_channel(wc_object.id)
-    else:
-        wc_txtable = None
-
-    if isinstance(wc_txtable, hikari.TextableChannel) and isinstance(embeddings, dict):
-        embed = hikari.Embed(
-            description=embeddings["description"].format(
-                hikari.OwnGuild.name,
-                event.member.id,
-                embeddings["readme_channel_id"],
-            ),
-            color=embeddings["color"],
-        )
-<<<<<<< HEAD
->>>>>>> 0cf3e58... chore: use more aprop component names
-=======
-
->>>>>>> 905dca6... perf: optimize command and event handling
         for info in range(len(embeddings["greetings_field"])):
             inner_dict = embeddings["greetings_field"][info]
             embed.add_field(
@@ -149,32 +76,13 @@ async def greet_new_member(
                 inline=True,
             )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         await wc_txtable.send(embed)
-=======
-        await wc_channel.send(embed)
->>>>>>> 0cf3e58... chore: use more aprop component names
-=======
-        await wc_txtable.send(embed)
->>>>>>> 905dca6... perf: optimize command and event handling
 
 
 @tanjun.as_loader
 def load_examples(client: tanjun.Client) -> None:
-<<<<<<< HEAD
-<<<<<<< HEAD
     """The loader for this component.
-=======
-    """The loader this component.
->>>>>>> f22a397... refactor: apply linter on components
-
     Args:
         client (tanjun.Client): The client instance that will load this module.
     """
-<<<<<<< HEAD
-=======
->>>>>>> 0cf3e58... chore: use more aprop component names
-=======
->>>>>>> f22a397... refactor: apply linter on components
     client.add_component(component.copy())

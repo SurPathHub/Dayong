@@ -9,26 +9,8 @@ jobs:
     - name: Install Python 
       uses: actions/setup-python@v2
       with:
-<<<<<<< HEAD
-<<<<<<< HEAD
-          python-version: 3.8
-    - name: flake8 Lint
-      uses: py-actions/flake8@v1
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 9f0994a... Update lint.yml
           python-version: 3.9
     - name: flake8 Lint
       uses: py-actions/flake8@v1
       with:
         max-line-length: "88"
-<<<<<<< HEAD
-=======
-          python-version: 3.8
-    - name: flake8 Lint
-      uses: py-actions/flake8@v1
->>>>>>> a926335... Create lint.yml
->>>>>>> a122801... Create lint.yml
-=======
->>>>>>> 9f0994a... Update lint.yml
