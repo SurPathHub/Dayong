@@ -24,8 +24,8 @@ async def _medium_daily_digest(
     """Extend `medium_daily_digest` and execute
     `dayong.tasks.get_medium_daily_digest` as a coro.
 
-    This coroutine is tasked to retrieve medium content on email subscription and
-    deliver fetched content every 30 seconds. 30 seconds is set to avoid rate-limiting.
+    This function is tasked to retrieve medium content on email subscription and
+    deliver the content every 30 seconds. 30 seconds is set to avoid rate-limiting.
 
     Args:
         ctx (tanjun.abc.SlashContext): Slash command specific context.
@@ -68,7 +68,6 @@ async def assign_task(
         tuple[str, Callable[..., Coroutine[Any, Any, Any]]]: A tuple containing the
             task name and the callable for the task.
     """
-    interval = float(interval)
     task_cstr = {
         "medium": (
             _medium_daily_digest.__name__,
@@ -93,7 +92,7 @@ async def assign_task(
     "interval",
     (
         "wait time in seconds until next content delivery. "
-        "email sub-based content should be >= 86400.0 (24H)"
+        "email sub-based content should be >= 86400.0 (24 hours)"
     ),
 )
 @tanjun.with_str_slash_option("source", "i.e. medium or dev.to)")
@@ -119,15 +118,7 @@ async def share_content(
             Defaults to tanjun.injected(type=DayongConfig).
     """
     action = action.lower()
-    try:
-        task_nm, task_fn, interval = await assign_task(source, interval)
-    except NotImplementedError:
-        await ctx.respond(
-            f"Oops! `{source}` isn't available yet. "
-            "Request it to be added by posting an issue here: "
-            "https://github.com/SurPathHub/Dayong/issues"
-        )
-        return
+    task_nm, task_fn, interval = await assign_task(source, interval)
 
     if action == "start":
         await ctx.respond("I'll comeback here to deliver articles and blog posts 📰")
