@@ -75,11 +75,13 @@ def validate_cfg(config: dict[str, Any], valid: dict[str, Any]) -> None:
             try:
                 validate_cfg(config[key], valid[key])
             except KeyError as key_err:
-                raise KeyError(f'key "{key}" is not a valid configuration') from key_err
+                raise KeyError(
+                    f"""key "{key}" is not a valid configuration"""
+                ) from key_err
         elif not isinstance(value, valid[key]):
             raise TypeError(
-                f'"{value}" in key {key} is the incorrect type'
-                f" {type(value)}, must be {valid[key]}",
+                f""""{value}" in key {key} is the incorrect type """
+                f"{type(value)}, must be {valid[key]}",
             )
 
 
