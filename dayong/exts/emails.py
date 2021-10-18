@@ -1,18 +1,22 @@
+# pylint: disable=W0231
 """
 dayong.tasks.emails
 ~~~~~~~~~~~~~~~~~~~
 
 Module in charge of retrieving content on email subscription.
 """
+import asyncio
 import re
 from typing import Any, Optional, Union
 
 from pragmail import Client, utils
+from pragmail.exceptions import IMAP4Error
 
-from dayong.utils import run_in_executor
+from dayong.exts.contents import ThirdPartyContent
+from dayong.interfaces import Client as _Client
 
 
-class EmailClient:
+class EmailClient(_Client):
     """Represents a client for retrieving email subscriptions."""
 
     def __init__(
@@ -26,8 +30,8 @@ class EmailClient:
         self.email = email
         self.password = password
         self.max_retries = max_retries if max_retries is not None else 5
-        self._client = Client(self.host)
-        self._client.login(self.email, self.password)
+        self._client: Optional[Client] = None
+        self.connect_to_server()
 
     @staticmethod
     def extract_mime_url(msg: bytes) -> Any:
@@ -86,14 +90,24 @@ class EmailClient:
 
         return message_body
 
-    def reconnect(self) -> None:
-        """Reconnect to the server."""
-        self._client.logout()
-        self._client = Client(self.host)
-        self._client.login(self.email, self.password)
+    @staticmethod
+    async def get_content(*args: Any, **kwargs: Any):
+        message_body = EmailClient.parse_message_data(args[0])
+        return ThirdPartyContent(EmailClient.extract_mime_url(message_body))
 
-    @run_in_executor
-    def get_medium_daily_digest(self) -> list[str]:
+    def connect_to_server(self) -> None:
+        """Connect to the mail server."""
+        try:
+            if self._client:
+                self._client.logout()
+
+            self._client = Client(self.host)
+            self._client.login(self.email, self.password)
+            self._client.select("INBOX")
+        except IMAP4Error as emap_err:
+            raise ValueError from emap_err
+
+    async def get_medium_daily_digest(self) -> ThirdPartyContent:
         """Retrieve relevant content URLs from the latest Medium Daily Digest message.
 
         Raises:
@@ -102,48 +116,18 @@ class EmailClient:
         Returns:
             list[str]: List of url strings.
         """
-        response, _ = self._client.select("INBOX")
-
-        if not response == "OK" and self.max_retries:
-            self.max_retries -= 1
-            self.reconnect()
-            self.get_medium_daily_digest()
-
-        response, message = self._client.latest_message("Medium Daily Digest")
-
-        if not response == "OK":
-            raise ValueError(f"{repr(self._client)} returned {response=}")
-
-        message_body = EmailClient.parse_message_data(message)
-        return EmailClient.extract_mime_url(message_body)
-
-    @classmethod
-    def client(
-        cls,
-        host: str,
-        email: str,
-        password: str,
-        max_retries: Optional[int] = None,
-    ) -> "EmailClient":
-        """Return an instance of `dayong.exts.email.Client`.
-
-        Args:
-            host (str): The IMAP server URL.
-            email (str): The subscriber's email address.
-            password (str): The email account's password.
-            max_retries (Optional[int], optional): The number of reconnection attempts.
-                Defaults to None.
-
-        Returns:
-            EmailClient: A `dayong.exts.EmailClient` instance.
-        """
-        return cls(
-            host=host,
-            email=email,
-            password=password,
-            max_retries=max_retries,
+        assert self._client
+        loop = asyncio.get_running_loop()
+        response, message = await loop.run_in_executor(
+            None, self._client.latest_message, "Medium Daily Digest"
         )
 
+        if response != "OK":
+            if self.max_retries > 0:
+                self.max_retries -= 1
+                await loop.run_in_executor(None, self.connect_to_server)
+                await loop.run_in_executor(None, self.get_medium_daily_digest)
+            else:
+                raise ValueError(f"{repr(self._client)} returned {response=}")
 
-if __name__ == "__main__":
-    pass
+        return await EmailClient.get_content(message)

@@ -26,3 +26,9 @@ install(theme="monokai")
 BASE_DIR = Path(__file__).resolve().parent
 ROOT_DIR = BASE_DIR.parent
 CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
+
+# Available 3rd party content providers.
+CONTENT_PROVIDER = {
+    "medium": "https://medium.com",
+    "dev": "https://dev.to",
+}

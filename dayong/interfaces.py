@@ -14,20 +14,17 @@ from sqlmodel.engine.result import ScalarResult
 from dayong.models import Message
 
 
-class GuildConfig(Protocol):
-    """Protocol class for guild configuration."""
+class Client(Protocol):
+    """Protocol of a client class supporting any third-party service."""
 
-    @property
-    def prefixes(self) -> list[str]:
-        """Prefixes used by the guild.
+    @staticmethod
+    async def get_content(*args: Any, **kwargs: Any) -> Any:
+        """Parse response data from a web request for specific content or detail.
 
         Returns:
-            list[str]: Sequence of prefixes.
+            Any: Part of the response data.
         """
-
-
-class UserInfo(Protocol):
-    """Protocol for user information."""
+        raise NotImplementedError
 
 
 class MessageDBProto(Protocol):
@@ -37,6 +34,7 @@ class MessageDBProto(Protocol):
         """Create physical message tables for all the message table models stored in
         `SQLModel.metadata`.
         """
+        raise NotImplementedError
 
     async def add_row(self, table_model_object: Message) -> None:
         """Add a row to the message table.
@@ -45,6 +43,7 @@ class MessageDBProto(Protocol):
             table_model_object (Message): An instance of `dayong.models.Message` or one
             of its subclasses.
         """
+        raise NotImplementedError
 
     async def remove_row(self, table_model_object: Message) -> None:
         """Remove a row from the message table.
@@ -53,8 +52,9 @@ class MessageDBProto(Protocol):
             table_model_object (Message): An instance of `dayong.models.Message` or one
             of its subclasses.
         """
+        raise NotImplementedError
 
-    async def get_row(self, tabe_model_object: Message) -> ScalarResult[Any]:
+    async def get_row(self, table_model_object: Message) -> ScalarResult[Any]:
         """Get data from the message table.
 
         Args:
@@ -64,3 +64,4 @@ class MessageDBProto(Protocol):
             ScalarResult: An `ScalarResult` object which contains a scalar value or
                 sequence of scalar values.
         """
+        raise NotImplementedError
