@@ -19,6 +19,11 @@ from dayong.interfaces import Client as _Client
 class EmailClient(_Client):
     """Represents a client for retrieving email subscriptions."""
 
+    host: str
+    email: str
+    password: str
+    max_retries: int = 5
+
     def __init__(
         self,
         host: str,
@@ -29,7 +34,7 @@ class EmailClient(_Client):
         self.host = host
         self.email = email
         self.password = password
-        self.max_retries = max_retries if max_retries is not None else 5
+        self.max_retries = max_retries if max_retries is not None else self.max_retries
         self._client: Optional[Client] = None
         self.connect_to_server()
 
