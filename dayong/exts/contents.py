@@ -3,12 +3,13 @@
 dayong.exts.contents
 ~~~~~~~~~~~~~~~~~~~~
 
+This module contains classes and helpers for handling contents from different sources.
 """
 from typing import Any, Optional
 
 
 class ThirdPartyContent:
-    """Represents content from third-party service/content providers."""
+    """Represents content from third-party service/content provider."""
 
     def __init__(self, content: Any, constraint: Optional[Any] = None) -> None:
         if isinstance(content, list):
