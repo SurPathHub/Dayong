@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dayong"
-version = "0.2.0"
+version = "0.2.1"
 description = "Discord Bot for SurPath Hub's server"
 readme = "README.md"
 authors = ["Your Name <you@example.com>"]
