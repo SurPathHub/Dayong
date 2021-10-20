@@ -5,5 +5,5 @@ Here is the list of 3rd party service providers.
 #### Email Subscription
 - [medium.com](https://medium.com/)
 
-#### API
+#### Web API
 - [dev.to](http://dev.to/)

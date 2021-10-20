@@ -4,3 +4,4 @@
 * [Setup](./setup.md)
 * [Commands](./commands.md)
 * [Events](./events.md)
+* [Vendors](./vendors.md)
