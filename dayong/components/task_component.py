@@ -140,7 +140,7 @@ async def assign_task(
         tuple[str, Callable[..., Coroutine[Any, Any, Any]]]: A tuple containing the
             task name and the callable for the task.
     """
-    # interval = interval if interval >= 86400.0 else 86400.0
+    interval = interval if interval >= 86400.0 else 86400.0
     task_cstr = {
         "medium": (
             _medium_daily_digest.__name__,
