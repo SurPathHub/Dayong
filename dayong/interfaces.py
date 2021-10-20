@@ -7,6 +7,7 @@ Interfaces used within Dayong.
 
 NOTE: We use protocol classes for structural subtyping.
 """
+from abc import abstractmethod
 from typing import Any, Protocol
 
 from sqlmodel.engine.result import ScalarResult
@@ -17,7 +18,7 @@ from dayong.models import Message
 class Client(Protocol):
     """Protocol of a client class supporting any third-party service."""
 
-    @staticmethod
+    @abstractmethod
     async def get_content(*args: Any, **kwargs: Any) -> Any:
         """Parse response data from a web request for specific content or detail.
 
