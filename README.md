@@ -1,6 +1,6 @@
 # Dayong
 ![License mit](https://img.shields.io/badge/license-MIT-brightgreen)
-[![Python version](https://img.shields.io/badge/python-3.9.7-blue.svg)](https://www.python.org/downloads/release/python-397/)
+[![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-397/)
 ![Codestyle](https://img.shields.io/badge/code%20style-black-black)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/SurPathHub/Dayong)
 

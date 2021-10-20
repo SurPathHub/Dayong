@@ -55,7 +55,6 @@ class TaskManager:
         loop = asyncio.get_running_loop()
         task = loop.create_task(wrapped_coro(), name=task_name)
         self.tasks[task.get_name()] = task
-
         return task_name, task
 
     def stop_task(self, task_name: str):

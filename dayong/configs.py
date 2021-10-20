@@ -21,7 +21,7 @@ class ConfigFile(BaseModel):
     bot_prefix: str
     embeddings: dict[str, Union[str, dict[str, Any]]]
     guild_id: int
-    imap_host: str
+    imap_domain_name: str
 
 
 class EnvironVariables(BaseModel):
@@ -54,7 +54,7 @@ class DayongConfig(EnvironVariables, ConfigFile):
             email=kwargs["email"],
             email_password=kwargs["email_password"],
             guild_id=kwargs["guild_id"],
-            imap_host=kwargs["imap_host"],
+            imap_domain_name=kwargs["imap_domain_name"],
         )
 
 
@@ -86,7 +86,7 @@ class DayongConfigLoader:
         self.bot_prefix = config["bot_prefix"]
         self.guild_id = config["guild_id"]
         self.embeddings = config["embeddings"]
-        self.imap_host = config["imap_host"]
+        self.imap_domain_name = config["imap_domain_name"]
 
 
 class DayongDynamicLoader:

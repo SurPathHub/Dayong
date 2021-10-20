@@ -11,55 +11,121 @@ import hikari
 import tanjun
 
 from dayong.configs import DayongConfig
+from dayong.exts.apis import RESTClient
 from dayong.exts.emails import EmailClient
+from dayong.settings import CONTENT_PROVIDER
 from dayong.tasks.manager import TaskManager
 
 component = tanjun.Component()
 task_manager = TaskManager()
 ext_instance: dict[str, Any] = {}
 
-# Available 3rd party content providers.
-CONTENT_PROVIDER = {
-    "medium",
-}
+RESPONSE_INTVL = 30
+RESPONSE_MESSG = {False: "Sorry, I got nothing for today 😔"}
+
+
+async def _set_response_intvl() -> int:
+    """Set interval according to number of tasks running which should prevent
+    rate-limiting.
+
+    Returns:
+        int: RESPONSE_INTVL
+    """
+    tasks = len(ext_instance)
+    if tasks >= 2:
+        return RESPONSE_INTVL + tasks
+    return RESPONSE_INTVL
+
+
+async def _set_ext_instance(ext_class: str, ext_class_instance: Any, *args: Any) -> Any:
+    """Save and track instances which may be used by other scheduled tasks.
+
+    Args:
+        ext_class (str): The name of the class.
+        ext_class_instance (Any): Any instantiable class.
+
+    Returns:
+        Any: The same instance passed as an argument to this function.
+    """
+    if ext_class not in ext_instance:
+        if args:
+            instance = ext_class_instance(*args)
+        else:
+            instance = ext_class_instance()
+        ext_instance[ext_class] = instance
+    else:
+        instance = ext_instance[ext_class]
+
+    return instance
+
+
+async def _set_ext_loop(
+    ctx: tanjun.abc.SlashContext, content: Union[list[Any], Any], response_intvl: int
+) -> None:
+    """Respond with retrieved content.
+
+    Args:
+        ctx (tanjun.abc.SlashContext): Slash command specific context.
+        content (Union[list[Any], Any]): The fetched content.
+        response_intvl (int): Interval between each response.
+    """
+    if content:
+        for article in content:
+            await ctx.respond(article)
+            await asyncio.sleep(response_intvl)
+    else:
+        await ctx.respond(f"dev.to: {RESPONSE_MESSG[False]}")
+
+
+async def _devto_article(ctx: tanjun.abc.SlashContext, *args: Any) -> NoReturn:
+    """Async wrapper for `dayong.tasks.get_devto_article()`
+
+    This coroutine is tasked to retrieve dev.to content on REST API endpoints and
+    deliver fetched content every `RESPONSE_INTVL` seconds.
+
+    Args:
+        ctx (tanjun.abc.SlashContext): Slash command specific context.
+    """
+    response_intvl = await _set_response_intvl()
+    client = await _set_ext_instance(RESTClient.__name__, RESTClient)
+    assert isinstance(client, RESTClient)
+
+    while True:
+        articles = await client.get_devto_article()
+        content = articles.content
+        await _set_ext_loop(ctx, content, response_intvl)
 
 
 async def _medium_daily_digest(
     ctx: tanjun.abc.SlashContext, config: DayongConfig
 ) -> NoReturn:
-    """Extend `medium_daily_digest` and execute
-    `dayong.tasks.get_medium_daily_digest` as a coro.
+    """Async wrapper for `dayong.tasks.get_medium_daily_digest()`.
 
     This coroutine is tasked to retrieve medium content on email subscription and
-    deliver fetched content every 30 seconds. 30 seconds is set to avoid rate-limiting.
+    deliver fetched content every `RESPONSE_INTVL` seconds.
 
     Args:
         ctx (tanjun.abc.SlashContext): Slash command specific context.
-        host (str): The URL of the email provider's IMAP server.
+        config (DayongConfig): Instance of `dayong.configs.DayongConfig`.
     """
-    ext_class = EmailClient.__name__
-
-    if ext_class not in ext_instance:
-        email = EmailClient.client(
-            config.imap_host, config.email, config.email_password
-        )
-        ext_instance[ext_class] = email
-    else:
-        email: EmailClient = ext_instance[ext_class]
+    response_intvl = await _set_response_intvl()
+    client = await _set_ext_instance(
+        EmailClient.__name__,
+        EmailClient,
+        config.imap_domain_name,
+        config.email,
+        config.email_password,
+    )
+    assert isinstance(client, EmailClient)
 
     while True:
-        articles = await email.get_medium_daily_digest()
-        if articles:
-            for article in articles:
-                await ctx.respond(article)
-                await asyncio.sleep(30)
-        else:
-            await ctx.respond("Sorry, I got nothing for today 😔")
+        articles = await client.get_medium_daily_digest()
+        content = articles.content
+        await _set_ext_loop(ctx, content, response_intvl)
 
 
 async def assign_task(
-    source: str,
-    interval: Union[int, float],
+    source: str, interval: Union[int, float]
 ) -> tuple[str, Callable[..., Coroutine[Any, Any, Any]], float]:
     """Get the coroutine for the given task specified by source.
 
@@ -74,11 +140,17 @@ async def assign_task(
         tuple[str, Callable[..., Coroutine[Any, Any, Any]]]: A tuple containing the
             task name and the callable for the task.
     """
+    # interval = interval if interval >= 86400.0 else 86400.0
     task_cstr = {
         "medium": (
             _medium_daily_digest.__name__,
             _medium_daily_digest,
-            interval if interval >= 86400.0 else 86400.0,
+            interval,
+        ),
+        "dev": (
+            _devto_article.__name__,
+            _devto_article,
+            interval,
         ),
     }
 
@@ -101,15 +173,15 @@ async def assign_task(
     ),
     converters=float,
 )
-@tanjun.with_str_slash_option("source", "e.g. medium or dev.to")
+@tanjun.with_str_slash_option("source", "e.g. medium or dev")
 @tanjun.as_slash_command(
     "content", "fetch content on email subscription, from a microservice, or API"
 )
 async def share_content(
     ctx: tanjun.abc.Context,
     source: str,
-    action: str,
     interval: float,
+    action: str,
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
     """Fetch content on email subscription, from a microservice, or API.
@@ -146,11 +218,13 @@ async def share_content(
                 ctx,
                 config,
             )
-            await ctx.respond("I'll comeback here to deliver articles and blog posts 📰")
+            await ctx.respond(
+                f"I'll comeback here to deliver content from `{source}` 📰"
+            )
         except RuntimeError:
             await ctx.respond("I'm already doing that 👌")
     elif action == "stop":
-        task_manager.get_task(task_nm).cancel()
+        task_manager.stop_task(task_nm)
     else:
         await ctx.respond(
             f"This doesn't seem to be a valid command argument: `{action}` 🤔"
