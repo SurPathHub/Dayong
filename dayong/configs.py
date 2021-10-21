@@ -37,10 +37,7 @@ class DayongConfig(EnvironVariables, ConfigFile):
     """Data model for Dayong's configuration."""
 
     @classmethod
-    def load(
-        cls,
-        **kwargs: Any,
-    ) -> "DayongConfig":
+    def load(cls, **kwargs: Any) -> "DayongConfig":
         """Construct an instance of `dayong.configs.DayongConfig`.
 
         Returns:

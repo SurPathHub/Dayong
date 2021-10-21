@@ -31,9 +31,6 @@ class MessageDBImpl(MessageDBProto):
     async def connect(self, config: DayongConfig = tanjun.injected(type=DayongConfig)):
         """Create a database connection.
 
-        If the `database_uri` is Falsy, the function will reattempt to get the url from
-        the environment variables.
-
         Args:
             config (DayongConfig, optional): A config interface. Defaults to
                 tanjun.injected(type=DayongConfig).
