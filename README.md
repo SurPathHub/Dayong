@@ -11,7 +11,7 @@ Dayong is dedicated to helping Discord servers build and manage their communitie
 - Free and open-source —tinker with it, and feel free to contribute to its improvement!
 - Modular —easily add and remove extensions and features.
 
-> For setup and installation and setup instructions, please refer to the [documentation](./docs/README.md).
+> For setup and installation instructions, please refer to the [documentation](./docs/README.md).
 
 ## Deployment
 
