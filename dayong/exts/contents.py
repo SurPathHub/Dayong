@@ -3,7 +3,7 @@
 dayong.exts.contents
 ~~~~~~~~~~~~~~~~~~~~
 
-This module contains classes and helpers for handling contents from different sources.
+Handlers for third-party content.
 """
 from typing import Any, Optional
 
