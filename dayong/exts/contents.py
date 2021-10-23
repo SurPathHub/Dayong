@@ -11,14 +11,10 @@ from typing import Any, Optional
 class ThirdPartyContent:
     """Represents content from third-party service/content provider."""
 
-    def __init__(self, content: Any, constraint: Optional[Any] = None) -> None:
-        if isinstance(content, list):
-            self.content = ThirdPartyContent.collect(content, constraint)
-        else:
-            self.content = content
+    content: Any
 
     @staticmethod
-    def collect(content_list: Any, constraint: Any) -> list[Any]:
+    async def collect(content_list: Any, constraint: Any) -> list[Any]:
         """Parse response data for specific parts.
 
         Args:
@@ -37,3 +33,19 @@ class ThirdPartyContent:
             parts = content_list
 
         return parts
+
+    @classmethod
+    async def parse(
+        cls, content: Any, constraint: Optional[Any] = None
+    ) -> "ThirdPartyContent":
+        """Parse response data.
+
+        Returns:
+            ThirdPartyContent: Class instance containing parsed third party content.
+        """
+        tp_content = ThirdPartyContent()
+        if isinstance(content, list):
+            tp_content.content = await ThirdPartyContent.collect(content, constraint)
+        else:
+            tp_content.content = content
+        return tp_content
