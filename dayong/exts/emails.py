@@ -63,7 +63,7 @@ class EmailClient(_Client):
         return uris
 
     @staticmethod
-    def parse_message_data(
+    async def parse_message_data(
         message: Union[list[Any], list[Union[bytes, tuple[bytes, bytes]]]]
     ) -> Any:
         """Parse the message data and extract message body.
@@ -89,8 +89,8 @@ class EmailClient(_Client):
 
     @staticmethod
     async def get_content(data: Any, *args: Any, **kwargs: Any) -> ThirdPartyContent:
-        message_body = EmailClient.parse_message_data(args[0])
-        return ThirdPartyContent(EmailClient.extract_mime_url(message_body))
+        message_body = await EmailClient.parse_message_data(data)
+        return await ThirdPartyContent.parse(EmailClient.extract_mime_url(message_body))
 
     def connect_to_server(self) -> None:
         """Connect to the mail server."""

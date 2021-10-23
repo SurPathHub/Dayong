@@ -25,7 +25,7 @@ class RESTClient(Client):
         loop = asyncio.get_running_loop()
         resp = await loop.run_in_executor(None, urllib.request.urlopen, data)
         data = await loop.run_in_executor(None, json.loads, resp.read())
-        return ThirdPartyContent(data, list(kwargs.values())[0])
+        return await ThirdPartyContent.parse(data, list(kwargs.values())[0])
 
     async def get_devto_article(self, sort_by_date: bool = False) -> ThirdPartyContent:
         """Retrieve URLs of dev.to articles.
