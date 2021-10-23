@@ -11,8 +11,8 @@ import hikari
 import tanjun
 
 from dayong.configs import DayongConfig, DayongDynamicLoader
-from dayong.interfaces import MessageDBProto
 from dayong.operations import MessageDBImpl
+from dayong.protos import MessageDBProto
 from dayong.settings import BASE_DIR
 
 

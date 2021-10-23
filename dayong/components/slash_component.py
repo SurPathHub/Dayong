@@ -13,8 +13,8 @@ from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from dayong.configs import DayongConfig
-from dayong.interfaces import MessageDBProto
 from dayong.models import AnonMessage
+from dayong.protos import MessageDBProto
 
 component = tanjun.Component()
 
