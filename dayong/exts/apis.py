@@ -9,8 +9,8 @@ import json
 import urllib.request
 from typing import Any
 
+from dayong.abc import Client
 from dayong.exts.contents import ThirdPartyContent
-from dayong.interfaces import Client
 from dayong.settings import CONTENT_PROVIDER
 
 
@@ -21,9 +21,9 @@ class RESTClient(Client):
     _request = urllib.request.Request("http://127.0.0.1", headers=_headers)
 
     @staticmethod
-    async def get_content(*args: Any, **kwargs: Any) -> ThirdPartyContent:
+    async def get_content(data: Any, *args: Any, **kwargs: Any) -> ThirdPartyContent:
         loop = asyncio.get_running_loop()
-        resp = await loop.run_in_executor(None, urllib.request.urlopen, args[0])
+        resp = await loop.run_in_executor(None, urllib.request.urlopen, data)
         data = await loop.run_in_executor(None, json.loads, resp.read())
         return ThirdPartyContent(data, list(kwargs.values())[0])
 
@@ -44,4 +44,4 @@ class RESTClient(Client):
         else:
             request.full_url = f"""{CONTENT_PROVIDER["dev"]}/api/articles/"""
 
-        return await RESTClient.get_content(request, constraint="canonical_url")
+        return await RESTClient.get_content(request, "canonical_url")

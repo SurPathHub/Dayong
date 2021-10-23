@@ -7,15 +7,17 @@ Module in charge of retrieving content on email subscription.
 """
 import asyncio
 import re
+from dataclasses import dataclass
 from typing import Any, Optional, Union
 
 from pragmail import Client, utils
 from pragmail.exceptions import IMAP4Error
 
+from dayong.abc import Client as _Client
 from dayong.exts.contents import ThirdPartyContent
-from dayong.interfaces import Client as _Client
 
 
+@dataclass
 class EmailClient(_Client):
     """Represents a client for retrieving email subscriptions."""
 
@@ -24,17 +26,7 @@ class EmailClient(_Client):
     password: str
     max_retries: int = 5
 
-    def __init__(
-        self,
-        host: str,
-        email: str,
-        password: str,
-        max_retries: Optional[int] = None,
-    ) -> None:
-        self.host = host
-        self.email = email
-        self.password = password
-        self.max_retries = max_retries if max_retries is not None else self.max_retries
+    def __post_init__(self) -> None:
         self._client: Optional[Client] = None
         self.connect_to_server()
 
@@ -96,7 +88,7 @@ class EmailClient(_Client):
         return message_body
 
     @staticmethod
-    async def get_content(*args: Any, **kwargs: Any):
+    async def get_content(data: Any, *args: Any, **kwargs: Any) -> ThirdPartyContent:
         message_body = EmailClient.parse_message_data(args[0])
         return ThirdPartyContent(EmailClient.extract_mime_url(message_body))
 

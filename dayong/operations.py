@@ -14,16 +14,13 @@ from sqlmodel.engine.result import ScalarResult
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from dayong.configs import DayongConfig, DayongDynamicLoader
-from dayong.interfaces import MessageDBProto
 from dayong.models import Message
+from dayong.protos import MessageDBProto
 
 
 class MessageDBImpl(MessageDBProto):
     """Implementaion of a database connection for transacting and interacting with
-    message tables, those of which derive from message table models.
-
-    The data to be selected, retrieved, and modified is determined by the table model
-    object and its type. The type, in this case, is `dayong.models.Message`.
+    message tables, those that derive from message table models.
     """
 
     _conn: AsyncEngine
