@@ -167,10 +167,7 @@ async def assign_task(
 @tanjun.with_str_slash_option("action", '"start" or "stop"')
 @tanjun.with_str_slash_option(
     "interval",
-    (
-        "wait time in seconds until next content delivery. "
-        "email sub-based content should be >= 86400.0 (24H)"
-    ),
+    "the interval between each content delivery. minimum of 86400.0 (24 hours)",
     converters=float,
 )
 @tanjun.with_str_slash_option("source", "e.g. medium or dev")

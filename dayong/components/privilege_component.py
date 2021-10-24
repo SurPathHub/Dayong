@@ -11,8 +11,8 @@ import tanjun
 from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
+from dayong.abc import DBProto
 from dayong.models import AnonMessage
-from dayong.protos import MessageDBProto
 
 component = tanjun.Component()
 
@@ -46,7 +46,7 @@ async def ping_command(ctx: tanjun.abc.Context) -> None:
 async def get_user_info(
     ctx: tanjun.abc.Context,
     str_id: str,
-    database: MessageDBProto = tanjun.injected(type=MessageDBProto),
+    database: DBProto = tanjun.injected(type=DBProto),
 ) -> None:
     """Reveal information on a user."
 
@@ -54,7 +54,7 @@ async def get_user_info(
         ctx (tanjun.abc.Context): Instance of `tanjun.abc.Context`.
         str_id (str): This can be a hash or the object or the ID of an
             existing user.
-        database (MessageDBProto): Interface for a database message table. This is a
+        database (DBProto): Interface for a database message table. This is a
             registered type dependency and is injected by the client.
     """
     await ctx.respond(content="Fetching user information, please wait...")

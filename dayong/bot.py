@@ -10,9 +10,9 @@ from pathlib import Path
 import hikari
 import tanjun
 
+from dayong.abc import DBProto
 from dayong.configs import DayongConfig, DayongDynamicLoader
 from dayong.operations import MessageDBImpl
-from dayong.protos import MessageDBProto
 from dayong.settings import BASE_DIR
 
 
@@ -32,7 +32,7 @@ def run() -> None:
         .load_modules(*Path(os.path.join(BASE_DIR, "components")).glob("*.py"))
         .add_prefix(loaded_config.bot_prefix)
         .set_type_dependency(DayongConfig, loaded_config)
-        .set_type_dependency(MessageDBProto, database)
+        .set_type_dependency(DBProto, database)
         .add_client_callback(tanjun.ClientCallbackNames.STARTING, database.connect)
     )
     bot.run()

@@ -13,12 +13,12 @@ from sqlmodel import SQLModel, select
 from sqlmodel.engine.result import ScalarResult
 from sqlmodel.ext.asyncio.session import AsyncSession
 
+from dayong.abc import DBProto
 from dayong.configs import DayongConfig, DayongDynamicLoader
 from dayong.models import Message
-from dayong.protos import MessageDBProto
 
 
-class MessageDBImpl(MessageDBProto):
+class MessageDBImpl(DBProto):
     """Implementaion of a database connection for transacting and interacting with
     message tables, those that derive from message table models.
     """
@@ -74,7 +74,7 @@ class MessageDBImpl(MessageDBProto):
             # https://github.com/tiangolo/sqlmodel/pull/58
             row: ScalarResult[Any] = await session.exec(
                 select(table_model).where(  # type: ignore
-                    table_model.message_id == table_model_object.message_id
+                    table_model.id == table_model_object.id
                 )
             )
             await session.delete(row)
@@ -98,7 +98,7 @@ class MessageDBImpl(MessageDBProto):
             # https://github.com/tiangolo/sqlmodel/pull/58
             row: ScalarResult[Any] = await session.exec(
                 select(table_model).where(  # type: ignore
-                    table_model.message_id == table_model_object.message_id
+                    table_model.id == table_model_object.id
                 )
             )
         return row

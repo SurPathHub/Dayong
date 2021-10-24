@@ -12,9 +12,9 @@ import tanjun
 from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
+from dayong.abc import DBProto
 from dayong.configs import DayongConfig
 from dayong.models import AnonMessage
-from dayong.protos import MessageDBProto
 
 component = tanjun.Component()
 
@@ -38,7 +38,7 @@ async def randomize_id(str_id: str) -> str:
 async def anon_command(
     ctx: tanjun.abc.SlashContext,
     message: str,
-    database: MessageDBProto = tanjun.injected(type=MessageDBProto),
+    database: DBProto = tanjun.injected(type=DBProto),
     config: DayongConfig = tanjun.injected(type=DayongConfig),
 ) -> None:
     """Allow a user or server member to send anonymous messages on Discord.
@@ -46,7 +46,7 @@ async def anon_command(
     Args:
         ctx (tanjun.abc.SlashContext): Interface of a context.
         message (str): The message to anonymize.
-        database (MessageDBProto): Interface for a database message table. This is a
+        database (DBProto): Interface for a database message table. This is a
             registered type dependency and is injected by the client.
         config (DayongConfig): An instance of `dayong.configs.DayongConfig`. Also a
             registered type dependency and is injected by the client.

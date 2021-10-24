@@ -13,7 +13,7 @@ from sqlmodel import Field, SQLModel
 class Message(SQLModel):
     """Base model class for message table models."""
 
-    message_id: str
+    id: Optional[int] = Field(default=None, primary_key=True)
 
 
 class AnonMessage(Message, table=True):
@@ -22,7 +22,7 @@ class AnonMessage(Message, table=True):
     # pyright cannot recognize the type of SQLModel.__tablename__
     # See: https://github.com/tiangolo/sqlmodel/issues/98
     __tablename__ = "anon_messages"  # type: ignore
-    id: Optional[int] = Field(default=None, primary_key=True)
+    message_id: str
     user_id: str
     username: str
     nickname: str
