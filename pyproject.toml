@@ -16,8 +16,6 @@ hikari = "^2.0.0.dev103"
 hikari-tanjun = "^2.1.1a1"
 rich = "^10.10.0"
 pragmail = "^0.2.4"
-celery = {extras = ["redis"], version = "^5.1.2"}
-celery-redbeat = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
