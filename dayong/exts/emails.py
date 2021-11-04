@@ -13,12 +13,11 @@ from typing import Any, Optional, Union
 from pragmail import Client, utils
 from pragmail.exceptions import IMAP4Error
 
-from dayong.abc import Client as _Client
 from dayong.exts.contents import ThirdPartyContent
 
 
 @dataclass
-class EmailClient(_Client):
+class EmailClient:
     """Represents a client for retrieving email subscriptions."""
 
     host: str
@@ -88,7 +87,16 @@ class EmailClient(_Client):
         return message_body
 
     @staticmethod
-    async def get_content(data: Any, *args: Any, **kwargs: Any) -> ThirdPartyContent:
+    async def get_content(data: Any) -> ThirdPartyContent:
+        """Parse and return fetched content.
+
+        Args:
+            data (Any): Response data from mail server.
+
+        Returns:
+            ThirdPartyContent: Representation of content from third-party
+                service/content provider.
+        """
         message_body = await EmailClient.parse_message_data(data)
         return await ThirdPartyContent.parse(EmailClient.extract_mime_url(message_body))
 
@@ -127,4 +135,4 @@ class EmailClient(_Client):
             else:
                 raise ValueError(f"{repr(self._client)} returned {response=}")
 
-        return await EmailClient.get_content(message)
+        return await self.get_content(message)
