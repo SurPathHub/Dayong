@@ -2,7 +2,7 @@
 dayong.tasks.manager
 ~~~~~~~~~~~~~~~~~~~~
 
-Task managers for coroutines.
+Custom implementation of background task managers.
 """
 import asyncio
 from asyncio.tasks import Task
@@ -43,7 +43,7 @@ class TaskManager:
             tuple[str, Task[Any]]: The task name and `asyncio.Task` object.
         """
         if task_name in self.tasks:
-            raise RuntimeError
+            raise PermissionError
 
         async def wrapped_coro():
             try:

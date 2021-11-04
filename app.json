@@ -7,10 +7,12 @@
       "description": "The jumble of letters and numbers that acts as a key to controlling a Discord Bot"
     },
     "EMAIL": {
-      "description": "The email address subscribed to a service (i.e. Medium Daily Digest)"
+      "description": "The email address subscribed to a service (i.e. Medium Daily Digest)",
+      "required": false
     },
     "EMAIL_PASSWORD": {
-      "description": "The email account's password."
+      "description": "The email account's password.",
+      "required": false
     }
   },
   "formation": {

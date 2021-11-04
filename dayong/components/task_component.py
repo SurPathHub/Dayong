@@ -20,7 +20,7 @@ component = tanjun.Component()
 task_manager = TaskManager()
 ext_instance: dict[str, Any] = {}
 
-RESPONSE_INTVL = 30
+RESPONSE_INTVL = 60
 RESPONSE_MESSG = {False: "Sorry, I got nothing for today 😔"}
 
 
@@ -92,13 +92,12 @@ async def _devto_article(ctx: tanjun.abc.SlashContext, *args: Any) -> NoReturn:
 
     while True:
         articles = await client.get_devto_article()
-        content = articles.content
-        await _set_ext_loop(ctx, content, response_intvl)
+        await _set_ext_loop(ctx, articles.content, response_intvl)
 
 
 async def _medium_daily_digest(
     ctx: tanjun.abc.SlashContext, config: DayongConfig
-) -> NoReturn:
+) -> Union[NoReturn, None]:
     """Async wrapper for `dayong.tasks.get_medium_daily_digest()`.
 
     This coroutine is tasked to retrieve medium content on email subscription and
@@ -109,12 +108,21 @@ async def _medium_daily_digest(
         config (DayongConfig): Instance of `dayong.configs.DayongConfig`.
     """
     response_intvl = await _set_response_intvl()
+    email = config.email
+    email_password = config.email_password
+
+    if email is None or email_password is None:
+        await ctx.respond(
+            "Can't retrieve content. Please check for missing email credentials 😕"
+        )
+        return
+
     client = await _set_ext_instance(
         EmailClient.__name__,
         EmailClient,
         config.imap_domain_name,
         config.email,
-        config.email_password,
+        email_password,
     )
     assert isinstance(client, EmailClient)
 
@@ -218,7 +226,7 @@ async def share_content(
             await ctx.respond(
                 f"I'll comeback here to deliver content from `{source}` 📰"
             )
-        except RuntimeError:
+        except PermissionError:
             await ctx.respond("I'm already doing that 👌")
     elif action == "stop":
         task_manager.stop_task(task_nm)

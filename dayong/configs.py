@@ -7,7 +7,7 @@ Initial setup and configuration logic.
 """
 import json
 import os
-from typing import Any, Union
+from typing import Any, Optional, Union
 
 from pydantic import BaseModel
 
@@ -29,8 +29,8 @@ class EnvironVariables(BaseModel):
 
     bot_token: str
     database_uri: str
-    email: str
-    email_password: str
+    email: Optional[str] = None
+    email_password: Optional[str] = None
 
 
 class DayongConfig(EnvironVariables, ConfigFile):
@@ -43,13 +43,15 @@ class DayongConfig(EnvironVariables, ConfigFile):
         Returns:
             An instance of `dayong.configs.DayongConfig`.
         """
+        email = kwargs.get("email")
+        email_password = kwargs.get("email_password")
         return cls(
             bot_prefix=kwargs["bot_prefix"],
             bot_token=kwargs["bot_token"],
             database_uri=kwargs["database_uri"],
             embeddings=kwargs["embeddings"],
-            email=kwargs["email"],
-            email_password=kwargs["email_password"],
+            email=email if email else None,
+            email_password=email_password if email_password else None,
             guild_id=kwargs["guild_id"],
             imap_domain_name=kwargs["imap_domain_name"],
         )
