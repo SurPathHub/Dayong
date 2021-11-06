@@ -10,8 +10,8 @@ import re
 from dataclasses import dataclass
 from typing import Any, Optional, Union
 
+from loguru import logger
 from pragmail import Client, utils
-from pragmail.exceptions import IMAP4Error
 
 from dayong.exts.contents import ThirdPartyContent
 
@@ -100,17 +100,15 @@ class EmailClient:
         message_body = await EmailClient.parse_message_data(data)
         return await ThirdPartyContent.parse(EmailClient.extract_mime_url(message_body))
 
+    @logger.catch
     def connect_to_server(self) -> None:
         """Connect to the mail server."""
-        try:
-            if self._client:
-                self._client.logout()
+        if self._client:
+            self._client.logout()
 
-            self._client = Client(self.host)
-            self._client.login(self.email, self.password)
-            self._client.select("INBOX")
-        except IMAP4Error as emap_err:
-            raise ValueError from emap_err
+        self._client = Client(self.host)
+        self._client.login(self.email, self.password)
+        self._client.select("INBOX")
 
     async def get_medium_daily_digest(self) -> ThirdPartyContent:
         """Retrieve relevant content URLs from the latest Medium Daily Digest message.
