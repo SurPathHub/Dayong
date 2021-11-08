@@ -17,6 +17,8 @@ hikari-tanjun = "^2.1.1a1"
 rich = "^10.10.0"
 pragmail = "^0.2.4"
 loguru = "^0.5.3"
+APScheduler = "^3.8.1"
+"discord.py" = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allow-prereleases = true }
@@ -63,7 +65,7 @@ typeCheckingMode = "strict"
 useLibraryCodeForTypes = true
 
 include = ["dayong"]
-exclude = ["**/__pycache__"]
+exclude = ["**/__pycache__", "dayong/exts/apscheduled"]
 
 reportMissingImports = true
 reportMissingTypeStubs = false

@@ -27,3 +27,12 @@ class AnonMessage(Message, table=True):
     username: str
     nickname: str
     message: str
+
+
+class ScheduledTask(SQLModel, table=True):
+    """Table model for scheduled tasks."""
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    channel_name: str
+    task_name: str
+    run: Optional[bool] = Field(default=True)

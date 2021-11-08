@@ -9,7 +9,7 @@ from typing import Optional, Sequence
 import hikari
 import tanjun
 
-from dayong.configs import DayongConfig
+from dayong.core.configs import DayongConfig
 
 component = tanjun.Component()
 
@@ -49,7 +49,7 @@ async def greet_new_member(
     Args:
         event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
             is a registered type dependency and is injected by the client.
-        config (DayongConfig, optional): An instance of `dayong.configs.DayongConfig`.
+        config (DayongConfig, optional): An instance of `dayong.core.configs.DayongConfig`.
             This is registered type dependency and is injected by the client. Defaults
             to tanjun.injected(type=DayongConfig).
     """

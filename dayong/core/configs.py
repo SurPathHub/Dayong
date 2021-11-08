@@ -1,6 +1,6 @@
 # pylint: disable=R0903
 """
-dayong.configs
+dayong.core.configs
 ~~~~~~~~~~~~~~
 
 Initial setup and configuration logic.
@@ -11,7 +11,7 @@ from typing import Any, Optional, Union
 
 from pydantic import BaseModel
 
-from dayong.settings import CONFIG_FILE
+from dayong.core.settings import CONFIG_FILE
 from dayong.utils import format_db_url
 
 
@@ -38,10 +38,10 @@ class DayongConfig(EnvironVariables, ConfigFile):
 
     @classmethod
     def load(cls, **kwargs: Any) -> "DayongConfig":
-        """Construct an instance of `dayong.configs.DayongConfig`.
+        """Construct an instance of `dayong.core.configs.DayongConfig`.
 
         Returns:
-            An instance of `dayong.configs.DayongConfig`.
+            An instance of `dayong.core.configs.DayongConfig`.
         """
         email = kwargs.get("email")
         email_password = kwargs.get("email_password")
@@ -93,10 +93,10 @@ class DayongDynamicLoader:
 
     @staticmethod
     def load() -> DayongConfig:
-        """Load configs into `dayong.configs.DayongConfig`.
+        """Load configs into `dayong.core.configs.DayongConfig`.
 
         Returns:
-            DayongConfig: An instance of `dayong.configs.DayongConfig`.
+            DayongConfig: An instance of `dayong.core.configs.DayongConfig`.
         """
         return DayongConfig.load(
             **DayongConfigLoader().__dict__ | DayongEnvLoader().__dict__

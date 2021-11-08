@@ -3,54 +3,60 @@
 dayong.abc
 ~~~~~~~~~~
 
-Object interfaces used within Dayong.
+Interfaces used within Dayong.
 """
 
 from abc import ABC, abstractmethod
 from typing import Any
 
+import tanjun
 from sqlmodel.engine.result import ScalarResult
 
+from dayong.core.configs import DayongConfig
 
-class DBProto(ABC):
-    """Protocol for a generic database interface."""
+
+class Database(ABC):
+    """Abstract base class of a database interface."""
+
+    @abstractmethod
+    async def connect(
+        self, config: DayongConfig = tanjun.injected(type=DayongConfig)
+    ) -> None:
+        """Create a database connection.
+
+        Args:
+            config (DayongConfig, optional): [description]. Defaults to
+                tanjun.injected(type=DayongConfig).
+        """
 
     @abstractmethod
     async def create_table(self) -> None:
-        """Create physical message tables for all the message table models stored in
-        `Any.metadata`.
-        """
-        raise NotImplementedError
+        """Create physical tables for all the table models stored in `Any.metadata`."""
 
     @abstractmethod
-    async def add_row(self, table_model_object: Any) -> None:
+    async def add_row(self, table_model: Any) -> None:
         """Add a row to the message table.
 
         Args:
-            table_model_object (Any): An instance of `dayong.models.Any` or one
-            of its subclasses.
+            table_model (Any): A subclass of SQLModel
         """
-        raise NotImplementedError
 
     @abstractmethod
-    async def remove_row(self, table_model_object: Any) -> None:
+    async def remove_row(self, table_model: Any) -> None:
         """Remove a row from the message table.
 
         Args:
-            table_model_object (Any): An instance of `dayong.models.Any` or one
-            of its subclasses.
+            table_model (Any): A subclass of SQLModel
         """
-        raise NotImplementedError
 
     @abstractmethod
-    async def get_row(self, table_model_object: Any) -> ScalarResult[Any]:
-        """Get data from the message table.
+    async def get_row(self, table_model: Any) -> ScalarResult[Any]:
+        """Get row from the message table.
 
         Args:
-            table_model_object (Any): Instance of a message table model.
+            table_model (Any): A subclass of SQLModel.
 
         Returns:
-            ScalarResult: An `ScalarResult` object which contains a scalar value or
-                sequence of scalar values.
+            ScalarResult: A `ScalarResult` which contains a scalar value or sequence of
+                scalar values.
         """
-        raise NotImplementedError

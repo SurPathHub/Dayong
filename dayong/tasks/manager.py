@@ -9,12 +9,12 @@ from asyncio.tasks import Task
 from typing import Any, Callable, Coroutine
 
 
-class TaskManager:
-    """Generic coroutine task manager and scheduler."""
+class TaskManagerMemory:
+    """In-memory coroutine task manager and scheduler."""
 
     tasks: dict[str, Task[Any]] = {}
 
-    def get_task(self, task_name: str) -> Task[Any]:
+    async def get_task(self, task_name: str) -> Task[Any]:
         """Fetch the task object for a specified task.
 
         Args:
@@ -57,11 +57,11 @@ class TaskManager:
         self.tasks[task.get_name()] = task
         return task_name, task
 
-    def stop_task(self, task_name: str):
+    async def stop_task(self, task_name: str):
         """Stop a task running in the background.
 
         Args:
             task_id (int): Integer associated with a task object.
         """
-        task = self.get_task(task_name)
+        task = await self.get_task(task_name)
         task.cancel()

@@ -10,8 +10,8 @@ from typing import Any, Optional
 
 import aiohttp
 
+from dayong.core.settings import CONTENT_PROVIDER
 from dayong.exts.contents import ThirdPartyContent
-from dayong.settings import CONTENT_PROVIDER
 
 
 class RESTClient:
@@ -50,7 +50,7 @@ class RESTClient:
                 publish date. Defaults to False.
 
         Returns:
-            list[str]: List of article URLs.
+            ThirdPartyContent: List of article URLs.
         """
 
         request = self._request

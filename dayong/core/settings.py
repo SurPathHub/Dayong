@@ -23,7 +23,7 @@ load_dotenv()
 # Install traceback handler.
 install(theme="monokai")
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = BASE_DIR.parent
 CONFIG_FILE = os.path.join(ROOT_DIR, "config.json")
 
