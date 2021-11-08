@@ -46,6 +46,7 @@ async def start_task(context: tanjun.abc.Context, source: str, db: Database):
     )
 
     try:
+        await db.create_table()
         result = await db.get_row(task_model, "task_name")
         if bool(result.one().run) is False:
             raise PermissionError
