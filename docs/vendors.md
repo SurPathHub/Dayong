@@ -3,7 +3,13 @@ Here is the list of 3rd party service providers.
 ## Content Providers
 
 #### Email Subscription
-- [medium.com](https://medium.com/)
+
+|               Name                | alias  |
+| :-------------------------------: | :----: |
+| [medium.com](https://medium.com/) | medium |
 
 #### Web API
-- [dev.to](http://dev.to/)
+
+|           Name           | alias |
+| :----------------------: | :---: |
+| [dev.to](http://dev.to/) |  dev  |

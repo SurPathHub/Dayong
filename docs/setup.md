@@ -5,40 +5,43 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 ## Bot Setup
 
 | ❗❗ Before you start, fork your own copy of SurPathHub/Dayong. |
-|-----------------------------------------|
+| --------------------------------------------------------------- |
 
 | ❗❗ You can also perform the steps below directly on your copy of Dayong on GitHub |
-|-----------------------------------------|
+| ----------------------------------------------------------------------------------- |
 
-| ❗❗ Your copy of the GitHub repository can be used to deploy changes automatically.|
-|-----------------------------------------|
+| ❗❗ Your copy of the GitHub repository can be used to deploy changes automatically. |
+| ------------------------------------------------------------------------------------ |
 
 1. Clone your fork to your local machine.
 
-    HTTP
-    ```
-    git clone https://github.com/<your username>/Dayong.git
-    ```
+   HTTP
 
-    SSH
-    ```
-    git clone git@github.com:<your username>/Dayong.git
-    ```
+   ```
+   git clone https://github.com/<your username>/Dayong.git
+   ```
 
-    GitHub CLI
-    ```
-    gh repo clone <your username>/Dayong.git
-    ```
+   SSH
+
+   ```
+   git clone git@github.com:<your username>/Dayong.git
+   ```
+
+   GitHub CLI
+
+   ```
+   gh repo clone <your username>/Dayong.git
+   ```
 
 2. Go to the project root directory.
 
-    ```
-    cd Dayong
-    ```
+   ```
+   cd Dayong
+   ```
 
 3. Edit the `config.json` file and its values as necessary.
 
-    The `config.json` file stores public options, settings, properties, configuration, and preferences.
+   The `config.json` file stores public options, settings, properties, configuration, and preferences.
 
 4. After setting up Dayong, `commit` and `push` your changes.
 
@@ -50,21 +53,23 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 2. Go to the project root directory.
 
-    ```
-    cd Dayong
-    ```
+   ```
+   cd Dayong
+   ```
 
 3. Create a copy of `.env.example`. Don't forget to omit the `.example` at the end.
 
-    On Linux and Unix
-    ```
-    cp .env.example .env
-    ```
+   On Linux and Unix
 
-    On Windows
-    ```
-    copy .env.example .env
-    ```
+   ```
+   cp .env.example .env
+   ```
+
+   On Windows
+
+   ```
+   copy .env.example .env
+   ```
 
 4. Edit the `.env` file and add your credentials to the corresponding variables.
 
@@ -76,12 +81,12 @@ Follow the instructions here: https://discordpy.readthedocs.io/en/stable/discord
 
 8. Edit the `config.json` file and its values as necessary.
 
-    The `config.json` file stores public options, settings, properties, configuration, and preferences.
+   The `config.json` file stores public options, settings, properties, configuration, and preferences.
 
 9. Quickly test if the configuration works by running:
 
-    ```
-    python dayong
-    ```
+   ```
+   python dayong
+   ```
 
 10. After setting up Dayong, `git commit` and `git push` your changes.
