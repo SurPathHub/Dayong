@@ -13,7 +13,7 @@ import tanjun
 from dayong.abc import Database
 from dayong.core.configs import DayongConfig, DayongDynamicLoader
 from dayong.core.settings import BASE_DIR
-from dayong.operations import MessageDB
+from dayong.operations import DatabaseImpl
 
 
 def run() -> None:
@@ -24,7 +24,7 @@ def run() -> None:
         banner="dayong",
         intents=hikari.Intents.ALL,
     )
-    database = MessageDB()
+    database = DatabaseImpl()
     (
         tanjun.Client.from_gateway_bot(
             bot, declare_global_commands=hikari.Snowflake(loaded_config.guild_id)

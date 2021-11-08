@@ -49,9 +49,9 @@ async def greet_new_member(
     Args:
         event (hikari.MemberCreateEvent): Instance of `hikari.MemberCreateEvent`. This
             is a registered type dependency and is injected by the client.
-        config (DayongConfig, optional): An instance of `dayong.core.configs.DayongConfig`.
-            This is registered type dependency and is injected by the client. Defaults
-            to tanjun.injected(type=DayongConfig).
+        config (DayongConfig, optional): An instance of
+            `dayong.core.configs.DayongConfig`. This is registered type dependency and
+            is injected by the client. Defaults to tanjun.injected(type=DayongConfig).
     """
     embeddings = config.embeddings["new_member_greetings"]
     channels = await event.app.rest.fetch_guild_channels(event.guild_id)

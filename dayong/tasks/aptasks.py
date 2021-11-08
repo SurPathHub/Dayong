@@ -12,7 +12,7 @@ from dayong.core.configs import DayongDynamicLoader
 from dayong.exts.apis import RESTClient
 from dayong.exts.emails import EmailClient
 from dayong.models import ScheduledTask
-from dayong.operations import ScheduledTaskDB
+from dayong.operations import DatabaseImpl
 
 CLIENT = discord.Client()
 
@@ -21,10 +21,10 @@ sched = AsyncIOScheduler()
 
 
 async def get_scheduled(table_model):
-    db = ScheduledTaskDB()
+    db = DatabaseImpl()
     await db.connect(config)
     await db.create_table()
-    result = await db.get_row(table_model)
+    result = await db.get_row(table_model, "task_name")
     return result.one()
 
 
@@ -60,7 +60,7 @@ async def get_devto_article():
         await asyncio.sleep(60)
 
 
-@sched.scheduled_job("interval", seconds=30)
+@sched.scheduled_job("interval", days=1)
 async def get_medium_daily_digest():
     try:
         result = await get_scheduled(ScheduledTask(channel_name="", task_name="medium"))

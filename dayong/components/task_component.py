@@ -8,9 +8,9 @@ import hikari
 import tanjun
 from sqlalchemy.exc import NoResultFound
 
+from dayong.abc import Database
 from dayong.core.settings import CONTENT_PROVIDER
 from dayong.models import ScheduledTask
-from dayong.operations import ScheduledTaskDB
 from dayong.tasks.manager import TaskManagerMemory
 
 component = tanjun.Component()
@@ -20,13 +20,13 @@ RESPONSE_INTVL = 30
 RESPONSE_MESSG = {False: "Sorry, I got nothing for today 😔"}
 
 
-async def start_task(context: tanjun.abc.Context, source: str, db: ScheduledTaskDB):
+async def start_task(context: tanjun.abc.Context, source: str, db: Database):
     """Start a scheduled task.
 
     Args:
         context (tanjun.abc.Context): Slash command specific context.
         source (str): Alias of the third-party content provider.
-        db (ScheduledTaskDB): An instance of `dayong.operations.ScheduledTaskDB`.
+        db (Database): An instance of `dayong.operations.Database`.
 
     Raises:
         NotImplementedError: Raised if alias does not exist.
@@ -46,23 +46,23 @@ async def start_task(context: tanjun.abc.Context, source: str, db: ScheduledTask
     )
 
     try:
-        result = await db.get_row(task_model)
+        result = await db.get_row(task_model, "task_name")
         if bool(result.one().run) is False:
             raise PermissionError
         else:
-            await db.update_row(task_model)
+            await db.update_row(task_model, "task_name")
             return
     except NoResultFound:
         await db.add_row(task_model)
 
 
-async def stop_task(context: tanjun.abc.Context, source: str, db: ScheduledTaskDB):
+async def stop_task(context: tanjun.abc.Context, source: str, db: Database):
     """Stop a scheduled task.
 
     Args:
         context (tanjun.abc.Context): Slash command specific context.
         source (str): Alias of the third-party content provider.
-        db (ScheduledTaskDB): An instance of `dayong.operations.ScheduledTaskDB`.
+        db (Database): An instance of `dayong.operations.Database`.
 
     Raises:
         ValueError: Raised if context failed to get the name of its channel.
@@ -72,13 +72,13 @@ async def stop_task(context: tanjun.abc.Context, source: str, db: ScheduledTaskD
     if channel is None:
         raise ValueError
 
-    await db.remove_row(
-        ScheduledTask(
-            channel_name=channel.name if channel.name else "",
-            task_name=source,
-            run=False,
-        )
+    task_model = ScheduledTask(
+        channel_name=channel.name if channel.name else "",
+        task_name=source,
+        run=False,
     )
+
+    await db.remove_row(task_model, "task_name")
 
 
 @component.with_command
@@ -92,7 +92,7 @@ async def share_content(
     ctx: tanjun.abc.SlashContext,
     source: str,
     action: str,
-    db: ScheduledTaskDB = tanjun.injected(type=ScheduledTaskDB),
+    db: Database = tanjun.injected(type=Database),
 ) -> None:
     """Fetch content on email subscription, from a service, or API.
 
@@ -103,8 +103,8 @@ async def share_content(
         ctx (tanjun.abc.Context): Interface of a context.
         source (str): Alias of the third-party content provider.
         action (str): Start or stop the content retrival task.
-        db (ScheduledTaskDB): An instance of `dayong.operations.ScheduledTaskDB`.
-            Defaults to tanjun.injected(type=ScheduledTaskDB).
+        db (Database): An instance of `dayong.operations.Database`.
+            Defaults to tanjun.injected(type=Database).
     """
     action = action.lower()
 
