@@ -28,13 +28,6 @@
         "version": "13"
       },
       "as": "DATABASE"
-    },
-    {
-      "plan": "heroku-redis:hobby-dev",
-      "options": {
-        "version": "6"
-      },
-      "as": "REDIS"
     }
   ],
   "buildpacks": [
