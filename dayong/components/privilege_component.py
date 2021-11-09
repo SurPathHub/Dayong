@@ -67,7 +67,8 @@ async def get_user_info(
                     username="",
                     nickname="",
                     message="",
-                )
+                ),
+                "message_id",
             )
             info = result.first()
             if isinstance(info, (AnonMessage,)):

@@ -4,7 +4,6 @@ dayong.operations
 
 Data model operations which include retrieval and update commands.
 """
-import asyncio
 from typing import Any
 
 import tanjun
@@ -42,13 +41,10 @@ class DatabaseImpl(Database):
     async def connect(
         self, config: DayongConfig = tanjun.injected(type=DayongConfig)
     ) -> None:
-        loop = asyncio.get_running_loop()
-        self._conn = await loop.run_in_executor(
-            None,
-            create_async_engine,
+        self._conn = create_async_engine(
             config.database_uri
             if config.database_uri
-            else DayongDynamicLoader().load().database_uri,
+            else DayongDynamicLoader().load().database_uri
         )
 
     async def create_table(self) -> None:
@@ -57,8 +53,7 @@ class DatabaseImpl(Database):
 
     async def add_row(self, table_model: SQLModel) -> None:
         async with AsyncSession(self._conn) as session:
-            loop = asyncio.get_running_loop()
-            await loop.run_in_executor(None, session.add, table_model)
+            session.add(table_model)
             await session.commit()
 
     async def remove_row(self, table_model: SQLModel, attribute: str) -> None:
@@ -93,7 +88,6 @@ class DatabaseImpl(Database):
             return await session.exec(select(table_model))  # type: ignore
 
     async def update_row(self, table_model: SQLModel, attribute: str) -> None:
-        loop = asyncio.get_running_loop()
         model = type(table_model)
         table = table_model.__dict__
 
@@ -105,6 +99,6 @@ class DatabaseImpl(Database):
             )
             task = row.one()
             task = await self.update(task, table)
-            await loop.run_in_executor(None, session.add, task)
+            session.add(task)
             await session.commit()
             await session.refresh(task)

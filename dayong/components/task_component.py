@@ -6,7 +6,7 @@ Scheduled tasks that run in the background.
 """
 import hikari
 import tanjun
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.exc import NoResultFound, ProgrammingError
 
 from dayong.abc import Database
 from dayong.core.settings import CONTENT_PROVIDER
@@ -45,10 +45,11 @@ async def start_task(context: tanjun.abc.Context, source: str, db: Database):
         channel_name=channel.name if channel.name else "", task_name=source, run=True
     )
 
+    await db.create_table()
+
     try:
-        await db.create_table()
         result = await db.get_row(task_model, "task_name")
-        if bool(result.one().run) is False:
+        if bool(result.one().run) is True:
             raise PermissionError
         else:
             await db.update_row(task_model, "task_name")
@@ -79,6 +80,8 @@ async def stop_task(context: tanjun.abc.Context, source: str, db: Database):
         run=False,
     )
 
+    # We can also update the row here, but for simplicity, it's best to just perform a
+    # delete query.
     await db.remove_row(task_model, "task_name")
 
 
@@ -131,7 +134,7 @@ async def share_content(
         try:
             await stop_task(ctx, source, db)
             await ctx.respond(f"Stopped content delivery for `{source}`")
-        except NoResultFound:
+        except (NoResultFound, ProgrammingError):
             await ctx.respond("That task isn't running 🤔")
     else:
         await ctx.respond(
