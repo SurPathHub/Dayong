@@ -11,13 +11,11 @@ from sqlalchemy.exc import NoResultFound, ProgrammingError
 from dayong.abc import Database
 from dayong.core.settings import CONTENT_PROVIDER
 from dayong.models import ScheduledTask
-from dayong.tasks.manager import TaskManagerMemory
-
-component = tanjun.Component()
-task_manager = TaskManagerMemory()
 
 RESPONSE_INTVL = 30
 RESPONSE_MESSG = {False: "Sorry, I got nothing for today 😔"}
+
+component = tanjun.Component()
 
 
 async def start_task(context: tanjun.abc.Context, source: str, db: Database):

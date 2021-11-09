@@ -2,15 +2,15 @@
 dayong.tasks.manager
 ~~~~~~~~~~~~~~~~~~~~
 
-Custom implementation of background task managers.
+Custom, built-in implementation of background task managers.
 """
 import asyncio
 from asyncio.tasks import Task
 from typing import Any, Callable, Coroutine
 
 
-class TaskManagerMemory:
-    """In-memory coroutine task manager and scheduler."""
+class AioTaskManager:
+    """Task manager and scheduler that manages tasks in the same event loop."""
 
     tasks: dict[str, Task[Any]] = {}
 
