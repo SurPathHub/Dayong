@@ -4,12 +4,12 @@ Here is the list of 3rd party service providers.
 
 #### Email Subscription
 
-|               Name                | alias  |
+|               Name                | Alias  |
 | :-------------------------------: | :----: |
 | [medium.com](https://medium.com/) | medium |
 
 #### Web API
 
-|           Name           | alias |
+|           Name           | Alias |
 | :----------------------: | :---: |
 | [dev.to](http://dev.to/) |  dev  |
