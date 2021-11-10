@@ -16,13 +16,15 @@ from dayong.operations import DatabaseImpl
 
 CONFIG = DayongDynamicLoader.load()
 CLIENT = discord.Client()
+
+db = DatabaseImpl()
 rest = RESTClient()
 email = None
+info = ""
 
 
 @logger.catch
 async def get_scheduled(table_model):
-    db = DatabaseImpl()
     await db.connect(CONFIG)
     await db.create_table()
     return (await db.get_row(table_model, "task_name")).one()
@@ -37,24 +39,28 @@ async def get_guild_channel(target_channel):
 
 
 @logger.catch
-async def check_email_cred():
-    global email
-
+async def del_schedule(table_model):
     try:
-        result = await get_scheduled(ScheduledTask(channel_name="", task_name="medium"))
+        await db.connect(CONFIG)
+        await db.remove_row(table_model, "task_name")
     except NoResultFound:
-        return
+        logger.info(f"{repr(table_model)} not found")
+
+
+@logger.catch
+async def check_email_cred():
+    global email, info
 
     email_host = CONFIG.imap_domain_name
     email_addr = CONFIG.email
     email_pass = CONFIG.email_password
-    channel = await get_guild_channel(result.channel_name)
 
     if email_addr is None or email_pass is None:
-        await channel.send(
-            "Can't retrieve content on email subscription. Please provide your email "
-            "credentials to do so 🔑"
+        info = (
+            "Can't retrieve content on email subscription. To do so, please "
+            "provide your email credentials and redeploy the bot."
         )
+        logger.info(info)
         return
 
     email = EmailClient(email_host, email_addr, email_pass)
@@ -85,29 +91,34 @@ async def get_devto_article():
     )
     for content in content.content:
         await channel.send(content)
-        await asyncio.sleep(30)
+        await asyncio.sleep(60)
 
 
 @logger.catch
 async def get_medium_daily_digest():
     task = get_devto_article.__name__
-
-    if email is None:
-        logger.info(f"{task} cannot run. reason: missing email credentials")
-        return
+    notsched = f"{task} is not scheduled to run"
+    xsession = f"{task} cannot run. reason: no session started.\n```{info}```"
+    table_model = ScheduledTask(channel_name="", task_name="medium")
 
     try:
-        result = await get_scheduled(ScheduledTask(channel_name="", task_name="medium"))
+        result = await get_scheduled(table_model)
     except NoResultFound:
-        logger.info(f"{task} is not scheduled to run")
+        logger.info(notsched)
         return
 
     if bool(result.run) is False:
-        logger.info(f"{task} is not scheduled to run")
+        logger.info(notsched)
+        return
+
+    channel = await get_guild_channel(result.channel_name)
+
+    if email is None:
+        await channel.send(xsession)
+        await del_schedule(table_model)
         return
 
     content = await email.get_medium_daily_digest()
-    channel = await get_guild_channel(result.channel_name)
 
     logger.info(
         f"{get_medium_daily_digest.__name__} "
@@ -115,7 +126,7 @@ async def get_medium_daily_digest():
     )
     for content in content.content:
         await channel.send(content)
-        await asyncio.sleep(30)
+        await asyncio.sleep(60)
 
 
 @logger.catch
