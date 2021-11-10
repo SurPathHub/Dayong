@@ -60,8 +60,8 @@ class Database(ABC):
             attribute (str): A Table model attribute.
 
         Returns:
-            ScalarResult[Any]: A `ScalarResult` which contains a scalar value or sequence of
-                scalar values.
+            ScalarResult[Any]: A `ScalarResult` which contains a scalar value or
+                sequence of scalar values.
         """
 
     @abstractmethod
@@ -72,8 +72,8 @@ class Database(ABC):
             table_model (type[SQLModel]): Type of the class which corresponds to a
                 database table.
         Returns:
-            ScalarResult[Any]: A `ScalarResult` which contains a scalar value or sequence of
-                scalar values.
+            ScalarResult[Any]: A `ScalarResult` which contains a scalar value or
+                sequence of scalar values.
         """
 
     @abstractmethod
