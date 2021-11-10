@@ -20,6 +20,7 @@ rest = RESTClient()
 email = None
 
 
+@logger.catch
 async def get_scheduled(table_model):
     db = DatabaseImpl()
     await db.connect(CONFIG)
@@ -27,6 +28,7 @@ async def get_scheduled(table_model):
     return (await db.get_row(table_model, "task_name")).one()
 
 
+@logger.catch
 async def get_guild_channel(target_channel):
     channel: TextChannel
     for channel in CLIENT.guilds[0].channels:
@@ -34,6 +36,7 @@ async def get_guild_channel(target_channel):
             return channel
 
 
+@logger.catch
 async def check_email_cred():
     global email
 
@@ -57,16 +60,21 @@ async def check_email_cred():
     email = EmailClient(email_host, email_addr, email_pass)
 
 
+@logger.catch
 async def get_devto_article():
+    task = get_devto_article.__name__
+
     try:
         result = await get_scheduled(ScheduledTask(channel_name="", task_name="dev"))
     except NoResultFound:
+        logger.info(f"{task} is not scheduled to run")
         return
 
     if bool(result.run) is False:
+        logger.info(f"{task} is not scheduled to run")
         return
 
-    content = await email.get_devto_article(sort_by_date=True)
+    content = await rest.get_devto_article(sort_by_date=True)
     channel = await get_guild_channel(result.channel_name)
 
     if not isinstance(channel, TextChannel):
@@ -80,22 +88,30 @@ async def get_devto_article():
         await asyncio.sleep(30)
 
 
+@logger.catch
 async def get_medium_daily_digest():
+    task = get_devto_article.__name__
+
     if email is None:
+        logger.info(f"{task} cannot run. reason: missing email credentials")
         return
 
     try:
         result = await get_scheduled(ScheduledTask(channel_name="", task_name="medium"))
     except NoResultFound:
+        logger.info(f"{task} is not scheduled to run")
         return
 
     if bool(result.run) is False:
+        logger.info(f"{task} is not scheduled to run")
         return
 
     content = await email.get_medium_daily_digest()
+    channel = await get_guild_channel(result.channel_name)
 
     logger.info(
-        f"{get_medium_daily_digest.__name__} delivering content to: {result.channel_name}"
+        f"{get_medium_daily_digest.__name__} "
+        "delivering content to: {result.channel_name}"
     )
     for content in content.content:
         await channel.send(content)
