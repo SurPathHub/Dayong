@@ -118,6 +118,7 @@ async def get_medium_daily_digest():
         await asyncio.sleep(30)
 
 
+@logger.catch
 @CLIENT.event
 async def on_ready():
     await check_email_cred()
