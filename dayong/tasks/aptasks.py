@@ -6,6 +6,7 @@ import discord
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord import TextChannel
 from loguru import logger
+from pragmail.exceptions import IMAP4Error
 from sqlalchemy.exc import NoResultFound
 
 from dayong.core.configs import DayongDynamicLoader
@@ -68,6 +69,8 @@ async def check_email_cred():
 
 @logger.catch
 async def get_devto_article():
+    global job_running
+
     task = get_devto_article.__name__
 
     try:
@@ -80,7 +83,7 @@ async def get_devto_article():
         logger.info(f"{task} is not scheduled to run")
         return
 
-    content = await rest.get_devto_article(sort_by_date=True)
+    content = await rest.get_devto_article()
     channel = await get_guild_channel(result.channel_name)
 
     if not isinstance(channel, TextChannel):
@@ -89,6 +92,7 @@ async def get_devto_article():
     logger.info(
         f"{get_devto_article.__name__} delivering content to: {result.channel_name}"
     )
+
     for content in content.content:
         await channel.send(content)
         await asyncio.sleep(60)
@@ -96,6 +100,8 @@ async def get_devto_article():
 
 @logger.catch
 async def get_medium_daily_digest():
+    global email, job_running
+
     task = get_devto_article.__name__
     notsched = f"{task} is not scheduled to run"
     xsession = f"{task} cannot run. reason: no session started.\n```{info}```"
@@ -118,12 +124,19 @@ async def get_medium_daily_digest():
         await del_schedule(table_model)
         return
 
-    content = await email.get_medium_daily_digest()
+    try:
+        content = await email.get_medium_daily_digest()
+    except IMAP4Error:
+        email = EmailClient(
+            CONFIG.imap_domain_name, CONFIG.email, CONFIG.email_password
+        )
+        content = await email.get_medium_daily_digest()
 
     logger.info(
         f"{get_medium_daily_digest.__name__} "
         "delivering content to: {result.channel_name}"
     )
+
     for content in content.content:
         await channel.send(content)
         await asyncio.sleep(60)
@@ -134,8 +147,8 @@ async def get_medium_daily_digest():
 async def on_ready():
     await check_email_cred()
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(get_devto_article, "cron", day_of_week="mon-sun", hour=7)
-    scheduler.add_job(get_medium_daily_digest, "cron", day_of_week="mon-sun", hour=7)
+    scheduler.add_job(get_devto_article, "interval", hours=24)
+    scheduler.add_job(get_medium_daily_digest, "interval", hours=24)
     scheduler.start()
 
 
