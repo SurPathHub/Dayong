@@ -1,6 +1,7 @@
 # type: ignore
 # pylint: skip-file
 import asyncio
+import time
 
 import discord
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -22,6 +23,22 @@ db = DatabaseImpl()
 rest = RESTClient()
 email = None
 info = ""
+job_ran = False
+
+
+async def signal_run() -> None:
+    global job_ran
+
+    job_ran = True
+
+
+async def check_rate() -> None:
+    global job_ran
+
+    if job_ran is True:
+        # Intentionally blocking
+        time.sleep(5)
+        job_ran = False
 
 
 @logger.catch
@@ -69,8 +86,6 @@ async def check_email_cred():
 
 @logger.catch
 async def get_devto_article():
-    global job_running
-
     task = get_devto_article.__name__
 
     try:
@@ -94,13 +109,15 @@ async def get_devto_article():
     )
 
     for content in content.content:
+        await check_rate()
         await channel.send(content)
+        await signal_run()
         await asyncio.sleep(60)
 
 
 @logger.catch
 async def get_medium_daily_digest():
-    global email, job_running
+    global email
 
     task = get_devto_article.__name__
     notsched = f"{task} is not scheduled to run"
@@ -138,7 +155,9 @@ async def get_medium_daily_digest():
     )
 
     for content in content.content:
+        await check_rate()
         await channel.send(content)
+        await signal_run()
         await asyncio.sleep(60)
 
 
