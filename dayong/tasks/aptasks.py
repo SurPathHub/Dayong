@@ -15,12 +15,14 @@ from dayong.exts.apis import RESTClient
 from dayong.exts.emails import EmailClient
 from dayong.models import ScheduledTask
 from dayong.operations import DatabaseImpl
+from dayong.tasks.manager import AioTaskManager
 
 CONFIG = DayongDynamicLoader.load()
 CLIENT = discord.Client()
 
 db = DatabaseImpl()
 rest = RESTClient()
+tm = AioTaskManager()
 email = None
 info = ""
 job_ran = False
@@ -45,12 +47,14 @@ async def check_rate() -> None:
 async def get_scheduled(table_model):
     await db.connect(CONFIG)
     await db.create_table()
-    return (await db.get_row(table_model, "task_name")).one()
+    try:
+        return (await db.get_row(table_model, "task_name")).one()
+    except NoResultFound:
+        return None
 
 
 @logger.catch
 async def get_guild_channel(target_channel):
-    channel: TextChannel
     for channel in CLIENT.guilds[0].channels:
         if target_channel == str(channel).strip():
             return channel
@@ -85,29 +89,7 @@ async def check_email_cred():
 
 
 @logger.catch
-async def get_devto_article():
-    task = get_devto_article.__name__
-
-    try:
-        result = await get_scheduled(ScheduledTask(channel_name="", task_name="dev"))
-    except NoResultFound:
-        logger.info(f"{task} is not scheduled to run")
-        return
-
-    if bool(result.run) is False:
-        logger.info(f"{task} is not scheduled to run")
-        return
-
-    content = await rest.get_devto_article()
-    channel = await get_guild_channel(result.channel_name)
-
-    if not isinstance(channel, TextChannel):
-        raise TypeError
-
-    logger.info(
-        f"{get_devto_article.__name__} delivering content to: {result.channel_name}"
-    )
-
+async def send_content(channel, content):
     for content in content.content:
         await check_rate()
         await channel.send(content)
@@ -116,18 +98,42 @@ async def get_devto_article():
 
 
 @logger.catch
+async def get_devto_article():
+    task = get_devto_article.__name__
+
+    result = await get_scheduled(ScheduledTask(channel_name="", task_name="dev"))
+
+    if not result or bool(result.run) is False:
+        logger.info(f"{task} is not scheduled to run")
+        return
+
+    content = await rest.get_devto_article()
+    channel = await get_guild_channel(result.channel_name)
+
+    if not isinstance(channel, TextChannel):
+        raise TypeError(f"channel is not a TextChannel: {channel}")
+
+    logger.info(
+        f"{get_devto_article.__name__} delivering content to: {result.channel_name}"
+    )
+
+    await tm.stop_task(task)
+    await tm.start_task(send_content, task, 0, channel, content)
+
+
+@logger.catch
 async def get_medium_daily_digest():
     global email
 
-    task = get_devto_article.__name__
+    task = get_medium_daily_digest.__name__
     notsched = f"{task} is not scheduled to run"
     xsession = f"{task} cannot run. reason: no session started.\n```{info}```"
     table_model = ScheduledTask(channel_name="", task_name="medium")
 
-    try:
-        result = await get_scheduled(table_model)
-    except NoResultFound:
-        logger.info(notsched)
+    result = await get_scheduled(table_model)
+
+    if not result:
+        logger.info(f"{task} is not scheduled to run")
         return
 
     if bool(result.run) is False:
@@ -135,6 +141,9 @@ async def get_medium_daily_digest():
         return
 
     channel = await get_guild_channel(result.channel_name)
+
+    if not isinstance(channel, TextChannel):
+        raise TypeError(f"channel is not a TextChannel: {channel}")
 
     if email is None:
         await channel.send(xsession)
@@ -154,11 +163,8 @@ async def get_medium_daily_digest():
         "delivering content to: {result.channel_name}"
     )
 
-    for content in content.content:
-        await check_rate()
-        await channel.send(content)
-        await signal_run()
-        await asyncio.sleep(60)
+    await tm.stop_task(task)
+    await tm.start_task(send_content, task, 0, channel, content)
 
 
 @logger.catch

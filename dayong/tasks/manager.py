@@ -54,14 +54,20 @@ class AioTaskManager:
 
         loop = asyncio.get_running_loop()
         task = loop.create_task(wrapped_coro(), name=task_name)
-        self.tasks[task.get_name()] = task
+        self.tasks[task_name] = task
         return task_name, task
 
-    async def stop_task(self, task_name: str):
+    async def stop_task(self, task_name: str) -> bool:
         """Stop a task running in the background.
 
         Args:
             task_id (int): Integer associated with a task object.
         """
-        task = await self.get_task(task_name)
-        task.cancel()
+        try:
+            task = self.tasks[task_name]
+            task.cancel()
+            del self.tasks[task_name]
+        except KeyError:
+            return False
+
+        return True
