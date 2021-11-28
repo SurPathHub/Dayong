@@ -1,4 +1,5 @@
 # Dayong
+
 ![License mit](https://img.shields.io/badge/license-MIT-brightgreen)
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-397/)
 ![Codestyle](https://img.shields.io/badge/code%20style-black-black)
@@ -23,7 +24,7 @@ Dayong comes with an `app.json` file for creating an app on Heroku from a GitHub
 
 If your fork is public, you can use the following button:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Otherwise, access the following link and replace `$YOUR_REPOSITORY_LINK$` with your repository link.
 
